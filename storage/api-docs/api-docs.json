@@ -2807,6 +2807,12 @@
                                         "branch_city": "Ciudad Secundaria",
                                         "branch_country": "Otro País",
                                         "branch_website": "https://www.cafeteriadelpueblo.com",
+                                        "branch_about_us": "Acerca de",
+                                        "branch_services": [
+                                            "Servicio 1",
+                                            "Servicio 2"
+                                        ],
+                                        "branch_additional_info": "Información Adicional",
                                         "branch_latitude": 78.91,
                                         "branch_longitude": -12.345,
                                         "branch_id": 1,
@@ -2840,6 +2846,12 @@
                                         "branch_city": "Ciudad Costera",
                                         "branch_country": "Otro País",
                                         "branch_website": "https://www.bardelmar.com",
+                                        "branch_about_us": "Acerca de",
+                                        "branch_services": [
+                                            "Servicio 1",
+                                            "Servicio 2"
+                                        ],
+                                        "branch_additional_info": "Información Adicional",
                                         "branch_latitude": -12.345,
                                         "branch_longitude": 67.89,
                                         "branch_id": 2,
@@ -2996,6 +3008,12 @@
                                         "branch_city": "Ciudad Secundaria",
                                         "branch_country": "Otro País",
                                         "branch_website": "https://www.cafeteriadelpueblo.com",
+                                        "branch_about_us": "Acerca de",
+                                        "branch_services": [
+                                            "Servicio 1",
+                                            "Servicio 2"
+                                        ],
+                                        "branch_additional_info": "Información Adicional",
                                         "branch_latitude": 78.91,
                                         "branch_longitude": -12.345,
                                         "branch_id": 1,
@@ -4860,6 +4878,21 @@
                         "type": "string",
                         "description": "Website of the business branch"
                     },
+                    "branch_about_us": {
+                        "type": "string",
+                        "description": "About of the business branch"
+                    },
+                    "branch_services": {
+                        "type": "array",
+                        "description": "Services of the business branch",
+                        "items": {
+                            "type": "integer"
+                        }
+                    },
+                    "branch_additional_info": {
+                        "type": "string",
+                        "description": "Additional Info of the business branch"
+                    },
                     "branch_latitude": {
                         "type": "number",
                         "description": "Latitude of the business branch",
@@ -5008,6 +5041,19 @@
                         "type": "string"
                     },
                     "branch_website": {
+                        "type": "string"
+                    },
+                    "branch_about_us": {
+                        "type": "string"
+                    },
+                    "branch_services": {
+                        "type": "array",
+                        "description": "Services of the business",
+                        "items": {
+                            "type": "integer"
+                        }
+                    },
+                    "branch_additional_info": {
                         "type": "string"
                     },
                     "branch_latitude": {
