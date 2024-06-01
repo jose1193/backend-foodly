@@ -33,21 +33,62 @@ class AuthController extends BaseController
 // USER LOGIN
     
     public function login(LoginRequest $request)
-{
-    $user = User::where('email', $request->email)->firstOrFail();
+    {
+        $user = User::where('email', $request->email)->firstOrFail();
 
-    if (!Hash::check($request->password, $user->password)) {
-        return $this->sendFailedLoginResponse();
+        if (!Hash::check($request->password, $user->password)) {
+            return $this->sendFailedLoginResponse();
+        }
+
+        $token = $this->createTokenForUser($user, $request->filled('remember'));
+        $cookie = $this->createCookieForToken($token);
+
+        $this->cacheUser($user);
+
+        return $this->sendSuccessLoginResponse($user, $token)->withCookie($cookie);
     }
 
-    $token = $this->createTokenForUser($user, $request->filled('remember'));
-    $cookie = $this->createCookieForToken($token);
+    // Private methods for token and cookie creation
+    private function createTokenForUser($user, $remember = false)
+    {
+        $token = $user->createToken('auth_token')->plainTextToken;
+        if ($remember) {
+            $rememberToken = Str::random(60);
+            $user->forceFill(['remember_token' => hash('sha256', $rememberToken)])->save();
+        }
+        return $token;
+    }
 
-    $this->cacheUser($user);
+    private function createCookieForToken($token)
+    {
+        return cookie(
+            'token', 
+            $token, 
+            60 * 24 * 365, // 1 year
+            '/', // Path
+            null, // Domain (null for default)
+            true, // Secure (true for HTTPS)
+            true, // HttpOnly
+            false, // Raw
+            'Strict' // SameSite
+        );
+    }
 
-    return $this->sendSuccessLoginResponse($user, $token)->withCookie($cookie);
-}
+    private function sendSuccessLoginResponse($user, $token)
+    {
+        return response()->json([
+            'message' => 'User logged successfully',
+            'token' => explode('|', $token)[1],
+            'token_type' => 'Bearer',
+            'token_created_at' => $user->tokens()->where('name', 'auth_token')->first()->created_at->format('Y-m-d H:i:s'),
+            'user' => new UserResource($user),
+        ], 200);
+    }
 
+    private function sendFailedLoginResponse()
+    {
+        return response()->json(['message' => 'Invalid credentials'], 401);
+    }
 
     // User logout
     public function logout(Request $request)
@@ -66,6 +107,8 @@ class AuthController extends BaseController
             ], 500);
         }
     }
+
+   
 
     // Get current user details
 public function user(Request $request)
@@ -112,38 +155,7 @@ public function user(Request $request)
         }
     }
 
-    // Private methods for token and cookie creation
-    private function createTokenForUser($user, $remember = false)
-    {
-        $token = $user->createToken('auth_token')->plainTextToken;
-        if ($remember) {
-            $rememberToken = Str::random(60);
-            $user->forceFill(['remember_token' => hash('sha256', $rememberToken)])->save();
-        }
-        return $token;
-    }
-
-    private function createCookieForToken($token)
-    {
-        return cookie('token', $token, 60 * 24 * 365); // 1 year
-    }
-
-    private function sendSuccessLoginResponse($user, $token)
-    {
-        return response()->json([
-            'message' => 'User logged successfully',
-            'token' => explode('|', $token)[1],
-            'token_type' => 'Bearer',
-            'token_created_at' => $user->tokens()->where('name', 'auth_token')->first()->created_at->format('Y-m-d H:i:s'),
-            'user' => new UserResource($user),
-        ], 200);
-    }
-
-    private function sendFailedLoginResponse()
-    {
-        return response()->json(['message' => 'Invalid credentials'], 401);
-    }
-
+    
     // Private method to cache user data
     private function cacheUser($user)
 {

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\BaseController as BaseController;
 use App\Models\User;
 use App\Models\PasswordResetUser;
 use Illuminate\Http\Request;
@@ -20,7 +21,10 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UpdatePasswordResetRequest;
 use Illuminate\Support\Facades\Log;
 
-use Illuminate\Routing\Controller as BaseController;
+use App\Jobs\SendMailResetPassword;
+use App\Jobs\SendMailPasswordResetSuccess;
+
+
 
 class PasswordResetUserController extends BaseController
 {
@@ -62,7 +66,8 @@ public function store(ForgotPasswordUserRequest $request)
         ]);
 
         // Enviar correo electrónico al usuario
-       Mail::to($user->email)->send(new ResetPasswordMail($pin));
+        //Mail::to($user->email)->send(new ResetPasswordMail($pin));
+        SendMailResetPassword::dispatch($user->email,$pin);
 
         DB::commit();
 
@@ -153,7 +158,8 @@ public function updatePassword(UpdatePasswordResetRequest $request)
            
 
             // Envía el correo electrónico de confirmación de cambio de contraseña
-            Mail::to($user->email)->send(new PasswordResetSuccess($user));
+            //Mail::to($user->email)->send(new PasswordResetSuccess($user));
+            SendMailPasswordResetSuccess::dispatch($user);
         });
 
         return response()->json(['message' => 'Password updated successfully'], 200);

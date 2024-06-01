@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\BaseController as BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -19,14 +20,26 @@ use App\Helpers\ImageHelper;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Routing\Controller as BaseController;
+
 
 class BranchCoverImageController extends BaseController
 {
-    // PERMISSIONS USERS
+    protected $cacheKey;
+    
+    protected $cacheTime = 720;
+    protected $userId;
+
+
     public function __construct()
 {
    $this->middleware('check.permission:Manager')->only(['index', 'store', 'update', 'destroy']);
+
+    $this->middleware(function ($request, $next) {
+            $this->userId = Auth::id();
+            $this->cacheKey = 'user_' . $this->userId . '_branch_cover_images';
+            return $next($request);
+        });
+
 
 }
 
@@ -37,38 +50,52 @@ class BranchCoverImageController extends BaseController
 public function index()
 {
     try {
-        $userId = Auth::id();
-        $cacheKey = 'user_' . $userId . '_branch_cover_images';
-
         // Attempt to retrieve cached data
-        $groupedCoverImages = $this->getCachedData($cacheKey, 60, function () use ($userId) {
-            // Obtener el usuario autenticado con negocios y sus sucursales con imágenes de portada cargadas de antemano
-            $user = User::with('businesses.branches.coverImages')->find($userId);
-
-            // Preparar un array para almacenar las imágenes de portada agrupadas por sucursal
-            $groupedCoverImages = [];
-
-            // Iterar sobre los negocios y sus sucursales para agrupar las imágenes de portada
-            foreach ($user->businesses as $business) {
-                foreach ($business->branches as $branch) {
-                    // Usar el nombre de la sucursal como clave para agrupar las imágenes de portada
-                    $branchName = $branch->branch_name; // Asegúrate de que 'branch_name' es el atributo correcto
-                    $groupedCoverImages[$branchName] = BusinessBranchCoverImageResource::collection($branch->coverImages);
-                }
-            }
-
-            return $groupedCoverImages;
+        $groupedCoverImages = $this->getCachedData($this->cacheKey, $this->cacheTime, function () {
+            return $this->getAllBranchCoverImages();
         });
 
-        // Devolver una respuesta JSON con las imágenes de portada agrupadas por sucursal
+        // Update cache with the grouped cover images
+        $this->updateBranchCoverImagesCache($groupedCoverImages);
+
+        // Return a JSON response with the grouped cover images
         return response()->json($groupedCoverImages);
     } catch (\Exception $e) {
-        // Registrar y manejar cualquier excepción que ocurra durante el proceso
+        // Log and handle any exception that occurs during the process
         Log::error('Error in index function: ' . $e->getMessage());
         return response()->json(['message' => 'An error occurred during processing'], 500);
     }
 }
 
+
+
+private function getAllBranchCoverImages()
+{
+    // Retrieve the authenticated user with businesses and their branches with preloaded cover images
+    $user = User::with('businesses.branches.coverImages')->find($this->userId);
+
+    // Prepare an array to store the cover images grouped by branch
+    $groupedCoverImages = [];
+
+    // Iterate over the businesses and their branches to group the cover images
+    foreach ($user->businesses as $business) {
+        foreach ($business->branches as $branch) {
+            // Use the branch name as the key to group the cover images
+            $branchName = $branch->branch_name; // Ensure 'branch_name' is the correct attribute
+            $groupedCoverImages[$branchName] = BusinessBranchCoverImageResource::collection($branch->coverImages);
+        }
+    }
+
+    return $groupedCoverImages;
+}
+
+
+    private function updateBranchCoverImagesCache($groupedCoverImages)
+    {
+    $this->refreshCache($this->cacheKey, $this->cacheTime, function () use ($groupedCoverImages) {
+        return $groupedCoverImages;
+    });
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -113,10 +140,17 @@ public function store(BusinessBranchCoverImageRequest $request)
             return new BusinessBranchCoverImageResource($branchCoverImage);
         });
 
-        DB::commit();  // Commit the transaction
+        // Update the cache for each new image
+        $branchCoverImages->each(function ($branchCoverImageResource) {
+            $this->refreshCache('branch_cover_image_' . $branchCoverImageResource->branch_image_uuid, $this->cacheTime, function () use ($branchCoverImageResource) {
+                return $branchCoverImageResource;
+            });
+        });
 
-        // Invalidate the cache for the user's branch cover images
-        $this->invalidateUserBranchCoverImageCache($userId);
+        // Update the cache with all branch cover images
+        $this->updateBranchCoverImagesCache($this->getAllBranchCoverImages());
+
+        DB::commit();  // Commit the transaction
 
         return response()->json($branchCoverImages, 200);
     } catch (\Exception $e) {
@@ -131,9 +165,10 @@ public function store(BusinessBranchCoverImageRequest $request)
 
 
 
+
 public function updateImage(UpdateBusinessBranchCoverImageRequest $request, $uuid)
 {
-    DB::beginTransaction(); // Iniciar transacción
+    DB::beginTransaction(); // Start the transaction
     try {
         $branchCoverImage = BranchCoverImage::where('branch_image_uuid', $uuid)->firstOrFail();
 
@@ -143,23 +178,31 @@ public function updateImage(UpdateBusinessBranchCoverImageRequest $request, $uui
                 'public/branch_photos'
             );
 
-              if ($branchCoverImage->branch_image_path) {
+            // Delete the old image if it exists
+            if ($branchCoverImage->branch_image_path) {
                 ImageHelper::deleteFileFromStorage($branchCoverImage->branch_image_path);
-                }
+            }
 
+            // Update the image path
             $branchCoverImage->update([
                 'branch_image_path' => $storedImagePath
             ]);
         }
 
-        DB::commit(); // Confirmar cambios si todo es correcto
+        // Update the cache for the specific image
+        $this->refreshCache('branch_cover_image_' . $uuid, $this->cacheTime, function () use ($branchCoverImage) {
+            return new BusinessBranchCoverImageResource($branchCoverImage);
+        });
 
-        // Invalidate the cache for the updated image
-        $this->invalidateCache('branch_cover_image_' . $uuid);
+        // Refresh the cache for all branch cover images
+        $groupedCoverImages = $this->getAllBranchCoverImages();
+        $this->updateBranchCoverImagesCache($groupedCoverImages);
+
+        DB::commit(); // Commit the changes if everything is correct
 
         return response()->json(new BusinessBranchCoverImageResource($branchCoverImage));
     } catch (\Exception $e) {
-        DB::rollBack(); // Revertir todos los cambios en caso de error
+        DB::rollBack(); // Roll back all changes in case of error
         Log::error('An error occurred while updating branch cover images: ' . $e->getMessage());
         return response()->json(['error' => 'Error updating business cover image'], 500);
     }
@@ -182,7 +225,7 @@ public function updateImage(UpdateBusinessBranchCoverImageRequest $request, $uui
         $cacheKey = 'branch_cover_image_' . $uuid;
 
         // Attempt to retrieve cached data
-        $branchCoverImage = $this->getCachedData($cacheKey, 60, function () use ($uuid) {
+        $branchCoverImage = $this->getCachedData($cacheKey, $this->cacheTime, function () use ($uuid) {
             // Find the branch cover image by its branch_image_uuid
             return BranchCoverImage::where('branch_image_uuid', $uuid)->firstOrFail();
         });
@@ -229,6 +272,10 @@ public function updateImage(UpdateBusinessBranchCoverImageRequest $request, $uui
         // Invalidate the cache for the deleted image
         $this->invalidateCache('branch_cover_image_' . $uuid);
 
+        // Refresh the cache for all branch cover images
+        $groupedCoverImages = $this->getAllBranchCoverImages();
+        $this->updateBranchCoverImagesCache($groupedCoverImages);
+
         return response()->json(['message' => 'Branch cover image deleted successfully'], 200);
     } catch (ModelNotFoundException $e) {
         DB::rollBack();
@@ -242,25 +289,8 @@ public function updateImage(UpdateBusinessBranchCoverImageRequest $request, $uui
 
 
 
-private function getCachedData($key, $minutes, \Closure $callback)
-{
-    return Cache::remember($key, now()->addMinutes($minutes), $callback);
-}
 
-private function putCachedData($key, $data, $minutes)
-{
-    Cache::put($key, $data, now()->addMinutes($minutes));
-}
 
-private function invalidateCache($key)
-{
-    Cache::forget($key);
-}
 
-private function invalidateUserBranchCoverImageCache($userId)
-{
-    $cacheKey = 'user_' . $userId . '_branch_cover_images';
-    $this->invalidateCache($cacheKey);
-}
 
 }

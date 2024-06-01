@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\BaseController as BaseController;
 use Illuminate\Http\Request;
 use App\Models\PromotionBranch;
 use App\Models\User;
@@ -14,14 +15,23 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Routing\Controller as BaseController;
+
 
 class PromotionBranchController extends BaseController
 {
-     // PERMISSIONS USERS
+    protected $cacheKey;
+    protected $cacheTime = 720;
+    protected $userId;
+
     public function __construct()
 {
    $this->middleware('check.permission:Manager')->only(['index','create', 'store','update', 'destroy','updateLogo']);
+
+     $this->middleware(function ($request, $next) {
+            $this->userId = Auth::id();
+            $this->cacheKey = 'user_' . $this->userId . '_branch_promotions';
+            return $next($request);
+        });
 
 }
 
@@ -32,36 +42,41 @@ class PromotionBranchController extends BaseController
    public function index()
 {
     try {
-       
-        $userId = Auth::id();
-
-        // Obtener la clave de caché usando la función privada
-        $cacheKey = $this->getUserBranchPromotionsCacheKey($userId);
+        $userId = $this->userId;
 
         // Intentar obtener las promociones desde la caché
-        $promotionsBranches = $this->getCachedData($cacheKey, 60, function () use ($userId) {
-            // Obtener todas las promociones de las sucursales asociadas a los negocios del usuario autenticado
-            $promotionsBranches = Business::where('user_id', $userId)
-                ->with('branches.promotionsbranches')
-                ->get()
-                ->pluck('branches')
-                ->flatten()
-                ->pluck('promotionsbranches')
-                ->flatten();
-
-            return $promotionsBranches;
-        });
+        $promotionsBranches = $this->getCachedPromotions($userId);
 
         // Devolver todas las promociones como respuesta JSON
         return response()->json(['branch_promotions' => PromotionBranchResource::collection($promotionsBranches)], 200);
-        
     } catch (\Exception $e) {
         Log::error('Error fetching promotions branch: ' . $e->getMessage());
         return response()->json(['message' => 'Error fetching promotions branch: '], 500);
     }
 }
 
+private function getCachedPromotions($userId)
+{
+    return $this->getCachedData($this->cacheKey, $this->cacheTime, function () use ($userId) {
+        // Obtener todas las promociones de las sucursales asociadas a los negocios del usuario autenticado
+        return $this->getAllPromotions($userId);
+    });
+}
 
+private function getAllPromotions($userId)
+{
+    $promotionsBranches = Business::where('user_id', $userId)
+        ->with(['branches.promotionsbranches' => function($query) {
+            $query->orderBy('id', 'desc');
+        }])
+        ->get()
+        ->pluck('branches')
+        ->flatten()
+        ->pluck('promotionsbranches')
+        ->flatten();
+
+    return $promotionsBranches;
+}
 
 
 
@@ -99,10 +114,17 @@ class PromotionBranchController extends BaseController
         // Crear la promoción de la sucursal
         $promotionBranch = PromotionBranch::create($validatedData);
 
+        //Cache
+        $this->refreshCache( "branch_promotion_{$promotionBranch->promotion_branch_uuid}", $this->cacheTime, function () use ($promotionBranch) {
+        return $promotionBranch;
+        });
+
+        
+        $this->updatePromotionCache($this->getAllPromotions($this->userId));
+
         DB::commit();
 
-        // Invalidar la caché de promociones de sucursales del usuario
-        $this->invalidateUserBranchPromotionCache($userId);
+       
 
         return response()->json(new PromotionBranchResource($promotionBranch), 200);
     } catch (\Exception $e) {
@@ -123,7 +145,7 @@ class PromotionBranchController extends BaseController
 {
     try {
         // Intentar obtener la promoción desde la caché
-        $promotionBranch = $this->getCachedData('promotion_branch_' . $uuid, 60, function () use ($uuid) {
+        $promotionBranch = $this->getCachedData('branch_promotion_' . $uuid, $this->cacheTime, function () use ($uuid) {
             // Buscar la promoción de sucursal por su UUID, incluyendo las promociones eliminadas
             return PromotionBranch::withTrashed()->where('promotion_branch_uuid', $uuid)->firstOrFail();
         });
@@ -162,11 +184,15 @@ class PromotionBranchController extends BaseController
         $validatedData = $request->validated();
         $promotionBranch->update($validatedData);
 
-        // Confirmar la transacción
-        DB::commit();
+        
+        //Cache
+        $this->refreshCache( "branch_promotion_{$uuid}", $this->cacheTime, function () use ($promotionBranch) {
+        return $promotionBranch;
+        });
 
-        // Invalidar la caché de promociones de sucursales del usuario
-        $this->invalidateUserBranchPromotionCache($userId);
+        $this->updatePromotionCache($this->getAllPromotions($this->userId));
+
+        DB::commit();
 
         return response()->json(new PromotionBranchResource($promotionBranch), 200);
     } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
@@ -203,10 +229,16 @@ public function destroy($uuid)
 
         $promotionBranch->delete();
 
-        DB::commit();
 
-        // Invalidar la caché de promociones de sucursales del usuario
-        $this->invalidateUserBranchPromotionCache($userId);
+        //Cache
+        $this->refreshCache( "branch_promotion_{$uuid}", $this->cacheTime, function () use ($promotionBranch) {
+        return $promotionBranch;
+        });
+
+        $this->updatePromotionCache($this->getAllPromotions($this->userId));
+
+
+        DB::commit();
 
         return response()->json(['message' => 'Promotion branch deleted successfully'], 200);
     } catch (ModelNotFoundException $e) {
@@ -218,6 +250,8 @@ public function destroy($uuid)
         return response()->json(['message' => 'Error deleting promotion branch'], 500);
     }
 }
+
+
 
 public function restore($uuid)
 {
@@ -234,10 +268,14 @@ public function restore($uuid)
         // Restaurar la promoción eliminada
         $promotionBranch->restore();
 
-        DB::commit();
+        //Cache
+        $this->refreshCache( "branch_promotion_{$uuid}", $this->cacheTime, function () use ($promotionBranch) {
+        return $promotionBranch;
+        });
 
-        // Invalidar la caché de promociones de sucursales del usuario
-        $this->invalidateUserBranchPromotionCache($userId);
+        $this->updatePromotionCache($this->getAllPromotions($this->userId));
+
+        DB::commit();
 
         return response()->json(new PromotionBranchResource($promotionBranch), 200);
     } catch (ModelNotFoundException $e) {
@@ -251,38 +289,12 @@ public function restore($uuid)
 }
 
 
-
-
-
-
-private function getCachedData($key, $minutes, \Closure $callback)
-{
-    return Cache::remember($key, now()->addMinutes($minutes), $callback);
-}
-
-private function putCachedData($key, $data, $minutes)
-{
-    Cache::put($key, $data, now()->addMinutes($minutes));
-}
-
-private function invalidateCache($key)
-{
-    Cache::forget($key);
-}
-
-private function getUserBranchPromotionsCacheKey($userId)
-{
-    return 'user_' . $userId . '_branch_promotions';
-}
-
-private function invalidateUserBranchPromotionCache($userId)
-{
-    $cacheKey = $this->getUserBranchPromotionsCacheKey($userId);
-    $this->invalidateCache($cacheKey);
-}
-
-
-
+private function updatePromotionCache($allPromotions)
+    {
+        $this->refreshCache($this->cacheKey, $this->cacheTime, function () use ($allPromotions) {
+            return $allPromotions;
+        });
+    }
 
 
 }

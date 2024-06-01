@@ -62,10 +62,10 @@ Route::get('/services', [ServiceController::class, 'index']);
     //Route::post('login', 'login');
 //});
        
-Route::middleware('auth.routes')->group(function() {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
+Route::middleware(['auth.routes','handle.notfound'])->group(function() {
+    //Route::get('/user', function (Request $request) {
+        //return $request->user();
+    //});
 
     // Rutas protegidas por autenticación y verificación
     Route::post('logout', [AuthController::class, 'logout']);

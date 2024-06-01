@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\BaseController as BaseController;
 use Illuminate\Http\Request;
 use App\Models\Business;
 
@@ -24,28 +25,37 @@ use App\Helpers\ImageHelper;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Routing\Controller as BaseController;
+use App\Jobs\SendWelcomeEmailBusiness;
 
 
 
 class BusinessController extends BaseController
 {
+    protected $cacheKey;
+    
+    protected $cacheTime = 720;
+    protected $userId;
 
-     // PERMISSIONS USERS
+    
     public function __construct()
 {
    $this->middleware('check.permission:Manager')->only(['index', 'store', 'update', 'destroy','updateLogo']);
+  
+  $this->middleware(function ($request, $next) {
+            $this->userId = Auth::id();
+            $this->cacheKey = 'user_' . $this->userId . '_business';
+            return $next($request);
+        });
+
 
 }
 
 public function index()
 {
     try {
-        $userId = Auth::id();
-        $cacheKey = 'user_' . $userId . '_business';
-
-        $businesses = $this->getCachedData($cacheKey, 3600, function () use ($userId) {
-            return Business::withTrashed()->where('user_id', $userId)->orderBy('id', 'desc')->get();
+        $userId = $this->userId;
+        $businesses = $this->getCachedData($this->cacheKey, $this->cacheTime, function () use ($userId) {
+            return $this->updateBusinessCache($userId);
         });
 
         if ($businesses->isEmpty()) {
@@ -55,12 +65,28 @@ public function index()
         return response()->json(['business' => BusinessResource::collection($businesses)], 200);
     } catch (QueryException $e) {
         Log::error('Database error: ' . $e->getMessage());
-        return response()->json(['message' => 'Database error: ' . $e->getMessage()], 500);
+        return response()->json(['message' => 'A database error occurred. Please try again later.'], 500);
     } catch (\Exception $e) {
         Log::error('Error retrieving business: ' . $e->getMessage());
-        return response()->json(['message' => 'Error retrieving business'], 500);
+        return response()->json(['message' => 'An error occurred while retrieving businesses. Please try again later.'], 500);
     }
 }
+
+private function updateBusinessCache($userId)
+{
+    $businesses = Business::withTrashed()->where('user_id', $userId)->orderBy('id', 'desc')->get();
+
+    if ($businesses->isEmpty()) {
+        throw new \Exception('No businesses found');
+    }
+
+    $this->refreshCache($this->cacheKey, $this->cacheTime, function () use ($businesses) {
+        return $businesses;
+    });
+
+    return $businesses;
+}
+
 
 
 
@@ -68,8 +94,9 @@ public function show($uuid)
 {
     try {
         $cacheKey = 'business_' . $uuid;
+       
 
-        $business = $this->getCachedData($cacheKey, 3600, function () use ($uuid) {
+        $business = $this->getCachedData($cacheKey, $this->cacheTime, function () use ($uuid) {
             return Business::withTrashed()->where('business_uuid', $uuid)->firstOrFail();
         });
 
@@ -83,17 +110,25 @@ public function show($uuid)
     }
 }
 
+
 public function store(BusinessRequest $request)
 {
     $data = $request->validated();
 
+    // Ensure the user ID is set
+    $userId = $this->userId;
+    if (!$userId) {
+        Log::error('Authenticated user not found.');
+        return response()->json(['message' => 'Authenticated user not found.'], 401);
+    }
+
     try {
-        return DB::transaction(function () use ($request, $data) {
+        return DB::transaction(function () use ($request, $data, $userId) {
             // Generar un UUID
             $data['business_uuid'] = Uuid::uuid4()->toString();
 
             // Obtener el ID del usuario actualmente autenticado
-            $data['user_id'] = Auth::id();
+            $data['user_id'] = $userId;
 
             // Guardar la foto del negocio si existe
             if ($request->hasFile('business_logo')) {
@@ -105,23 +140,28 @@ public function store(BusinessRequest $request)
             // Crear el negocio
             $business = Business::create($data);
 
-            // Verificar y ajustar el formato de business_services
+           
             $services = $data['business_services'] ?? [];
             if (!is_array($services)) {
-                $services = [$services];  // Convertir a array si no lo es
+                $services = [$services];  
             }
 
-            // Asociar servicios con el negocio usando la tabla pivot
+           
             $business->services()->attach($services);
 
-            // Enviar correo electrónico de manera asincrónica
-            Mail::to($business->user->email)->send(new WelcomeMailBusiness($business->user, $business));
+          
+           // Mail::to($business->user->email)->send(new WelcomeMailBusiness($business->user, $business));
+            SendWelcomeEmailBusiness::dispatch($business->user, $business);
+
 
             // Manejo de caché
-            $this->invalidateUserBusinessesCache($data['user_id']);
-            $this->putCachedData('business_' . $business->business_uuid, $business, 60);
+            $cacheKey = 'business_' . $business->business_uuid;
+            $this->refreshCache($cacheKey, $this->cacheTime, function () use ($business) {
+            return $business;
+            });
+            $this->updateBusinessCache($this->userId);
 
-            // Devolver una respuesta adecuada
+            
             return response()->json(new BusinessResource($business), 200);
         });
     } catch (QueryException $e) {
@@ -141,8 +181,9 @@ public function updateLogo(UpdateBusinessLogoRequest $request, $uuid)
 {
     try {
         $cacheKey = 'business_' . $uuid;
+       
 
-        $business = $this->getCachedData($cacheKey, 3600, function () use ($uuid) {
+        $business = $this->getCachedData($cacheKey, $this->cacheTime, function () use ($uuid) {
             return Business::withTrashed()->where('business_uuid', $uuid)->firstOrFail();
         });
 
@@ -161,8 +202,12 @@ public function updateLogo(UpdateBusinessLogoRequest $request, $uuid)
             $business->save();
 
             // Limpiar la caché del negocio
-            $this->invalidateCache($cacheKey);
-            $this->putCachedData($cacheKey, $business->fresh(), 60);
+            $this->refreshCache($cacheKey, $this->cacheTime, function () use ($business) {
+            return $business;
+            });
+
+             // Actualizar el caché
+            $this->updateBusinessCache($this->userId);
 
             
         }
@@ -181,7 +226,8 @@ public function update(BusinessRequest $request, $uuid)
     try {
         return DB::transaction(function () use ($request, $uuid) {
             $cacheKey = "business_{$uuid}";
-            $business = $this->getCachedData($cacheKey, 600, function () use ($uuid) {
+            
+            $business = $this->getCachedData($cacheKey, $this->cacheTime, function () use ($uuid) {
                 return auth()->user()->businesses()->where('business_uuid', $uuid)->firstOrFail();
             });
 
@@ -195,7 +241,12 @@ public function update(BusinessRequest $request, $uuid)
                 $business->services()->sync($serviceIds);
             }
 
-            $this->putCachedData($cacheKey, $business->fresh(), 60);
+            $this->refreshCache($cacheKey, $this->cacheTime, function () use ($business) {
+            return $business;
+            });
+
+            // Actualizar el caché
+        $this->updateBusinessCache($this->userId);
 
             return response()->json(new BusinessResource($business->fresh()), 200);
         });
@@ -211,12 +262,23 @@ public function update(BusinessRequest $request, $uuid)
 public function destroy($uuid)
 {
     try {
-        $business = $this->getCachedData("business_{$uuid}", 600, function () use ($uuid) {
+
+        $cacheKey = "business_{$uuid}";
+       
+
+        $business = $this->getCachedData($cacheKey, $this->cacheTime, function () use ($uuid) {
             return Business::where('business_uuid', $uuid)->firstOrFail();
         });
 
-        $this->invalidateCache("business_{$uuid}");
+        
         $business->delete();
+
+        $this->refreshCache($cacheKey, $this->cacheTime, function () use ($business) {
+            return $business;
+        });
+
+        // Actualizar el caché
+        $this->updateBusinessCache($this->userId);
 
         return response()->json(['message' => 'Business deleted successfully'], 200);
     } catch (\Exception $e) {
@@ -225,9 +287,14 @@ public function destroy($uuid)
     }
 }
 
+
+
 public function restore($uuid)
 {
     try {
+        $cacheKey = "business_{$uuid}";
+        
+
         $business = auth()->user()->businesses()->where('business_uuid', $uuid)->onlyTrashed()->first();
 
         if (!$business) {
@@ -239,7 +306,13 @@ public function restore($uuid)
         }
 
         $business->restore();
-        $this->putCachedData("business_{$uuid}", $business, 60);
+
+        $this->refreshCache($cacheKey, $this->cacheTime, function () use ($business) {
+            return $business;
+        });
+
+        // Actualizar el caché
+        $this->updateBusinessCache($this->userId);
 
         return response()->json(new BusinessResource($business), 200);
     } catch (\Exception $e) {
@@ -251,29 +324,5 @@ public function restore($uuid)
 
 
 
-
-private function getCachedData($key, $minutes, \Closure $callback)
-{
-    return Cache::remember($key, $minutes, $callback);
-}
-
-private function putCachedData($key, $data, $minutes)
-{
-    Cache::put($key, $data, now()->addMinutes($minutes));
-}
-
-private function invalidateCache($key)
-{
-    Cache::forget($key);
-}
-
-private function invalidateUserBusinessesCache($userId)
-{
-    $cacheKey = 'user_' . $userId . '_business';
-    $this->invalidateCache($cacheKey);
-}
-
-
-
-
+     
 }

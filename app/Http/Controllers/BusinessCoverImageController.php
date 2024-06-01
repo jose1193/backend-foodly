@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\BaseController as BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -17,74 +18,93 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Auth;
 
 class BusinessCoverImageController extends BaseController
 {
 
-     // PERMISSIONS USERS
+    protected $cacheKey;
+    
+    protected $cacheTime = 720;
+    protected $userId;
+
+
     public function __construct()
 {
    $this->middleware('check.permission:Manager')->only(['index', 'store',  'update', 'destroy']);
 
-}
-
-   public function index()
-{
-    try {
-        $user = auth()->user();
-
-        // Cargar los negocios del usuario
-        $user->load('businesses');
-
-        // Recopilar los IDs de los negocios
-        $businessIds = $user->businesses->pluck('id')->toArray();
-
-        // Generar la clave de caché utilizando los IDs de los negocios
-        $cacheKey = 'business_' . implode('_', $businessIds) . '_cover_images';
-
-        $groupedCoverImages = $this->getCachedData($cacheKey, 720, function () use ($user) {
-            $user->load('businesses.coverImages');
-
-            $groupedCoverImages = [];
-
-            $user->businesses->each(function ($business) use ($user, &$groupedCoverImages) {
-                if ($business->user_id === $user->id) {
-                    // Agrupar las imágenes por el nombre del negocio y usar el Resource para la transformación de datos
-                    $groupedCoverImages[$business->business_name] = BusinessCoverImageResource::collection($business->coverImages);
-                }
-            });
-
-            return $groupedCoverImages;
+   $this->middleware(function ($request, $next) {
+            $this->userId = Auth::id();
+            $this->cacheKey = 'user_' . $this->userId . '_business_cover_images';
+            return $next($request);
         });
 
+
+}
+
+public function index()
+{
+    try {
+        // Intentar recuperar los datos en caché
+        $groupedCoverImages = $this->getCachedData($this->cacheKey, $this->cacheTime, function () {
+            return $this->getAllBusinessCoverImages();
+        });
+
+        // Actualizar el caché con las imágenes de portada agrupadas
+        $this->updateBusinessCoverImagesCache($groupedCoverImages);
+
+        // Devolver una respuesta JSON con las imágenes de portada agrupadas
         return response()->json($groupedCoverImages, 200);
     } catch (\Exception $e) {
-        Log::error('Error fetching business cover images', [
-            'error' => $e->getMessage(),
+        // Registrar y manejar cualquier excepción que ocurra durante el proceso
+        Log::error('Error in index function: ' . $e->getMessage(), [
             'user_id' => auth()->id()
         ]);
-        return response()->json(['message' => 'Error fetching business cover images. Please try again later.'], 500);
+        return response()->json(['message' => 'An error occurred during processing'], 500);
     }
 }
 
 
 
+   private function getAllBusinessCoverImages()
+{
+    $user = auth()->user();
+    $user->load('businesses.coverImages');
 
+    $groupedCoverImages = [];
+
+    $user->businesses->each(function ($business) use ($user, &$groupedCoverImages) {
+        if ($business->user_id === $user->id) {
+            $groupedCoverImages[$business->business_name] = BusinessCoverImageResource::collection($business->coverImages);
+        }
+    });
+
+    return $groupedCoverImages;
+}
+
+
+
+private function updateBusinessCoverImagesCache($groupedCoverImages)
+{
+    $this->refreshCache($this->cacheKey, $this->cacheTime, function () use ($groupedCoverImages) {
+        return $groupedCoverImages;
+    });
+}
 
 
   public function store(BusinessCoverImageRequest $request)
 {
-    DB::beginTransaction(); // Start the transaction
+    DB::beginTransaction(); // Inicia la transacción
     try {
         $validatedData = $request->validated();
 
-        // Verify and adjust the format of business_image_path
+        // Verificar y ajustar el formato de business_image_path
         $imagePaths = $validatedData['business_image_path'];
         if (!is_array($imagePaths)) {
-            $imagePaths = [$imagePaths];  // Convert to array if not already
+            $imagePaths = [$imagePaths];  // Convertir a array si no lo es
         }
 
+        // Procesar y almacenar las imágenes
         $businessImages = collect($imagePaths)->map(function ($image) use ($validatedData) {
             $storedImagePath = ImageHelper::storeAndResize($image, 'public/business_photos');
 
@@ -97,22 +117,29 @@ class BusinessCoverImageController extends BaseController
             return new BusinessCoverImageResource($businessCoverImage);
         });
 
-        DB::commit(); // Confirm the transaction if everything went well
+        // Actualizar el caché para cada nueva imagen
+        $businessImages->each(function ($businessCoverImageResource) {
+            $this->refreshCache('business_cover_uuid_' . $businessCoverImageResource->business_image_uuid, $this->cacheTime, function () use ($businessCoverImageResource) {
+                return $businessCoverImageResource;
+            });
+        });
 
-        // Invalidate the cache for the user's business cover images
-        $this->invalidateUserBusinessesCoverImageCache($validatedData['business_id']);
+        // Cachear la nueva respuesta
+        $this->updateBusinessCoverImagesCache($this->getAllBusinessCoverImages());
+        
+        DB::commit(); // Confirmar la transacción si todo salió bien
 
-        // Cache the new response
-        $cacheKey = 'business_' . $validatedData['business_id'] . '_cover_images';
-        $this->putCachedData($cacheKey, $businessImages, 60); // Cache for 60 minutes
-
-        return response()->json($businessImages, 200);
+        return response()->json($businessImages, 201);
     } catch (\Exception $e) {
-        DB::rollBack(); // Reverse the transaction in case of failure
-        Log::error('Error storing business cover images: ' . $e->getMessage());
-        return response()->json(['error' => 'Error storing business cover images: ' . $e->getMessage()], 500);
+        DB::rollBack(); // Revertir la transacción en caso de fallo
+        Log::error('Error storing business cover images: ' . $e->getMessage(), [
+            'user_id' => auth()->id(),
+            'trace' => $e->getTraceAsString()
+        ]);
+        return response()->json(['error' => 'Error storing business cover images. Please try again later.'], 500);
     }
 }
+
 
 
 public function updateImage(UpdateBusinessCoverImageRequest $request, $uuid)
@@ -136,11 +163,12 @@ public function updateImage(UpdateBusinessCoverImageRequest $request, $uuid)
             });
         }
 
-        // Invalidate the cache for the user's businesses
-        $this->invalidateUserBusinessesCoverImageCache($businessCoverImage->business->user_id);
+        // Cachear la nueva respuesta
+         $this->refreshCache('business_cover_image_' . $uuid, $this->cacheTime, function () use ($businessCoverImage) {
+            return new BusinessCoverImageResource($businessCoverImage);
+        });
+        $this->updateBusinessCoverImagesCache($this->getAllBusinessCoverImages());
 
-        // Also invalidate the cache for the specific business cover images
-        $this->invalidateCache('business_' . $businessCoverImage->business_id . '_cover_images');
 
         return response()->json(
             new BusinessCoverImageResource($businessCoverImage)
@@ -165,7 +193,7 @@ public function show($uuid)
         $cacheKey = 'business_cover_image_' . $uuid;
 
         // Attempt to get the business cover image from the cache or the database
-        $businessCoverImage = $this->getCachedData($cacheKey, 720, function () use ($uuid) {
+        $businessCoverImage = $this->getCachedData($cacheKey, 360, function () use ($uuid) {
             return BusinessCoverImage::where('business_image_uuid', $uuid)->firstOrFail();
         });
 
@@ -198,20 +226,19 @@ public function show($uuid)
             ImageHelper::deleteFileFromStorage($businessCoverImage->business_image_path);
             }
 
-        // Delete the business cover image
+       
         $businessCoverImage->delete();
 
-        DB::commit();
-
-        // Invalidate the cache for the user's business cover images
-        $this->invalidateUserBusinessesCoverImageCache($userId);
+       
 
         // Also invalidate the cache for the specific business cover images
-        $this->invalidateCache('business_' . $businessId . '_cover_images');
+        $this->invalidateCache('business_cover_image_' . $uuid);
 
         // Invalidate the cache for the specific business cover image UUID
-        $cacheKey = 'business_cover_image_' . $uuid;
-        Cache::forget($cacheKey);
+         $this->updateBusinessCoverImagesCache($this->getAllBusinessCoverImages());
+        
+        DB::commit();
+
 
         return response()->json(['message' => 'Business cover image deleted successfully'], 200);
     } catch (ModelNotFoundException $e) {
@@ -224,28 +251,6 @@ public function show($uuid)
     }
 }
 
-
-
-private function getCachedData($key, $minutes, \Closure $callback)
-{
-    return Cache::remember($key, now()->addMinutes($minutes), $callback);
-}
-
-private function putCachedData($key, $data, $minutes)
-{
-    Cache::put($key, $data, now()->addMinutes($minutes));
-}
-
-private function invalidateCache($key)
-{
-    Cache::forget($key);
-}
-
-private function invalidateUserBusinessesCoverImageCache($businessId)
-{
-    $cacheKey = 'business_' . $businessId . '_cover_images';
-    $this->invalidateCache($cacheKey);
-}
 
 
 

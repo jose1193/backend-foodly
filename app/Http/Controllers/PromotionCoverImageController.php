@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\BaseController as BaseController;
 use Illuminate\Http\Request;
 use App\Models\Promotion;
 use App\Models\PromotionImage;
@@ -15,15 +16,24 @@ use Illuminate\Support\Facades\Auth;
 use App\Helpers\ImageHelper;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Routing\Controller as BaseController;
+
 
 class PromotionCoverImageController extends BaseController
 {
+    protected $cacheKey;
+    protected $cacheTime = 720;
+    protected $userId;
+
     // PERMISSIONS USERS
     public function __construct()
 {
-   $this->middleware('check.permission:Manager')->only(['index','create', 'store', 'edit', 'update', 'destroy']);
+   $this->middleware('check.permission:Manager')->only(['index','store', 'edit', 'update', 'destroy']);
 
+   $this->middleware(function ($request, $next) {
+            $this->userId = Auth::id();
+            $this->cacheKey = 'user_'. $this->userId . '_business_promotions_images';
+            return $next($request);
+        });
 }
 
 
@@ -33,38 +43,34 @@ class PromotionCoverImageController extends BaseController
    public function index()
 {
     try {
-        // Obtener el ID del usuario autenticado
-        $userId = auth()->id();
-        $cacheKey = $this->getPromotionImagesCacheKey($userId);
-
-        // Intentar obtener los datos en caché
-        $groupedPromotionImages = $this->getCachedData($cacheKey, 30, function() use ($userId) {
-            // Obtener todos los negocios asociados al usuario autenticado con carga ansiosa de promociones e imágenes
-            $businesses = User::findOrFail($userId)->businesses()->with('promotions.promotionImages')->get();
-
-           
-            $groupedPromotionImages = [];
-
-            // Iterar sobre cada negocio y sus promociones para agrupar las imágenes de promoción
-            foreach ($businesses as $business) {
-                foreach ($business->promotions as $promotion) {
-                    $promotionTitle = $promotion->promotion_title;
-                    $promotionImages = $promotion->promotionImages;
-
-                    $groupedPromotionImages[$promotionTitle] = PromotionImageResource::collection($promotionImages);
-                }
-            }
-
-            return $groupedPromotionImages;
+        $userId = $this->userId;
+        $groupedPromotionImages = $this->getCachedData($this->cacheKey, $this->cacheTime, function() use ($userId) {
+            return $this->getGroupedPromotionImages($userId);
         });
 
-        // Devolver todas las imágenes de promoción agrupadas por título de promoción como respuesta JSON
         return response()->json(['grouped_promotion_images' => $groupedPromotionImages], 200);
     } catch (\Exception $e) {
         Log::error('An error occurred while fetching promotion images: ' . $e->getMessage());
         return response()->json(['message' => 'Error fetching promotion images'], 500);
     }
 }
+
+private function getGroupedPromotionImages($userId)
+{
+    $businesses = User::findOrFail($userId)->businesses()->with('promotions.promotionImages')->get();
+
+    $groupedPromotionImages = [];
+    foreach ($businesses as $business) {
+        foreach ($business->promotions as $promotion) {
+            $promotionTitle = $promotion->promotion_title;
+            $promotionImages = $promotion->promotionImages;
+
+            $groupedPromotionImages[$promotionTitle] = PromotionImageResource::collection($promotionImages);
+        }
+    }
+
+    return $groupedPromotionImages;
+    }
 
 
 
@@ -76,36 +82,48 @@ class PromotionCoverImageController extends BaseController
     public function store(PromotionCoverImageRequest $request)
 {
     try {
-        // Iniciar una transacción de base de datos
+       
         DB::beginTransaction();
 
-        // Validar la solicitud entrante
+        
         $validatedData = $request->validated();
         $promotionImages = [];
 
-        // Almacenar las imágenes de portada del negocio
+        
         foreach ($validatedData['promotion_image_path'] as $image) {
-            // Almacenar y redimensionar la imagen
+           
             $storedImagePath = ImageHelper::storeAndResize($image, 'public/promotion_photos');
 
-            // Crear una nueva instancia de PromotionImage y guardarla en la base de datos
+           
             $promotionImage = PromotionImage::create([
                 'promotion_image_path' => $storedImagePath,
                 'promotion_id' => $validatedData['promotion_id'],
                 'promotion_image_uuid' => Uuid::uuid4()->toString(),
             ]);
 
-            // Crear una instancia de PromotionImageResource para la respuesta JSON
+           
             $promotionImages[] = new PromotionImageResource($promotionImage);
         }
 
-        // Confirmar la transacción
+        // Cache the promotion images
+        foreach ($promotionImages as $promotionImageResource) {
+            $this->refreshCache(
+                'business_promotion_image_' . $promotionImageResource->promotion_image_uuid,
+                $this->cacheTime,
+                function () use ($promotionImageResource) {
+                    return $promotionImageResource;
+                }
+            );
+        }
+
+        // Update the promotion images cache
+        $groupedPromotionImages = $this->getGroupedPromotionImages($this->userId);
+        $this->updatePromotionImagesCache($groupedPromotionImages);
+
+
         DB::commit();
 
-        // Invalidar la caché de imágenes de promoción del usuario
-        $userId = auth()->id();
-        $this->invalidateUserPromotionImagesCache($userId);
-
+       
         return response()->json([
             'promotion_images' => $promotionImages,
         ]);
@@ -126,9 +144,10 @@ class PromotionCoverImageController extends BaseController
     public function show($uuid)
 {
     try {
-      
+        $cacheKey ='business_promotion_image_' . $uuid;
+       
         // Attempt to retrieve the promotion image from the cache
-        $promotionImageResource = $this->getCachedData('promotion_image_' . $uuid, 30, function() use ($uuid) {
+        $promotionImageResource = $this->getCachedData($cacheKey . $uuid,  $this->cacheTime, function() use ($uuid) {
             // Find the promotion image by its UUID
            $promotionImage = PromotionImage::where('promotion_image_uuid', $uuid)->firstOrFail();
 
@@ -163,27 +182,39 @@ class PromotionCoverImageController extends BaseController
     DB::beginTransaction();
     try {
         // Find the promotion image by its UUID
-        $promotionImage = PromotionImage::where('promotion_image_uuid', $promotion_image_uuid)->firstOrFail();
+        $cacheKey = "business_promotion_image_{$promotion_image_uuid}";
+        
+        $promotionImage = $this->getCachedData($cacheKey, $this->cacheTime, function () use ($promotion_image_uuid) {
+            return PromotionImage::where('promotion_image_uuid', $promotion_image_uuid)->firstOrFail();
+        });
+
+      
 
         if ($request->hasFile('promotion_image_path')) {
             // Store and resize the new image
             $storedImagePath = ImageHelper::storeAndResize($request->file('promotion_image_path'), 'public/promotion_photos');
 
-            // Delete the old image if it exists
+           
             ImageHelper::deleteFileFromStorage($promotionImage->promotion_image_path);
 
-            // Update the image path in the PromotionImage model
+           
             $promotionImage->promotion_image_path = $storedImagePath;
             $promotionImage->save();
         }
+        
+          // Invalidate the cache for the updated promotion image
+        $this->refreshCache($cacheKey, $this->cacheTime, function () use ($promotionImage) {
+            return $promotionImage;
+        });
+
+        // Update the grouped promotion images cache
+        $this->updateGroupedPromotionImagesCache();
+
 
         // Commit the transaction
         DB::commit();
 
-        // Invalidate the cache for the updated promotion image
-        $this->invalidateUserPromotionImagesCache(Auth::id());
-        $this->invalidateCache('promotion_image_' . $promotion_image_uuid);
-
+      
         return response()->json([
             'promotion_image' => new PromotionImageResource($promotionImage)
         ]);
@@ -202,21 +233,28 @@ class PromotionCoverImageController extends BaseController
 {
     DB::beginTransaction();
     try {
-        // Buscar la imagen de promoción por su UUID
-        $promotionImage = PromotionImage::where('promotion_image_uuid', $promotion_image_uuid)->firstOrFail();
+        
+        // Find the promotion image by its UUID
+        $cacheKey = "business_promotion_image_{$promotion_image_uuid}";
+       
+        $promotionImage = $this->getCachedData($cacheKey, $this->cacheTime, function () use ($promotion_image_uuid) {
+            return PromotionImage::where('promotion_image_uuid', $promotion_image_uuid)->firstOrFail();
+        });
 
-        // Eliminar la imagen del almacenamiento
+       
         ImageHelper::deleteFileFromStorage($promotionImage->promotion_image_path);
 
-        // Eliminar el modelo de la base de datos
+       
         $promotionImage->delete();
 
-        // Confirmar la transacción
+        
         DB::commit();
 
-        // Invalidate the cache for the deleted promotion image
-        $this->invalidateUserPromotionImagesCache(Auth::id());
-        $this->invalidateCache('promotion_image_' . $promotion_image_uuid);
+        // Invalidate the cache for the updated promotion image
+        $this->invalidateCache($cacheKey);
+
+        // Update the grouped promotion images cache
+        $this->updateGroupedPromotionImagesCache();
 
         return response()->json(['message' => 'Promotion image deleted successfully']);
     } catch (ModelNotFoundException $e) {
@@ -231,31 +269,24 @@ class PromotionCoverImageController extends BaseController
 
 
 
-private function getCachedData($key, $minutes, \Closure $callback)
+private function updateGroupedPromotionImagesCache()
 {
-    return Cache::remember($key, now()->addMinutes($minutes), $callback);
-}
 
-private function putCachedData($key, $data, $minutes)
-{
-    Cache::put($key, $data, now()->addMinutes($minutes));
-}
-
-private function invalidateCache($key)
-{
-    Cache::forget($key);
-}
-
-private function getPromotionImagesCacheKey($userId)
-{
+    // Get the grouped promotion images
+    $groupedPromotionImages = $this->getGroupedPromotionImages($this->userId);
+    
+    $this->updatePromotionImagesCache($groupedPromotionImages);
    
-    return 'promotions_' . $userId . '_images';
+}
+        
+
+private function updatePromotionImagesCache($groupedPromotionImages)
+{
+    $this->refreshCache($this->cacheKey, $this->cacheTime, function () use ($groupedPromotionImages) {
+        return $groupedPromotionImages;
+    });
 }
 
-private function invalidateUserPromotionImagesCache($userId)
-{
-    $cacheKey = $this->getPromotionImagesCacheKey($userId);
-    $this->invalidateCache($cacheKey);
-}
+
 
 }

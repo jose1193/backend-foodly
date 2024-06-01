@@ -24,11 +24,11 @@ class SubcategoryRequest extends FormRequest
      */
      public function rules()
 {
-    $subcategoryId = $this->route('subcategory') ? $this->route('subcategory')->id : null;
+    
     $isStoreRoute = $this->is('api/subcategories-store');
 
     return [
-        'subcategory_name' => ($isStoreRoute ? 'required|' : '') . 'string|min:3|max:255|unique:subcategories,subcategory_name,' . $subcategoryId . ',id',
+        'subcategory_name' => ($isStoreRoute ? 'required|' : '') . 'string|min:3|max:255',
         'subcategory_description' => 'nullable|string|min:3|max:255',
         'category_id' => ($isStoreRoute ? 'required|' : '') . 'exists:categories,id',
     ];

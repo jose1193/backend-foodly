@@ -9,27 +9,31 @@ use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Routing\Controller as BaseController;
+use App\Http\Controllers\BaseController as BaseController;
 
 
 class SubcategoryController extends BaseController
 {
-     // PERMISSIONS USERS
+    protected $cacheKey;
+    protected $cacheTime = 720;
+    
     public function __construct()
 {
    $this->middleware('check.permission:Super Admin')->only(['store', 'edit', 'update', 'destroy']);
-
+    $this->middleware(function ($request, $next) {
+            
+            $this->cacheKey = 'subcategories';
+            return $next($request);
+        });
 }
     
 
    public function index()
 {
     try {
-        $cacheKey = 'subcategories';
-
         // Attempt to retrieve cached data
-        $subcategories = $this->getCachedData($cacheKey, 60, function () {
-            return Subcategory::orderBy('id', 'desc')->get();
+        $subcategories = $this->getCachedData($this->cacheKey, $this->cacheTime, function () {
+            return $this->retrieveSubcategories();
         });
 
         return response()->json(['subcategories' => SubcategoryResource::collection($subcategories)]);
@@ -39,24 +43,50 @@ class SubcategoryController extends BaseController
     }
 }
 
+
+private function retrieveSubcategories()
+{
+    return Subcategory::orderBy('id', 'desc')->get();
+}
+
+private function updateSubcategoriesCache()
+    {
+        $this->refreshCache($this->cacheKey, $this->cacheTime, function () {
+            return $this->retrieveSubcategories();
+        });
+    }
+
+
+
 public function store(SubcategoryRequest $request)
 {
     DB::beginTransaction();
     try {
         $validatedData = $request->validated();
+        
+        // Check for existing subcategory with the same name and category_id
+        $existingSubcategory = Subcategory::where('subcategory_name', $validatedData['subcategory_name'])
+                                          ->where('category_id', $validatedData['category_id'])
+                                          ->first();
+        
+        if ($existingSubcategory) {
+            // If a subcategory with the same name and category_id already exists, return a conflict response
+            return response()->json(['message' => 'Subcategory with this name and category already exists'], 409);
+        }
+
         $validatedData['subcategory_uuid'] = Uuid::uuid4()->toString();
         
         $subcategory = Subcategory::create($validatedData);
         
         // Commit the transaction
         DB::commit();
-        
-        // Update the cache
-        $cacheKey = 'subcategories';
-        $this->invalidateCache($cacheKey);
-        $this->getCachedData($cacheKey, 60, function () {
-            return Subcategory::orderBy('id', 'desc')->get();
+
+        // Update cache
+        $cacheKey = 'subcategory_' . $subcategory->subcategory_uuid;
+        $this->refreshCache($cacheKey, $this->cacheTime, function () use ($subcategory) {
+            return $subcategory;
         });
+        $this->updateSubcategoriesCache();
 
         return response()->json(new SubcategoryResource($subcategory), 201);
     } catch (\Exception $e) {
@@ -79,7 +109,7 @@ public function store(SubcategoryRequest $request)
         $cacheKey = 'subcategory_' . $uuid;
 
         // Intentar obtener la subcategoría desde la caché
-        $subcategory = $this->getCachedData($cacheKey, 60, function () use ($uuid) {
+        $subcategory = $this->getCachedData($cacheKey, $this->cacheTime, function () use ($uuid) {
             // Buscar la subcategoría por su UUID
             return Subcategory::where('subcategory_uuid', $uuid)->firstOrFail();
         });
@@ -113,12 +143,14 @@ public function store(SubcategoryRequest $request)
         // Commit de la transacción
         DB::commit();
 
-        // Invalidar la caché de la subcategoría
-        $cacheKey = 'subcategory_' . $uuid;
-        $this->invalidateCache($cacheKey);
-        $this->getCachedData($cacheKey, 60, function () use ($uuid) {
-            return Subcategory::where('subcategory_uuid', $uuid)->firstOrFail();
-        });
+        // Update cache for the specific subcategory
+            $cacheKey = 'subcategory_' . $uuid;
+            $this->refreshCache($cacheKey, $this->cacheTime, function () use ($subcategory) {
+                return $subcategory;
+            });
+
+            // Update cache for the list of subcategories
+            $this->updateSubcategoriesCache();
 
         // Devolver una respuesta JSON con la subcategoría actualizada
         return response()->json(new SubcategoryResource($subcategory), 200);
@@ -149,16 +181,17 @@ public function destroy($uuid)
             return response()->json(['message' => 'Subcategory not found'], 404);
         }
 
-        // Eliminar la subcategoría
+        
         $subcategory->delete();
 
-        // Commit de la transacción
+      
         DB::commit();
 
         // Invalidar la caché de la subcategoría
-        $cacheKey = 'subcategory_' . $uuid;
-        $this->invalidateCache($cacheKey);
+        $this->invalidateCache('subcategory_' . $uuid);
+        $this->updateSubcategoriesCache();
 
+        
         // Devolver una respuesta JSON con un mensaje de éxito
         return response()->json(['message' => 'Subcategory successfully removed'], 200);
     } catch (\Exception $e) {
@@ -167,23 +200,6 @@ public function destroy($uuid)
         Log::error('Error deleting subcategory: ' . $e->getMessage());
         return response()->json(['message' => 'Error deleting subcategory'], 500);
     }
-}
-
-
-
-private function getCachedData($key, $minutes, \Closure $callback)
-{
-    return Cache::remember($key, now()->addMinutes($minutes), $callback);
-}
-
-private function putCachedData($key, $data, $minutes)
-{
-    Cache::put($key, $data, now()->addMinutes($minutes));
-}
-
-private function invalidateCache($key)
-{
-    Cache::forget($key);
 }
 
 
