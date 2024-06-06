@@ -124,44 +124,38 @@ public function store(BusinessRequest $request)
 
     try {
         return DB::transaction(function () use ($request, $data, $userId) {
-            // Generar un UUID
+            // Generate a UUID
             $data['business_uuid'] = Uuid::uuid4()->toString();
-
-            // Obtener el ID del usuario actualmente autenticado
             $data['user_id'] = $userId;
 
-            // Guardar la foto del negocio si existe
+            // Save the business logo if it exists
             if ($request->hasFile('business_logo')) {
                 $image = $request->file('business_logo');
-                $photoPath = ImageHelper::storeAndResize($image, 'public/business_logos');
-                $data['business_logo'] = $photoPath;
+                $data['business_logo'] = ImageHelper::storeAndResize($image, 'public/business_logos');
             }
 
-            // Crear el negocio
+            // Create the business
             $business = Business::create($data);
 
-           
-            $services = $data['business_services'] ?? [];
-            if (!is_array($services)) {
-                $services = [$services];  
-            }
-
-           
+            // Attach services
+            $services = collect($data['business_services'] ?? []);
             $business->services()->attach($services);
 
-          
-           // Mail::to($business->user->email)->send(new WelcomeMailBusiness($business->user, $business));
+            // Create business hours
+            $hours = collect($data['business_hours'] ?? []);
+            $hours->each(function ($hour) use ($business) {
+                $hour['business_id'] = $business->id;
+                $business->businessHours()->create($hour);
+            });
+
+            // Dispatch welcome email
             SendWelcomeEmailBusiness::dispatch($business->user, $business);
 
-
-            // Manejo de caché
+            // Handle caching
             $cacheKey = 'business_' . $business->business_uuid;
-            $this->refreshCache($cacheKey, $this->cacheTime, function () use ($business) {
-            return $business;
-            });
-            $this->updateBusinessCache($this->userId);
+            $this->refreshCache($cacheKey, $this->cacheTime, fn() => $business);
+            $this->updateBusinessCache($userId);
 
-            
             return response()->json(new BusinessResource($business), 200);
         });
     } catch (QueryException $e) {
@@ -175,6 +169,7 @@ public function store(BusinessRequest $request)
         return response()->json(['message' => 'An error occurred: ' . $e->getMessage()], 500);
     }
 }
+
 
 
 public function updateLogo(UpdateBusinessLogoRequest $request, $uuid)
@@ -220,13 +215,12 @@ public function updateLogo(UpdateBusinessLogoRequest $request, $uuid)
 }
 
 
-
 public function update(BusinessRequest $request, $uuid)
 {
     try {
         return DB::transaction(function () use ($request, $uuid) {
             $cacheKey = "business_{$uuid}";
-            
+
             $business = $this->getCachedData($cacheKey, $this->cacheTime, function () use ($uuid) {
                 return auth()->user()->businesses()->where('business_uuid', $uuid)->firstOrFail();
             });
@@ -234,19 +228,19 @@ public function update(BusinessRequest $request, $uuid)
             $business->update($request->validated());
 
             if ($request->filled('business_services')) {
-                $serviceIds = $request->input('business_services');
-                if (!is_array($serviceIds)) {
-                    $serviceIds = [$serviceIds];
-                }
+                $serviceIds = collect($request->input('business_services'))->toArray();
                 $business->services()->sync($serviceIds);
             }
 
-            $this->refreshCache($cacheKey, $this->cacheTime, function () use ($business) {
-            return $business;
-            });
+            if ($request->filled('business_hours')) {
+                $hours = collect($request->input('business_hours'))->toArray();
 
-            // Actualizar el caché
-        $this->updateBusinessCache($this->userId);
+                $business->businessHours()->delete();
+                $business->businessHours()->createMany($hours);
+            }
+
+            $this->refreshCache($cacheKey, $this->cacheTime, fn() => $business);
+            $this->updateBusinessCache($this->userId);
 
             return response()->json(new BusinessResource($business->fresh()), 200);
         });
@@ -258,6 +252,8 @@ public function update(BusinessRequest $request, $uuid)
         return response()->json(['message' => 'An error occurred'], 500);
     }
 }
+
+
 
 public function destroy($uuid)
 {

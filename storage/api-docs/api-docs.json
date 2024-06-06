@@ -2218,7 +2218,42 @@
                                         "business_additional_info": "Información Adicional",
                                         "business_latitude": 123.456,
                                         "business_longitude": -78.91,
-                                        "category_id": 1
+                                        "category_id": 1,
+                                        "business_opening_hours": [
+                                            {
+                                                "day": 0,
+                                                "open": {
+                                                    "day": 0,
+                                                    "time": "0900"
+                                                },
+                                                "close": {
+                                                    "day": 0,
+                                                    "time": "1700"
+                                                }
+                                            },
+                                            {
+                                                "day": 1,
+                                                "open": {
+                                                    "day": 0,
+                                                    "time": "0900"
+                                                },
+                                                "close": {
+                                                    "day": 0,
+                                                    "time": "1700"
+                                                }
+                                            },
+                                            {
+                                                "day": 2,
+                                                "open": {
+                                                    "day": 0,
+                                                    "time": "0900"
+                                                },
+                                                "close": {
+                                                    "day": 0,
+                                                    "time": "1600"
+                                                }
+                                            }
+                                        ]
                                     },
                                     {
                                         "id": 2,
@@ -2238,11 +2273,44 @@
                                             "Servicio 2"
                                         ],
                                         "business_additional_info": "Información Adicional",
-                                        "business_opening_hours": "Lun-Vie: 07:00-20:00, Sáb-Dom: 08:00-18:00",
-                                        "business_opening_date": "2023-10-15",
                                         "business_latitude": 12.345,
                                         "business_longitude": -67.89,
-                                        "category_id": 2
+                                        "category_id": 2,
+                                        "business_opening_hours": [
+                                            {
+                                                "day": 0,
+                                                "open": {
+                                                    "day": 0,
+                                                    "time": "0900"
+                                                },
+                                                "close": {
+                                                    "day": 0,
+                                                    "time": "1700"
+                                                }
+                                            },
+                                            {
+                                                "day": 1,
+                                                "open": {
+                                                    "day": 0,
+                                                    "time": "0900"
+                                                },
+                                                "close": {
+                                                    "day": 0,
+                                                    "time": "1700"
+                                                }
+                                            },
+                                            {
+                                                "day": 2,
+                                                "open": {
+                                                    "day": 0,
+                                                    "time": "0900"
+                                                },
+                                                "close": {
+                                                    "day": 0,
+                                                    "time": "1600"
+                                                }
+                                            }
+                                        ]
                                     }
                                 ]
                             }
@@ -2387,7 +2455,42 @@
                                     "business_additional_info": "Información Adicional",
                                     "business_latitude": 123.456,
                                     "business_longitude": -78.91,
-                                    "category_id": "Cocina Portuguesa"
+                                    "category_id": "Cocina Portuguesa",
+                                    "business_opening_hours": [
+                                        {
+                                            "day": 0,
+                                            "open": {
+                                                "day": 0,
+                                                "time": "0900"
+                                            },
+                                            "close": {
+                                                "day": 0,
+                                                "time": "1700"
+                                            }
+                                        },
+                                        {
+                                            "day": 1,
+                                            "open": {
+                                                "day": 0,
+                                                "time": "0900"
+                                            },
+                                            "close": {
+                                                "day": 0,
+                                                "time": "1700"
+                                            }
+                                        },
+                                        {
+                                            "day": 2,
+                                            "open": {
+                                                "day": 0,
+                                                "time": "0900"
+                                            },
+                                            "close": {
+                                                "day": 0,
+                                                "time": "1600"
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         }
@@ -2815,7 +2918,42 @@
                                         "branch_additional_info": "Información Adicional",
                                         "branch_latitude": 78.91,
                                         "branch_longitude": -12.345,
-                                        "branch_id": 1,
+                                        "branch_opening_hours": [
+                                            {
+                                                "day": 0,
+                                                "open": {
+                                                    "day": 0,
+                                                    "time": "0900"
+                                                },
+                                                "close": {
+                                                    "day": 0,
+                                                    "time": "1700"
+                                                }
+                                            },
+                                            {
+                                                "day": 1,
+                                                "open": {
+                                                    "day": 0,
+                                                    "time": "0900"
+                                                },
+                                                "close": {
+                                                    "day": 0,
+                                                    "time": "1700"
+                                                }
+                                            },
+                                            {
+                                                "day": 2,
+                                                "open": {
+                                                    "day": 0,
+                                                    "time": "0900"
+                                                },
+                                                "close": {
+                                                    "day": 0,
+                                                    "time": "1600"
+                                                }
+                                            }
+                                        ],
+                                        "bunisess_id": 1,
                                         "business": {
                                             "id": 1,
                                             "business_uuid": "d84e7fa6-9171-4ba1-bd2a-3e8322ae4c53",
@@ -2854,7 +2992,42 @@
                                         "branch_additional_info": "Información Adicional",
                                         "branch_latitude": -12.345,
                                         "branch_longitude": 67.89,
-                                        "branch_id": 2,
+                                        "branch_opening_hours": [
+                                            {
+                                                "day": 0,
+                                                "open": {
+                                                    "day": 0,
+                                                    "time": "0900"
+                                                },
+                                                "close": {
+                                                    "day": 0,
+                                                    "time": "1700"
+                                                }
+                                            },
+                                            {
+                                                "day": 1,
+                                                "open": {
+                                                    "day": 0,
+                                                    "time": "0900"
+                                                },
+                                                "close": {
+                                                    "day": 0,
+                                                    "time": "1700"
+                                                }
+                                            },
+                                            {
+                                                "day": 2,
+                                                "open": {
+                                                    "day": 0,
+                                                    "time": "0900"
+                                                },
+                                                "close": {
+                                                    "day": 0,
+                                                    "time": "1600"
+                                                }
+                                            }
+                                        ],
+                                        "business_id": 2,
                                         "business": {
                                             "id": 1,
                                             "business_uuid": "75f75413-5bea-4f50-b530-7f500f4cf8f9",
@@ -4835,6 +5008,12 @@
                     "business_logo": {
                         "type": "string",
                         "format": "binary"
+                    },
+                    "business_hours": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BusinessRegistration_business_hours"
+                        }
                     }
                 }
             },
@@ -4906,6 +5085,12 @@
                     "business_id": {
                         "type": "integer",
                         "description": "Id of the business to be associated with the branch"
+                    },
+                    "branch_hours": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BranchRegistration_branch_hours"
+                        }
                     }
                 }
             },
@@ -4960,6 +5145,12 @@
                     },
                     "category_id": {
                         "type": "integer"
+                    },
+                    "business_hours": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BusinessRegistration_business_hours"
+                        }
                     }
                 }
             },
@@ -5066,6 +5257,12 @@
                     },
                     "business_id": {
                         "type": "integer"
+                    },
+                    "branch_hours": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BranchRegistration_branch_hours"
+                        }
                     }
                 }
             },
@@ -5326,6 +5523,40 @@
                     "business_id": {
                         "type": "integer",
                         "description": "ID of the business"
+                    }
+                }
+            },
+            "BusinessRegistration_business_hours": {
+                "type": "object",
+                "properties": {
+                    "open": {
+                        "type": "string",
+                        "description": "Opening time of the business"
+                    },
+                    "close": {
+                        "type": "string",
+                        "description": "Closing time of the business"
+                    },
+                    "day": {
+                        "type": "integer",
+                        "description": "Day of the week"
+                    }
+                }
+            },
+            "BranchRegistration_branch_hours": {
+                "type": "object",
+                "properties": {
+                    "open": {
+                        "type": "string",
+                        "description": "Opening time of the branch"
+                    },
+                    "close": {
+                        "type": "string",
+                        "description": "Closing time of the branch"
+                    },
+                    "day": {
+                        "type": "integer",
+                        "description": "Day of the week"
                     }
                 }
             }

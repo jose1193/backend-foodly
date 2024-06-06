@@ -88,7 +88,7 @@ public function store(SubcategoryRequest $request)
         });
         $this->updateSubcategoriesCache();
 
-        return response()->json(new SubcategoryResource($subcategory), 201);
+        return response()->json(new SubcategoryResource($subcategory), 200);
     } catch (\Exception $e) {
         // Rollback the transaction in case of error
         DB::rollBack();

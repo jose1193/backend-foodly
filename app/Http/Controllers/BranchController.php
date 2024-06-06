@@ -101,11 +101,11 @@ public function store(BranchRequest $request)
     DB::beginTransaction();
 
     try {
-        
         $data = $request->validated();
         $businessId = $request->input('business_id');
-       
-        $business =  auth()->user()->businesses()->find($businessId);
+        $user = auth()->user();
+        
+        $business = $user->businesses()->find($businessId);
 
         if (!$business) {
             return response()->json(['message' => 'Unauthorized. Business does not belong to authenticated user.'], 401);
@@ -117,21 +117,21 @@ public function store(BranchRequest $request)
 
         $businessBranch = BusinessBranch::create($data);
 
-        // Verificar y ajustar el formato de branch_services
-            $services = $data['branch_services'] ?? [];
-            if (!is_array($services)) {
-                $services = [$services];  // Convertir a array si no lo es
-            }
-
-        // Asociar servicios con el negocio usando la tabla pivot
+        // Attach services
+        $services = collect($data['branch_services'] ?? []);
         $businessBranch->BranchServices()->attach($services);
 
-        SendWelcomeEmailBranch::dispatch(auth()->user(), $businessBranch);
-
-        $this->refreshCache('branch_' . $businessBranch->branch_uuid, $this->cacheTime, function () use ($businessBranch) {
-        return $businessBranch;
+        // Create branch hours
+        $hours = collect($data['branch_hours'] ?? []);
+        $hours->each(function ($hour) use ($businessBranch) {
+            $businessBranch->branchHours()->create($hour);
         });
 
+        // Dispatch welcome email
+        SendWelcomeEmailBranch::dispatch($user, $businessBranch);
+
+        // Handle caching
+        $this->refreshCache('branch_' . $businessBranch->branch_uuid, $this->cacheTime, fn() => $businessBranch);
         $this->updateBranchCache();
 
         DB::commit();
@@ -143,6 +143,7 @@ public function store(BranchRequest $request)
         return response()->json(['error' => 'An error occurred while storing the branch'], 500);
     }
 }
+
 
 
 private function handleBranchLogo($request)
@@ -226,8 +227,8 @@ public function updateLogo(Request $request, $uuid)
         return DB::transaction(function () use ($request, $uuid) {
             $cacheKey = "branch_{$uuid}";
 
-            // Intentar obtener los datos de la caché, y si no están, obtenerlos de la base de datos
-            $business_branch = $this->getCachedData($cacheKey, $this->cacheTime, function () use ($uuid) {
+            // Attempt to get data from cache, and if not present, get it from the database
+            $businessBranch = $this->getCachedData($cacheKey, $this->cacheTime, function () use ($uuid) {
                 $user = auth()->user();
                 return BusinessBranch::where('branch_uuid', $uuid)
                     ->whereHas('business', function ($query) use ($user) {
@@ -235,37 +236,38 @@ public function updateLogo(Request $request, $uuid)
                     })->firstOrFail();
             });
 
-            // Actualizar la sucursal con los datos validados
-            $business_branch->update($request->validated());
+            // Update the branch with validated data
+            $businessBranch->update($request->validated());
 
-             if ($request->filled('branch_services')) {
-                $serviceIds = $request->input('branch_services');
-                if (!is_array($serviceIds)) {
-                    $serviceIds = [$serviceIds];
-                }
-                $business_branch->BranchServices()->sync($serviceIds);
+            if ($request->filled('branch_services')) {
+                $serviceIds = collect($request->input('branch_services'))->toArray();
+                $businessBranch->BranchServices()->sync($serviceIds);
             }
 
-           
+            if ($request->filled('branch_hours')) {
+                $hours = collect($request->input('branch_hours'))->toArray();
+
+                $businessBranch->branchHours()->delete();
+                $businessBranch->branchHours()->createMany($hours);
+            }
+
             // Cache handling
-        $this->refreshCache($cacheKey, $this->cacheTime, function () use ($business_branch) {
-        return $business_branch;
-        });
+            $this->refreshCache($cacheKey, $this->cacheTime, fn() => $businessBranch);
+            $this->updateBranchCache();
 
-        $this->updateBranchCache();
-
-            // Devolver una respuesta JSON con la sucursal actualizada
-            return response()->json(new BranchResource($business_branch), 200);
+            // Return a JSON response with the updated branch
+            return response()->json(new BranchResource($businessBranch), 200);
         });
     } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-        // La sucursal no fue encontrada o no pertenece al usuario
+        // The branch was not found or does not belong to the user
         return response()->json(['message' => 'Business Branch not found or access denied'], 404);
     } catch (\Exception $e) {
-        // Manejar cualquier otro error y registrar el mensaje de error
+        // Handle any other errors and log the error message
         Log::error('Error updating business branch: ' . $e->getMessage());
         return response()->json(['error' => 'Error updating business branch'], 500);
     }
 }
+
 
 
 

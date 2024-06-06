@@ -62,4 +62,14 @@ public function services()
     {
         return $this->belongsToMany(Service::class, 'business_service');
     }
+
+
+    public function businessHours()
+    {
+
+    return $this->hasMany(BusinessHour::class);
+    
+    }
+
+
 }

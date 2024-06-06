@@ -50,4 +50,11 @@ public function BranchServices()
         return $this->belongsToMany(Service::class, 'branch_service');
     }
 
+    public function branchHours()
+    {
+
+    return $this->hasMany(BranchHour::class, 'branch_id');
+    
+    }
+
 }

@@ -44,6 +44,11 @@ class BranchRequest extends FormRequest
             'branch_additional_info' => 'nullable',
             'branch_about_us' => 'nullable',
             'business_id' => ($isStoreRoute ? 'required|' : '') . 'exists:businesses,id',
+
+            'branch_hours' => 'nullable|array',
+            'branch_hours.*.day' => 'required|integer|min:0|max:6',
+            'branch_hours.*.open' => 'required',
+            'branch_hours.*.close' => 'required',
             
         ];
     }

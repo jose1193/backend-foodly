@@ -37,6 +37,7 @@ class BusinessResource extends JsonResource
         'business_website' => $this->business_website,
         'category_id' => $this->category ? $this->category->id : null,
         'category' => $this->category ? new CategoryResource($this->category): null,
+        'business_opening_hours' => ['periods' => BusinessHourResource::collection($this->businessHours)],
         'created_at' => $this->created_at ? $this->created_at->toDateTimeString() : null,
         'updated_at' => $this->updated_at ? $this->updated_at->toDateTimeString() : null,
         'deleted_at' => $this->deleted_at ? $this->deleted_at->toDateTimeString() : null,
@@ -46,6 +47,8 @@ class BusinessResource extends JsonResource
        
         
     ];
+
+    
 }
 
     

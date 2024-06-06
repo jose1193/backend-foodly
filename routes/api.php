@@ -28,7 +28,7 @@ use App\Http\Controllers\SocialLoginController;
 use App\Http\Controllers\CreateUserController;
 use App\Http\Controllers\PasswordResetUserController;
 use App\Http\Controllers\ServiceController;
-
+use App\Http\Controllers\TwitterController;
 //Route::get('/user', function (Request $request) {
     //return $request->user();
 //})->middleware('auth:sanctum');
@@ -61,7 +61,13 @@ Route::get('/services', [ServiceController::class, 'index']);
     //Route::post('register', 'register');
     //Route::post('login', 'login');
 //});
-       
+
+Route::get('auth/twitter', [TwitterController::class, 'redirectToTwitter']);
+Route::post('twitter/callback', [TwitterController::class, 'handleTwitterCallback']);
+Route::post('/twitter/user-details', [TwitterController::class, 'getUserDetails']);
+
+
+
 Route::middleware(['auth.routes','handle.notfound'])->group(function() {
     //Route::get('/user', function (Request $request) {
         //return $request->user();
