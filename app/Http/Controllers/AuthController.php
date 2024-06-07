@@ -60,30 +60,37 @@ class AuthController extends BaseController
     }
 
     private function createCookieForToken($token)
-    {
-        return cookie(
-            'token', 
-            $token, 
-            60 * 24 * 365, // 1 year
-            '/', // Path
-            null, // Domain (null for default)
-            true, // Secure (true for HTTPS)
-            true, // HttpOnly
-            false, // Raw
-            'Strict' // SameSite
-        );
-    }
+{
+    return cookie(
+        'token', 
+        $token, 
+        60 * 24 * 365, // 1 año
+        '/', // Path
+        null, // Dominio (null para predeterminado)
+        false, // Secure (false para HTTP)
+        true, // HttpOnly
+        false, // Raw
+        'Lax' // SameSite
+    );
+}
+
 
     private function sendSuccessLoginResponse($user, $token)
-    {
-        return response()->json([
-            'message' => 'User logged successfully',
-            'token' => explode('|', $token)[1],
-            'token_type' => 'Bearer',
-            'token_created_at' => $user->tokens()->where('name', 'auth_token')->first()->created_at->format('Y-m-d H:i:s'),
-            'user' => new UserResource($user),
-        ], 200);
-    }
+{
+    // El token completo está en formato "id|token". Solo queremos la parte del token real después del '|'
+    $tokenParts = explode('|', $token);
+    $tokenString = isset($tokenParts[1]) ? $tokenParts[1] : $token; // En caso de que no haya '|', usa el token completo
+
+    return response()->json([
+        'message' => 'User logged successfully',
+        'token' => $tokenString,
+        'token_type' => 'Bearer',
+        'token_created_at' => $user->tokens()->where('name', 'auth_token')->first()->created_at->format('Y-m-d H:i:s'),
+        'user' => new UserResource($user),
+    ], 200)->withCookie($this->createCookieForToken($tokenString));
+}
+
+
 
     private function sendFailedLoginResponse()
     {
