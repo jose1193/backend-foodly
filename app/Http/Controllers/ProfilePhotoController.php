@@ -69,13 +69,6 @@ private function validateAndSaveImage(Request $request, $user, $image)
     $user->update(['profile_photo_path' => $photoPath]);
 }
 
-private function deleteExistingImage($user)
-{
-    if ($user->profile_photo_path) {
-        ImageHelper::deleteFileFromStorage($user->profile_photo_path);
-        $user->update(['profile_photo_path' => null]);
-    }
-}
 
 private function invalidateUserCache($userId)
 {
