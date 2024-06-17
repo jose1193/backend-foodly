@@ -92,9 +92,10 @@
     <script>
         window.onload = function() {
             // Build a system
+            const url = "https://foodly.up.railway.app/swagger/docs/api-docs.json";
             const ui = SwaggerUIBundle({
                 dom_id: '#swagger-ui',
-                url: "{!! $urlToDocs !!}",
+                url: url,
                 operationsSorter: {!! isset($operationsSorter) ? '"' . $operationsSorter . '"' : 'null' !!},
                 configUrl: {!! isset($configUrl) ? '"' . $configUrl . '"' : 'null' !!},
                 validatorUrl: {!! isset($validatorUrl) ? '"' . $validatorUrl . '"' : 'null' !!},
