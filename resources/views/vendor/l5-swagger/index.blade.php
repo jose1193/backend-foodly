@@ -5,10 +5,9 @@
     <meta charset="UTF-8">
     <title>Foodly APIs</title>
     <meta name="theme-color" content="#79005d" />
-    <link rel="stylesheet" type="text/css" href="https://foodly.up.railway.app/swagger/swagger-ui.min.css">
-    <link rel="icon" type="image/png" href="https://foodly.up.railway.app/favicon/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="https://foodly.up.railway.app/favicon/favicon-16x16.png"
-        sizes="16x16" />
+    <link rel="stylesheet" type="text/css" href="{{ env('APP_URL') }}/swagger/swagger-ui.min.css">
+    <link rel="icon" type="image/png" href="{{ env('APP_URL') }}/favicon/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="{{ env('APP_URL') }}/favicon/favicon-16x16.png" sizes="16x16" />
 
 
     <style>
@@ -87,12 +86,12 @@
 
 
 
-    <script src="https://foodly.up.railway.app/swagger/swagger-ui-bundle.js"></script>
-    <script src="https://foodly.up.railway.app/swagger/swagger-ui-standalone-preset.js"></script>
+    <script src="{{ env('APP_URL') }}/swagger/swagger-ui-bundle.js"></script>
+    <script src="{{ env('APP_URL') }}/swagger/swagger-ui-standalone-preset.js"></script>
     <script>
         window.onload = function() {
             // Build a system
-            const url = "https://foodly.up.railway.app/docs/api-docs.json";
+            const url = "{{ env('APP_URL') }}/docs/api-docs.json";
             const ui = SwaggerUIBundle({
                 dom_id: '#swagger-ui',
                 url: url,
