@@ -12,7 +12,7 @@
     },
     "servers": [
         {
-            "url": "https://www.qa.apps-369.com/api/"
+            "url": "https://foodly.up.railway.app/api/"
         }
     ],
     "tags": [
