@@ -87,7 +87,7 @@
 
 
 
-    <script src="{{ l5_swagger_asset($documentation, 'swagger-ui-bundle.js') }}"></script>
+    <script src="https://foodly.up.railway.app/swagger/swagger-ui-bundle.js"></script>
     <script src="https://foodly.up.railway.app/swagger/swagger-ui-standalone-preset.js"></script>
     <script>
         window.onload = function() {
