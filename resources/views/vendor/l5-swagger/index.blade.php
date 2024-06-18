@@ -35,7 +35,7 @@
 
         .swagger-ui .topbar-wrapper img {
             background-color: #79005d;
-            content: url('https://foodly.world/img/logo-white.png');
+            content: url('{{ env('APP_URL') }}/img/logo-white.png');
         }
 
 
@@ -87,7 +87,7 @@
 
 
     <script src="{{ env('APP_URL') }}/swagger/swagger-ui-bundle.js"></script>
-    <script src="https://foodly.world/swagger/swagger-ui-standalone-preset.js"></script>
+    <script src="{{ env('APP_URL') }}/swagger/swagger-ui-standalone-preset.js"></script>
     <script>
         window.onload = function() {
             // Build a system
