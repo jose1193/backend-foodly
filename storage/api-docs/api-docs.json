@@ -12,7 +12,7 @@
     },
     "servers": [
         {
-            "url": "https://foodly.world/api/"
+            "url": "http://ec2-3-94-132-184.compute-1.amazonaws.com/api/"
         }
     ],
     "tags": [
