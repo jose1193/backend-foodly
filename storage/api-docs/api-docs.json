@@ -12,7 +12,7 @@
     },
     "servers": [
         {
-            "url": "http://foodly.world/api/"
+            "url": "https://foodly.world/api/"
         }
     ],
     "tags": [
