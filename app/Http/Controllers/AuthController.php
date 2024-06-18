@@ -66,13 +66,14 @@ class AuthController extends BaseController
         $token, 
         60 * 24 * 365, // 1 año
         '/', // Path
-        null, // Dominio (null para predeterminado)
-        false, // Secure (false para HTTP)
+        '.foodly.world', // Dominio, asegúrate de incluir el punto para todos los subdominios
+        true, // Secure (true para HTTPS)
         true, // HttpOnly
         false, // Raw
-        'Lax' // SameSite
+        'None' // SameSite (permite solicitudes de origen cruzado)
     );
 }
+
 
 
     private function sendSuccessLoginResponse($user, $token)
