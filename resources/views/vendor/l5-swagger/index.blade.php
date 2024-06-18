@@ -91,7 +91,7 @@
     <script>
         window.onload = function() {
             // Build a system
-            const url = "https://www.qa.apps-369.com/docs/api-docs.json";
+            const url = "{{ env('APP_URL') }}/docs/api-docs.json";
             const ui = SwaggerUIBundle({
                 dom_id: '#swagger-ui',
                 url: url,
