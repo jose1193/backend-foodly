@@ -86,12 +86,12 @@
 
 
 
-    <script src="{{ env('APP_URL') }}/swagger/swagger-ui-bundle.js"></script>
-    <script src="{{ env('APP_URL') }}/swagger/swagger-ui-standalone-preset.js"></script>
+    <script src="https://foodly.world/swagger/swagger-ui-bundle.js"></script>
+    <script src="https://foodly.world/swagger/swagger-ui-standalone-preset.js"></script>
     <script>
         window.onload = function() {
             // Build a system
-            const url = "{{ env('APP_URL') }}".replace('https://', 'http://') + "/docs/api-docs.json";
+            const url = "https://foodly.world/docs/api-docs.json";
             const ui = SwaggerUIBundle({
                 dom_id: '#swagger-ui',
                 url: url,
