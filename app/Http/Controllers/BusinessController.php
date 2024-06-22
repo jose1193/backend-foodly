@@ -145,6 +145,7 @@ public function store(BusinessRequest $request)
             $hours = collect($data['business_hours'] ?? []);
             $hours->each(function ($hour) use ($business) {
                 $hour['business_id'] = $business->id;
+                $hour['uuid'] = Uuid::uuid4()->toString();
                 $business->businessHours()->create($hour);
             });
 

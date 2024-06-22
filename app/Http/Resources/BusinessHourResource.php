@@ -12,23 +12,18 @@ class BusinessHourResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray($request)
     {
-         return [
-        //'id' => $this->id,
-        //'business_id' => (int) $this->business_id,
-        'day' =>  $this->day,
-        'open' => [
-            'day' => $this->day,
-            'time' => $this->formatTime($this->open),
-        ],
-        'close' => [
-            'day' => $this->day,
-            'time' => $this->formatTime($this->close),
-        ],
-        //'created_at' => $this->created_at->toDateTimeString(),
-        //'updated_at' => $this->updated_at->toDateTimeString(),
-    ];
+        return [
+            
+                "day_{$this->day}" => [
+                    'open_a' => $this->formatTime($this->open_a),
+                    'close_a' => $this->formatTime($this->close_a),
+                    'open_b' => $this->formatTime($this->open_b),
+                    'close_b' => $this->formatTime($this->close_b),
+                ],
+            
+        ];
     }
 
     private function getDayName(int $day)
@@ -48,7 +43,8 @@ class BusinessHourResource extends JsonResource
 
     private function formatTime(string $time)
 {
-    return Carbon::createFromFormat('H:i:s', $time)->format('Hi');
+    return $time ? \Carbon\Carbon::createFromFormat('H:i:s', $time)->format('Hi') : null;
+    //return Carbon::createFromFormat('H:i:s', $time)->format('Hi');
 }
 
 }
