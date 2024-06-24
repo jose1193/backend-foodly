@@ -150,7 +150,7 @@ public function store(BusinessRequest $request)
             //});
 
 
-        // Suponiendo que $data contiene los datos enviados desde el formulario
+        
         $businessHoursData = $data['business_hours'] ?? [];
         // Iterar sobre los días y crear cada registro de business hours
         foreach ($businessHoursData as $day => $hours) {
@@ -159,7 +159,7 @@ public function store(BusinessRequest $request)
                 // Crear un nuevo array con los datos relevantes
                 $businessHourData = [
                     'business_id' => $business->id,
-                    'day' => $day,  // Puedes guardar el día si lo necesitas
+                    'day' => $day,  
                     'open_a' => $hours['open_a'],
                     'close_a' => $hours['close_a'],
                     'open_b' => $hours['open_b'],
