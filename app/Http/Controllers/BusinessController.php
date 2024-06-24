@@ -142,12 +142,42 @@ public function store(BusinessRequest $request)
             $business->services()->attach($services);
 
             // Create business hours
-            $hours = collect($data['business_hours'] ?? []);
-            $hours->each(function ($hour) use ($business) {
-                $hour['business_id'] = $business->id;
-                $hour['uuid'] = Uuid::uuid4()->toString();
-                $business->businessHours()->create($hour);
-            });
+            //$hours = collect($data['business_hours'] ?? []);
+            //$hours->each(function ($hour) use ($business) {
+                //$hour['business_id'] = $business->id;
+            
+                //$business->businessHours()->create($hour);
+            //});
+
+
+        // Suponiendo que $data contiene los datos enviados desde el formulario
+        $businessHoursData = $data['business_hours'] ?? [];
+        // Iterar sobre los días y crear cada registro de business hours
+        foreach ($businessHoursData as $day => $hours) {
+            // Verificar si hay datos válidos para el día actual
+            if (!empty($hours['open_a']) && !empty($hours['close_a'])) {
+                // Crear un nuevo array con los datos relevantes
+                $businessHourData = [
+                    'business_id' => $business->id,
+                    'day' => $day,  // Puedes guardar el día si lo necesitas
+                    'open_a' => $hours['open_a'],
+                    'close_a' => $hours['close_a'],
+                    'open_b' => $hours['open_b'],
+                    'close_b' => $hours['close_b'],
+            
+                ];
+
+                    // Añadir open_b y close_b si existen
+                    if (!empty($hours['open_b']) && !empty($hours['close_b'])) {
+                    $businessHourData['open_b'] = $hours['open_b'];
+                    $businessHourData['close_b'] = $hours['close_b'];
+                }
+
+                    // Crear el registro de business hour
+                    $business->businessHours()->create($businessHourData);
+                    }
+          }
+
 
             // Dispatch welcome email
             SendWelcomeEmailBusiness::dispatch($business->user, $business);
@@ -233,12 +263,44 @@ public function update(BusinessRequest $request, $uuid)
                 $business->services()->sync($serviceIds);
             }
 
-            if ($request->filled('business_hours')) {
-                $hours = collect($request->input('business_hours'))->toArray();
+        //if ($request->filled('business_hours')) {
+                //$hours = collect($request->input('business_hours'))->toArray();
+            
+               // $business->businessHours()->delete();
+               // $business->businessHours()->createMany($hours);
+            //}
 
-                $business->businessHours()->delete();
-                $business->businessHours()->createMany($hours);
-            }
+       if ($request->filled('business_hours')) {
+    // Convertir los datos de business_opening_hours en un array
+    $businessHoursData = $request->input('business_hours');
+
+    // Iterar sobre los datos de business_opening_hours recibidos
+    foreach ($businessHoursData as $day => $hourData) {
+        // Buscar y actualizar el registro existente si existe
+        $businessHour = $business->businessHours()->where('day', $day)->first();
+
+        if ($businessHour) {
+            // Actualizar los campos existentes
+            $businessHour->update([
+                'open_a' => $hourData['open_a'],
+                'close_a' => $hourData['close_a'],
+                'open_b' => $hourData['open_b'],
+                'close_b' => $hourData['close_b'],
+            ]);
+        } else {
+            // Si no existe un registro para este día, crear uno nuevo
+            $business->businessHours()->create([
+                'day' => $day,
+                'open_a' => $hourData['open_a'],
+                'close_a' => $hourData['close_a'],
+                'open_b' => $hourData['open_b'],
+                'close_b' => $hourData['close_b'],
+            ]);
+        }
+    }
+}
+
+
 
             $this->refreshCache($cacheKey, $this->cacheTime, fn() => $business);
             $this->updateBusinessCache($this->userId);

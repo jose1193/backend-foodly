@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class BusinessHour extends Model
 {
     use HasFactory;
-   protected $fillable = ['uuid','business_id', 'day', 'open_a', 'close_a', 'open_b', 'close_b'];
+   protected $fillable = ['business_id', 'day', 'open_a', 'close_a', 'open_b', 'close_b'];
 
 
     public function business()

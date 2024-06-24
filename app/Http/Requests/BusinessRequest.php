@@ -46,11 +46,17 @@ class BusinessRequest extends FormRequest
             'business_additional_info' => 'nullable',
             'category_id' => ($isStoreRoute ? 'required|' : '') . 'exists:categories,id',
 
-            'business_hours.*.day' => 'required|integer|min:0|max:6',
-            'business_hours.*.open_a' => 'nullable',
-            'business_hours.*.close_a' => 'nullable',
-            'business_hours.*.open_b' => 'nullable',
-            'business_hours.*.close_b' => 'nullable',
+            //'business_hours.*.day' => 'nullable|string|min:0|max:6',
+            //'business_hours.*.open_a' => 'nullable|string',
+            //'business_hours.*.close_a' => 'nullable|string',
+            //'business_hours.*.open_b' => 'nullable|string',
+            //'business_hours.*.close_b' => 'nullable|string',
+
+            
+            'business_hours.*.open_a' => 'nullable|string',
+            'business_hours.*.open_b' => 'nullable|string',
+            'business_hours.*.close_a' => 'nullable|string',
+            'business_hours.*.close_b' => 'nullable|string',
         ];
     }
 

@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('business_hours', function (Blueprint $table) {
         $table->id();
-        $table->uuid('uuid')->unique();
         $table->unsignedBigInteger('business_id'); 
-        $table->unsignedTinyInteger('day'); // 0 para domingo, 1 para lunes, etc.
+        $table->string('day')->nullable();; 
         $table->time('open_a')->nullable();
         $table->time('close_a')->nullable();
         $table->time('open_b')->nullable();

@@ -14,18 +14,21 @@ class BusinessHourResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            
-                "day_{$this->day}" => [
-                    'open_a' => $this->formatTime($this->open_a),
-                    'close_a' => $this->formatTime($this->close_a),
-                    'open_b' => $this->formatTime($this->open_b),
-                    'close_b' => $this->formatTime($this->close_b),
-                ],
-            
-        ];
+        // Verifica que $this->collection no sea null antes de usar groupBy()
+        if ($this->collection) {
+            // Ejemplo de cómo usar groupBy()
+            $groupedData = $this->collection->groupBy('day');
+            // Continúa con la lógica para formatear los datos según sea necesario
+        }
+
+        // Devuelve el arreglo transformado o lo que sea adecuado en tu caso
+        return parent::toArray($request);
+    
+
+
     }
 
+    
     private function getDayName(int $day)
     {
         $days = [

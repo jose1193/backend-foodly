@@ -2219,64 +2219,43 @@
                                         "business_latitude": 123.456,
                                         "business_longitude": -78.91,
                                         "category_id": 1,
-                                        "business_opening_hours": [
-                                            {
-                                                "day_0": {
-                                                    "open_a": "08:00",
-                                                    "close_a": "12:00",
-                                                    "open_b": "14:00",
-                                                    "close_b": "18:00"
+                                        "business_opening_hours": {
+                                            "periods": [
+                                                {
+                                                    "day": 0,
+                                                    "open": {
+                                                        "day": 0,
+                                                        "time": "0900"
+                                                    },
+                                                    "close": {
+                                                        "day": 0,
+                                                        "time": "1700"
+                                                    }
+                                                },
+                                                {
+                                                    "day": 1,
+                                                    "open": {
+                                                        "day": 1,
+                                                        "time": "0900"
+                                                    },
+                                                    "close": {
+                                                        "day": 1,
+                                                        "time": "1700"
+                                                    }
+                                                },
+                                                {
+                                                    "day": 2,
+                                                    "open": {
+                                                        "day": 2,
+                                                        "time": "0900"
+                                                    },
+                                                    "close": {
+                                                        "day": 2,
+                                                        "time": "1600"
+                                                    }
                                                 }
-                                            },
-                                            {
-                                                "day_1": {
-                                                    "open_a": "08:00",
-                                                    "close_a": "12:00",
-                                                    "open_b": "14:00",
-                                                    "close_b": "18:00"
-                                                }
-                                            },
-                                            {
-                                                "day_2": {
-                                                    "open_a": "08:00",
-                                                    "close_a": "12:00",
-                                                    "open_b": "14:00",
-                                                    "close_b": "18:00"
-                                                }
-                                            },
-                                            {
-                                                "day_3": {
-                                                    "open_a": "08:00",
-                                                    "close_a": "12:00",
-                                                    "open_b": "14:00",
-                                                    "close_b": "18:00"
-                                                }
-                                            },
-                                            {
-                                                "day_4": {
-                                                    "open_a": "08:00",
-                                                    "close_a": "12:00",
-                                                    "open_b": "14:00",
-                                                    "close_b": "18:00"
-                                                }
-                                            },
-                                            {
-                                                "day_5": {
-                                                    "open_a": "08:00",
-                                                    "close_a": "12:00",
-                                                    "open_b": "14:00",
-                                                    "close_b": "18:00"
-                                                }
-                                            },
-                                            {
-                                                "day_6": {
-                                                    "open_a": "08:00",
-                                                    "close_a": "12:00",
-                                                    "open_b": "14:00",
-                                                    "close_b": "18:00"
-                                                }
-                                            }
-                                        ]
+                                            ]
+                                        }
                                     },
                                     {
                                         "id": 2,
@@ -2299,64 +2278,43 @@
                                         "business_latitude": 12.345,
                                         "business_longitude": -67.89,
                                         "category_id": 2,
-                                        "business_opening_hours": [
-                                            {
-                                                "day_0": {
-                                                    "open_a": "08:00",
-                                                    "close_a": "12:00",
-                                                    "open_b": "14:00",
-                                                    "close_b": "18:00"
+                                        "business_opening_hours": {
+                                            "periods": [
+                                                {
+                                                    "day": 0,
+                                                    "open": {
+                                                        "day": 0,
+                                                        "time": "0900"
+                                                    },
+                                                    "close": {
+                                                        "day": 0,
+                                                        "time": "1700"
+                                                    }
+                                                },
+                                                {
+                                                    "day": 1,
+                                                    "open": {
+                                                        "day": 1,
+                                                        "time": "0900"
+                                                    },
+                                                    "close": {
+                                                        "day": 1,
+                                                        "time": "1700"
+                                                    }
+                                                },
+                                                {
+                                                    "day": 2,
+                                                    "open": {
+                                                        "day": 2,
+                                                        "time": "0900"
+                                                    },
+                                                    "close": {
+                                                        "day": 2,
+                                                        "time": "1600"
+                                                    }
                                                 }
-                                            },
-                                            {
-                                                "day_1": {
-                                                    "open_a": "08:00",
-                                                    "close_a": "12:00",
-                                                    "open_b": "14:00",
-                                                    "close_b": "18:00"
-                                                }
-                                            },
-                                            {
-                                                "day_2": {
-                                                    "open_a": "08:00",
-                                                    "close_a": "12:00",
-                                                    "open_b": "14:00",
-                                                    "close_b": "18:00"
-                                                }
-                                            },
-                                            {
-                                                "day_3": {
-                                                    "open_a": "08:00",
-                                                    "close_a": "12:00",
-                                                    "open_b": "14:00",
-                                                    "close_b": "18:00"
-                                                }
-                                            },
-                                            {
-                                                "day_4": {
-                                                    "open_a": "08:00",
-                                                    "close_a": "12:00",
-                                                    "open_b": "14:00",
-                                                    "close_b": "18:00"
-                                                }
-                                            },
-                                            {
-                                                "day_5": {
-                                                    "open_a": "08:00",
-                                                    "close_a": "12:00",
-                                                    "open_b": "14:00",
-                                                    "close_b": "18:00"
-                                                }
-                                            },
-                                            {
-                                                "day_6": {
-                                                    "open_a": "08:00",
-                                                    "close_a": "12:00",
-                                                    "open_b": "14:00",
-                                                    "close_b": "18:00"
-                                                }
-                                            }
-                                        ]
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -2502,64 +2460,43 @@
                                     "business_latitude": 123.456,
                                     "business_longitude": -78.91,
                                     "category_id": "Cocina Portuguesa",
-                                    "business_opening_hours": [
-                                        {
-                                            "day_0": {
-                                                "open_a": "08:00",
-                                                "close_a": "12:00",
-                                                "open_b": "14:00",
-                                                "close_b": "18:00"
+                                    "business_opening_hours": {
+                                        "periods": [
+                                            {
+                                                "day": 0,
+                                                "open": {
+                                                    "day": 0,
+                                                    "time": "0900"
+                                                },
+                                                "close": {
+                                                    "day": 0,
+                                                    "time": "1700"
+                                                }
+                                            },
+                                            {
+                                                "day": 1,
+                                                "open": {
+                                                    "day": 1,
+                                                    "time": "0900"
+                                                },
+                                                "close": {
+                                                    "day": 1,
+                                                    "time": "1700"
+                                                }
+                                            },
+                                            {
+                                                "day": 2,
+                                                "open": {
+                                                    "day": 2,
+                                                    "time": "0900"
+                                                },
+                                                "close": {
+                                                    "day": 2,
+                                                    "time": "1600"
+                                                }
                                             }
-                                        },
-                                        {
-                                            "day_1": {
-                                                "open_a": "08:00",
-                                                "close_a": "12:00",
-                                                "open_b": "14:00",
-                                                "close_b": "18:00"
-                                            }
-                                        },
-                                        {
-                                            "day_2": {
-                                                "open_a": "08:00",
-                                                "close_a": "12:00",
-                                                "open_b": "14:00",
-                                                "close_b": "18:00"
-                                            }
-                                        },
-                                        {
-                                            "day_3": {
-                                                "open_a": "08:00",
-                                                "close_a": "12:00",
-                                                "open_b": "14:00",
-                                                "close_b": "18:00"
-                                            }
-                                        },
-                                        {
-                                            "day_4": {
-                                                "open_a": "08:00",
-                                                "close_a": "12:00",
-                                                "open_b": "14:00",
-                                                "close_b": "18:00"
-                                            }
-                                        },
-                                        {
-                                            "day_5": {
-                                                "open_a": "08:00",
-                                                "close_a": "12:00",
-                                                "open_b": "14:00",
-                                                "close_b": "18:00"
-                                            }
-                                        },
-                                        {
-                                            "day_6": {
-                                                "open_a": "08:00",
-                                                "close_a": "12:00",
-                                                "open_b": "14:00",
-                                                "close_b": "18:00"
-                                            }
-                                        }
-                                    ]
+                                        ]
+                                    }
                                 }
                             }
                         }
@@ -2720,64 +2657,43 @@
                                     "business_latitude": 123.456,
                                     "business_longitude": -78.91,
                                     "category_id": 1,
-                                    "business_opening_hours": [
-                                        {
-                                            "day_0": {
-                                                "open_a": "08:00",
-                                                "close_a": "12:00",
-                                                "open_b": "14:00",
-                                                "close_b": "18:00"
+                                    "business_opening_hours": {
+                                        "periods": [
+                                            {
+                                                "day": 0,
+                                                "open": {
+                                                    "day": 0,
+                                                    "time": "0900"
+                                                },
+                                                "close": {
+                                                    "day": 0,
+                                                    "time": "1700"
+                                                }
+                                            },
+                                            {
+                                                "day": 1,
+                                                "open": {
+                                                    "day": 1,
+                                                    "time": "0900"
+                                                },
+                                                "close": {
+                                                    "day": 1,
+                                                    "time": "1700"
+                                                }
+                                            },
+                                            {
+                                                "day": 2,
+                                                "open": {
+                                                    "day": 2,
+                                                    "time": "0900"
+                                                },
+                                                "close": {
+                                                    "day": 2,
+                                                    "time": "1600"
+                                                }
                                             }
-                                        },
-                                        {
-                                            "day_1": {
-                                                "open_a": "08:00",
-                                                "close_a": "12:00",
-                                                "open_b": "14:00",
-                                                "close_b": "18:00"
-                                            }
-                                        },
-                                        {
-                                            "day_2": {
-                                                "open_a": "08:00",
-                                                "close_a": "12:00",
-                                                "open_b": "14:00",
-                                                "close_b": "18:00"
-                                            }
-                                        },
-                                        {
-                                            "day_3": {
-                                                "open_a": "08:00",
-                                                "close_a": "12:00",
-                                                "open_b": "14:00",
-                                                "close_b": "18:00"
-                                            }
-                                        },
-                                        {
-                                            "day_4": {
-                                                "open_a": "08:00",
-                                                "close_a": "12:00",
-                                                "open_b": "14:00",
-                                                "close_b": "18:00"
-                                            }
-                                        },
-                                        {
-                                            "day_5": {
-                                                "open_a": "08:00",
-                                                "close_a": "12:00",
-                                                "open_b": "14:00",
-                                                "close_b": "18:00"
-                                            }
-                                        },
-                                        {
-                                            "day_6": {
-                                                "open_a": "08:00",
-                                                "close_a": "12:00",
-                                                "open_b": "14:00",
-                                                "close_b": "18:00"
-                                            }
-                                        }
-                                    ]
+                                        ]
+                                    }
                                 }
                             }
                         }
@@ -3045,6 +2961,43 @@
                                         "branch_additional_info": "Información Adicional",
                                         "branch_latitude": 78.91,
                                         "branch_longitude": -12.345,
+                                        "branch_opening_hours": {
+                                            "periods": [
+                                                {
+                                                    "day": 0,
+                                                    "open": {
+                                                        "day": 0,
+                                                        "time": "0900"
+                                                    },
+                                                    "close": {
+                                                        "day": 0,
+                                                        "time": "1700"
+                                                    }
+                                                },
+                                                {
+                                                    "day": 1,
+                                                    "open": {
+                                                        "day": 1,
+                                                        "time": "0900"
+                                                    },
+                                                    "close": {
+                                                        "day": 1,
+                                                        "time": "1700"
+                                                    }
+                                                },
+                                                {
+                                                    "day": 2,
+                                                    "open": {
+                                                        "day": 2,
+                                                        "time": "0900"
+                                                    },
+                                                    "close": {
+                                                        "day": 2,
+                                                        "time": "1600"
+                                                    }
+                                                }
+                                            ]
+                                        },
                                         "bunisess_id": 1,
                                         "business": {
                                             "id": 1,
@@ -3084,6 +3037,43 @@
                                         "branch_additional_info": "Información Adicional",
                                         "branch_latitude": -12.345,
                                         "branch_longitude": 67.89,
+                                        "branch_opening_hours": {
+                                            "periods": [
+                                                {
+                                                    "day": 0,
+                                                    "open": {
+                                                        "day": 0,
+                                                        "time": "0900"
+                                                    },
+                                                    "close": {
+                                                        "day": 0,
+                                                        "time": "1700"
+                                                    }
+                                                },
+                                                {
+                                                    "day": 1,
+                                                    "open": {
+                                                        "day": 1,
+                                                        "time": "0900"
+                                                    },
+                                                    "close": {
+                                                        "day": 1,
+                                                        "time": "1700"
+                                                    }
+                                                },
+                                                {
+                                                    "day": 2,
+                                                    "open": {
+                                                        "day": 2,
+                                                        "time": "0900"
+                                                    },
+                                                    "close": {
+                                                        "day": 2,
+                                                        "time": "1600"
+                                                    }
+                                                }
+                                            ]
+                                        },
                                         "business_id": 2,
                                         "business": {
                                             "id": 1,
@@ -3243,6 +3233,43 @@
                                             "Servicio 1",
                                             "Servicio 2"
                                         ],
+                                        "branch_opening_hours": {
+                                            "periods": [
+                                                {
+                                                    "day": 0,
+                                                    "open": {
+                                                        "day": 0,
+                                                        "time": "0900"
+                                                    },
+                                                    "close": {
+                                                        "day": 0,
+                                                        "time": "1700"
+                                                    }
+                                                },
+                                                {
+                                                    "day": 1,
+                                                    "open": {
+                                                        "day": 1,
+                                                        "time": "0900"
+                                                    },
+                                                    "close": {
+                                                        "day": 1,
+                                                        "time": "1700"
+                                                    }
+                                                },
+                                                {
+                                                    "day": 2,
+                                                    "open": {
+                                                        "day": 2,
+                                                        "time": "0900"
+                                                    },
+                                                    "close": {
+                                                        "day": 2,
+                                                        "time": "1600"
+                                                    }
+                                                }
+                                            ]
+                                        },
                                         "branch_additional_info": "Información Adicional",
                                         "branch_latitude": 78.91,
                                         "branch_longitude": -12.345,
@@ -5067,7 +5094,10 @@
                         "format": "binary"
                     },
                     "business_hours": {
-                        "$ref": "#/components/schemas/BusinessRegistration_business_hours"
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BusinessRegistration_business_hours"
+                        }
                     }
                 }
             },
@@ -5139,6 +5169,12 @@
                     "business_id": {
                         "type": "integer",
                         "description": "Id of the business to be associated with the branch"
+                    },
+                    "branch_hours": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BranchRegistration_branch_hours"
+                        }
                     }
                 }
             },
@@ -5195,7 +5231,10 @@
                         "type": "integer"
                     },
                     "business_hours": {
-                        "$ref": "#/components/schemas/BusinessRegistration_business_hours"
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BusinessRegistration_business_hours"
+                        }
                     }
                 }
             },
@@ -5302,6 +5341,12 @@
                     },
                     "business_id": {
                         "type": "integer"
+                    },
+                    "branch_hours": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BranchRegistration_branch_hours"
+                        }
                     }
                 }
             },
@@ -5565,63 +5610,37 @@
                     }
                 }
             },
-            "BusinessRegistration_business_hours_day_0": {
-                "type": "object",
-                "properties": {
-                    "open_a": {
-                        "type": "string"
-                    },
-                    "close_a": {
-                        "type": "string"
-                    },
-                    "open_b": {
-                        "type": "string"
-                    },
-                    "close_b": {
-                        "type": "string"
-                    }
-                }
-            },
-            "BusinessRegistration_business_hours_day_1": {
-                "type": "object",
-                "properties": {
-                    "open_a": {
-                        "type": "string"
-                    },
-                    "open_b": {
-                        "type": "string"
-                    },
-                    "close_a": {
-                        "type": "string"
-                    },
-                    "close_b": {
-                        "type": "string"
-                    }
-                }
-            },
             "BusinessRegistration_business_hours": {
                 "type": "object",
                 "properties": {
-                    "day_0": {
-                        "$ref": "#/components/schemas/BusinessRegistration_business_hours_day_0"
+                    "open": {
+                        "type": "string",
+                        "description": "Opening time of the business"
                     },
-                    "day_1": {
-                        "$ref": "#/components/schemas/BusinessRegistration_business_hours_day_1"
+                    "close": {
+                        "type": "string",
+                        "description": "Closing time of the business"
                     },
-                    "day_2": {
-                        "$ref": "#/components/schemas/BusinessRegistration_business_hours_day_0"
+                    "day": {
+                        "type": "integer",
+                        "description": "Day of the week"
+                    }
+                }
+            },
+            "BranchRegistration_branch_hours": {
+                "type": "object",
+                "properties": {
+                    "open": {
+                        "type": "string",
+                        "description": "Opening time of the branch"
                     },
-                    "day_3": {
-                        "$ref": "#/components/schemas/BusinessRegistration_business_hours_day_0"
+                    "close": {
+                        "type": "string",
+                        "description": "Closing time of the branch"
                     },
-                    "day_4": {
-                        "$ref": "#/components/schemas/BusinessRegistration_business_hours_day_0"
-                    },
-                    "day_5": {
-                        "$ref": "#/components/schemas/BusinessRegistration_business_hours_day_0"
-                    },
-                    "day_6": {
-                        "$ref": "#/components/schemas/BusinessRegistration_business_hours_day_0"
+                    "day": {
+                        "type": "integer",
+                        "description": "Day of the week"
                     }
                 }
             }

@@ -210,4 +210,3 @@ Route::middleware(['auth.routes','handle.notfound','token.auth'])->group(functio
 
     // Otras rutas protegidas...
 });
-    

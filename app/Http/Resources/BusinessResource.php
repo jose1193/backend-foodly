@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use Carbon\Carbon;
 class BusinessResource extends JsonResource
 {
     /**
@@ -34,10 +34,10 @@ class BusinessResource extends JsonResource
         'business_website' => $this->business_website,
         'business_latitude' => (double) $this->business_latitude,
         'business_longitude' => (double) $this->business_longitude,
-        'business_website' => $this->business_website,
         'category_id' => $this->category ? $this->category->id : null,
         'category' => $this->category ? new CategoryResource($this->category): null,
-        'business_opening_hours' => ['periods' => BusinessHourResource::collection($this->businessHours)],
+        //'business_opening_hours' =>  BusinessHourResource::collection($this->businessHours),
+        'business_opening_hours' => $this->getBusinessOpeningHours(),
         'created_at' => $this->created_at ? $this->created_at->toDateTimeString() : null,
         'updated_at' => $this->updated_at ? $this->updated_at->toDateTimeString() : null,
         'deleted_at' => $this->deleted_at ? $this->deleted_at->toDateTimeString() : null,
@@ -45,13 +45,48 @@ class BusinessResource extends JsonResource
         'business_promotions' => PromotionResource::collection($this->promotions),
         'business_branches' => BranchResource::collection($this->branches),
        
-        
+         
+
     ];
 
     
 }
+ // Suponiendo que este código forma parte de una clase o método donde se manejan los horarios de apertura
+public function getBusinessOpeningHours()
+{
+    $daysOfWeek = ['day_0', 'day_1', 'day_2', 'day_3', 'day_4', 'day_5', 'day_6'];
+    $businessOpeningHours = [];
 
-    
+    foreach ($daysOfWeek as $day) {
+        $businessOpeningHours[$day] = [
+            'open_a' => $this->formatTime($this->getOpenTime($day, 'open_a')),
+            'close_a' => $this->formatTime($this->getCloseTime($day, 'close_a')),
+            'open_b' => $this->formatTime($this->getOpenTime($day, 'open_b')),
+            'close_b' => $this->formatTime($this->getCloseTime($day, 'close_b')),
+        ];
+    }
+
+    return $businessOpeningHours;
+}
+
+protected function getOpenTime($day, $time)
+{
+    return $this->businessHours->where('day', $day)->pluck($time)->first();
+}
+
+protected function getCloseTime($day, $time)
+{
+    return $this->businessHours->where('day', $day)->pluck($time)->first();
+}
+
+ private function formatTime($time)
+{
+    if (!$time) {
+        return null; // Devuelve null si el tiempo es nulo
+    }
+
+    return Carbon::createFromFormat('H:i:s', $time)->format('H:i');
+}
         //protected function getBusinessPhoto()
         // {
         // Obtener la primera imagen de portada asociada al negocio
