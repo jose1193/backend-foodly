@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('business_hours', function (Blueprint $table) {
         $table->id();
         $table->unsignedBigInteger('business_id'); 
-        $table->string('day')->nullable();; 
+        $table->string('day')->nullable(); 
         $table->time('open_a')->nullable();
         $table->time('close_a')->nullable();
         $table->time('open_b')->nullable();

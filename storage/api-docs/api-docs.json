@@ -5194,7 +5194,7 @@
                     "category_id": {
                         "type": "integer"
                     },
-                    "business_hours": {
+                    "business_opening_hours": {
                         "$ref": "#/components/schemas/BusinessRegistration_business_hours"
                     }
                 }

@@ -151,7 +151,7 @@ public function store(BusinessRequest $request)
 
 
         
-        $businessHoursData = $data['business_hours'] ?? [];
+        $businessHoursData = $data['business_opening_hours'] ?? [];
         // Iterar sobre los días y crear cada registro de business hours
         foreach ($businessHoursData as $day => $hours) {
             // Verificar si hay datos válidos para el día actual
@@ -270,9 +270,9 @@ public function update(BusinessRequest $request, $uuid)
                // $business->businessHours()->createMany($hours);
             //}
 
-       if ($request->filled('business_hours')) {
-    // Convertir los datos de business_opening_hours en un array
-    $businessHoursData = $request->input('business_hours');
+       if ($request->filled('business_opening_hours')) {
+    
+    $businessHoursData = $request->input('business_opening_hours');
 
     // Iterar sobre los datos de business_opening_hours recibidos
     foreach ($businessHoursData as $day => $hourData) {
