@@ -5066,8 +5066,8 @@
                         "type": "string",
                         "format": "binary"
                     },
-                    "business_hours": {
-                        "$ref": "#/components/schemas/BusinessRegistration_business_hours"
+                    "business_opening_hours": {
+                        "$ref": "#/components/schemas/BusinessRegistration_business_opening_hours"
                     }
                 }
             },
@@ -5195,7 +5195,7 @@
                         "type": "integer"
                     },
                     "business_opening_hours": {
-                        "$ref": "#/components/schemas/BusinessRegistration_business_hours"
+                        "$ref": "#/components/schemas/BusinessRegistration_business_opening_hours"
                     }
                 }
             },
@@ -5565,7 +5565,7 @@
                     }
                 }
             },
-            "BusinessRegistration_business_hours_day_0": {
+            "BusinessRegistration_business_opening_hours_day_0": {
                 "type": "object",
                 "properties": {
                     "open_a": {
@@ -5582,7 +5582,7 @@
                     }
                 }
             },
-            "BusinessRegistration_business_hours_day_1": {
+            "BusinessRegistration_business_opening_hours_day_1": {
                 "type": "object",
                 "properties": {
                     "open_a": {
@@ -5599,29 +5599,29 @@
                     }
                 }
             },
-            "BusinessRegistration_business_hours": {
+            "BusinessRegistration_business_opening_hours": {
                 "type": "object",
                 "properties": {
                     "day_0": {
-                        "$ref": "#/components/schemas/BusinessRegistration_business_hours_day_0"
+                        "$ref": "#/components/schemas/BusinessRegistration_business_opening_hours_day_0"
                     },
                     "day_1": {
-                        "$ref": "#/components/schemas/BusinessRegistration_business_hours_day_1"
+                        "$ref": "#/components/schemas/BusinessRegistration_business_opening_hours_day_1"
                     },
                     "day_2": {
-                        "$ref": "#/components/schemas/BusinessRegistration_business_hours_day_0"
+                        "$ref": "#/components/schemas/BusinessRegistration_business_opening_hours_day_0"
                     },
                     "day_3": {
-                        "$ref": "#/components/schemas/BusinessRegistration_business_hours_day_0"
+                        "$ref": "#/components/schemas/BusinessRegistration_business_opening_hours_day_0"
                     },
                     "day_4": {
-                        "$ref": "#/components/schemas/BusinessRegistration_business_hours_day_0"
+                        "$ref": "#/components/schemas/BusinessRegistration_business_opening_hours_day_0"
                     },
                     "day_5": {
-                        "$ref": "#/components/schemas/BusinessRegistration_business_hours_day_0"
+                        "$ref": "#/components/schemas/BusinessRegistration_business_opening_hours_day_0"
                     },
                     "day_6": {
-                        "$ref": "#/components/schemas/BusinessRegistration_business_hours_day_0"
+                        "$ref": "#/components/schemas/BusinessRegistration_business_opening_hours_day_0"
                     }
                 }
             }
