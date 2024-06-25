@@ -150,33 +150,42 @@ public function store(BusinessRequest $request)
             //});
 
 
-        
-        $businessHoursData = $data['business_opening_hours'] ?? [];
-        // Iterar sobre los días y crear cada registro de business hours
-        foreach ($businessHoursData as $day => $hours) {
-            // Verificar si hay datos válidos para el día actual
-            if (!empty($hours['open_a']) && !empty($hours['close_a'])) {
-                // Crear un nuevo array con los datos relevantes
-                $businessHourData = [
-                    'business_id' => $business->id,
-                    'day' => $day,  
-                    'open_a' => $hours['open_a'],
-                    'close_a' => $hours['close_a'],
-                    'open_b' => $hours['open_b'],
-                    'close_b' => $hours['close_b'],
-            
-                ];
+    $businessOpeningHours = $request->input('business_opening_hours');
 
-                    // Añadir open_b y close_b si existen
-                    if (!empty($hours['open_b']) && !empty($hours['close_b'])) {
-                    $businessHourData['open_b'] = $hours['open_b'];
-                    $businessHourData['close_b'] = $hours['close_b'];
-                }
+    // Inicializar un array para almacenar las horas procesadas
+    $processedHours = [];
 
-                    // Crear el registro de business hour
-                    $business->businessHours()->create($businessHourData);
-                    }
-          }
+    foreach ($businessOpeningHours as $day => $hours) {
+    // Filtrar y validar los horarios
+        $hours = array_filter($hours, function($time, $key) {
+        return !is_null($time) && in_array($key, ['open_a', 'close_a', 'open_b', 'close_b']);
+        }, ARRAY_FILTER_USE_BOTH);
+
+        $hour = [
+        'business_id' => $business->id,
+        'day' => $day,
+        'open_a' => $hours['open_a'] ?? null,
+        'close_a' => $hours['close_a'] ?? null,
+        'open_b' => $hours['open_b'] ?? null,
+        'close_b' => $hours['close_b'] ?? null,
+        ];
+
+        // Verificar que cada apertura tiene un cierre correspondiente
+        if (($hour['open_a'] && !$hour['close_a']) || (!$hour['open_a'] && $hour['close_a'])) {
+        continue; // O manejar el error según sea necesario
+        }
+        if (($hour['open_b'] && !$hour['close_b']) || (!$hour['open_b'] && $hour['close_b'])) {
+        continue; // O manejar el error según sea necesario
+        }
+
+    // Guardar los datos en el array procesado para respuesta
+    $processedHours[] = $hour;
+
+    // Crear el registro asociado utilizando la relación
+    $business->businessHours()->create($hour);
+}
+
+   
 
 
             // Dispatch welcome email
@@ -270,35 +279,55 @@ public function update(BusinessRequest $request, $uuid)
                // $business->businessHours()->createMany($hours);
             //}
 
-       if ($request->filled('business_opening_hours')) {
-    
-    $businessHoursData = $request->input('business_opening_hours');
+     if ($request->filled('business_opening_hours')) {
+    $businessOpeningHours = $request->input('business_opening_hours');
 
-    // Iterar sobre los datos de business_opening_hours recibidos
-    foreach ($businessHoursData as $day => $hourData) {
-        // Buscar y actualizar el registro existente si existe
-        $businessHour = $business->businessHours()->where('day', $day)->first();
+// Inicializar un array para almacenar las horas procesadas
+$processedHours = [];
 
-        if ($businessHour) {
-            // Actualizar los campos existentes
-            $businessHour->update([
-                'open_a' => $hourData['open_a'],
-                'close_a' => $hourData['close_a'],
-                'open_b' => $hourData['open_b'],
-                'close_b' => $hourData['close_b'],
-            ]);
-        } else {
-            // Si no existe un registro para este día, crear uno nuevo
-            $business->businessHours()->create([
-                'day' => $day,
-                'open_a' => $hourData['open_a'],
-                'close_a' => $hourData['close_a'],
-                'open_b' => $hourData['open_b'],
-                'close_b' => $hourData['close_b'],
-            ]);
-        }
+foreach ($businessOpeningHours as $day => $hours) {
+    // Filtrar y validar los horarios
+    $hours = array_filter($hours, function($time, $key) {
+        return !is_null($time) && in_array($key, ['open_a', 'close_a', 'open_b', 'close_b']);
+    }, ARRAY_FILTER_USE_BOTH);
+
+    $hour = [
+        'business_id' => $business->id,
+        'day' => $day,
+        'open_a' => $hours['open_a'] ?? null,
+        'close_a' => $hours['close_a'] ?? null,
+        'open_b' => $hours['open_b'] ?? null,
+        'close_b' => $hours['close_b'] ?? null,
+    ];
+
+    // Verificar que cada apertura tiene un cierre correspondiente
+    if (($hour['open_a'] && !$hour['close_a']) || (!$hour['open_a'] && $hour['close_a'])) {
+        continue; // O manejar el error según sea necesario
+    }
+    if (($hour['open_b'] && !$hour['close_b']) || (!$hour['open_b'] && $hour['close_b'])) {
+        continue; // O manejar el error según sea necesario
+    }
+
+    // Guardar los datos en el array procesado para respuesta
+    $processedHours[] = $hour;
+
+    // Buscar si ya existe un registro para este día
+    $existingHour = $business->businessHours()->where('day', $day)->first();
+
+    if ($existingHour) {
+        // Actualizar los campos existentes
+        $existingHour->update($hour);
+    } else {
+        // Si no existe un registro para este día, crear uno nuevo
+        $business->businessHours()->create($hour);
     }
 }
+
+
+   
+}
+
+
 
 
 

@@ -59,10 +59,10 @@ public function getBusinessOpeningHours()
 
     foreach ($daysOfWeek as $day) {
         $businessOpeningHours[$day] = [
-            'open_a' => $this->formatTime($this->getOpenTime($day, 'open_a')),
-            'close_a' => $this->formatTime($this->getCloseTime($day, 'close_a')),
-            'open_b' => $this->formatTime($this->getOpenTime($day, 'open_b')),
-            'close_b' => $this->formatTime($this->getCloseTime($day, 'close_b')),
+            'open_a' => $this->getOpenTime($day, 'open_a'),
+            'close_a' => $this->getCloseTime($day, 'close_a'),
+            'open_b' => $this->getOpenTime($day, 'open_b'),
+            'close_b' => $this->getCloseTime($day, 'close_b'),
         ];
     }
 

@@ -53,10 +53,10 @@ class BusinessRequest extends FormRequest
             //'business_hours.*.close_b' => 'nullable|string',
 
             
-            'business_opening_hours.*.open_a' => 'nullable|string',
-            'business_opening_hours.*.open_b' => 'nullable|string',
-            'business_opening_hours.*.close_a' => 'nullable|string',
-            'business_opening_hours.*.close_b' => 'nullable|string',
+            'business_opening_hours.*.open_a' => 'nullable',
+            'business_opening_hours.*.open_b' => 'nullable',
+            'business_opening_hours.*.close_a' => 'nullable',
+            'business_opening_hours.*.close_b' => 'nullable',
         ];
     }
 
