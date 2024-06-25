@@ -45,15 +45,11 @@ class BusinessRequest extends FormRequest
 
             'business_additional_info' => 'nullable',
             'category_id' => ($isStoreRoute ? 'required|' : '') . 'exists:categories,id',
-
-            //'business_hours.*.day' => 'nullable|string|min:0|max:6',
-            //'business_hours.*.open_a' => 'nullable|string',
-            //'business_hours.*.close_a' => 'nullable|string',
-            //'business_hours.*.open_b' => 'nullable|string',
-            //'business_hours.*.close_b' => 'nullable|string',
-
-            
-           
+        'business_opening_hours' => 'required|array',
+        'business_opening_hours.*.open_a' => 'nullable|string|regex:regex:/^([01]?[0-9]|2[0-3])[0-5][0-9]$|^\d{2}:\d{2}$/',
+        'business_opening_hours.*.open_b' => 'nullable|string|regex:regex:/^([01]?[0-9]|2[0-3])[0-5][0-9]$|^\d{2}:\d{2}$/',
+        'business_opening_hours.*.close_a' => 'nullable|string|regex:regex:/^([01]?[0-9]|2[0-3])[0-5][0-9]$|^\d{2}:\d{2}$/',
+        'business_opening_hours.*.close_b' => 'nullable|string|regex:regex:/^([01]?[0-9]|2[0-3])[0-5][0-9]$|^\d{2}:\d{2}$/',
         ];
     }
 
