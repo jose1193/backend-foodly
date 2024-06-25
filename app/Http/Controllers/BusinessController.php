@@ -241,7 +241,7 @@ public function updateLogo(UpdateBusinessLogoRequest $request, $uuid)
         return response()->json(new BusinessResource($business), 200);
     } catch (\Exception $e) {
         Log::error('Error updating business logo: ' . $e->getMessage());
-        return response()->json(['error' => 'An error occurred: '], 500);
+        return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
     }
 }
 
@@ -312,7 +312,7 @@ public function update(BusinessRequest $request, $uuid)
         return response()->json(['message' => 'Business not found'], 404);
     } catch (\Exception $e) {
         Log::error("Error updating business with UUID {$uuid}: " . $e->getMessage());
-        return response()->json(['message' => 'An error occurred'], 500);
+         return response()->json(['message' => 'An error occurred: ' . $e->getMessage()], 500);
     }
 }
 
