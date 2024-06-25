@@ -53,10 +53,10 @@ class BusinessRequest extends FormRequest
             //'business_hours.*.close_b' => 'nullable|string',
 
             
-            'business_opening_hours.*.open_a' => 'nullable|string',
-            'business_opening_hours.*.open_b' => 'nullable|string',
-            'business_opening_hours.*.close_a' => 'nullable|string',
-            'business_opening_hours.*.close_b' => 'nullable|string',
+             'business_opening_hours.*.open_a' => ['nullable', 'string', 'date_format:H:i', 'regex:/^\d{1,2}:\d{2}([ap]m)?$/i'],
+    'business_opening_hours.*.open_b' => ['nullable', 'string', 'date_format:H:i', 'regex:/^\d{1,2}:\d{2}([ap]m)?$/i'],
+    'business_opening_hours.*.close_a' => ['nullable', 'string', 'date_format:H:i', 'regex:/^\d{1,2}:\d{2}([ap]m)?$/i'],
+    'business_opening_hours.*.close_b' => ['nullable', 'string', 'date_format:H:i', 'regex:/^\d{1,2}:\d{2}([ap]m)?$/i'],
         ];
     }
 
