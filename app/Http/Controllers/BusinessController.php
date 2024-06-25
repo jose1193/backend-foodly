@@ -162,8 +162,8 @@ public function store(BusinessRequest $request)
                     'day' => $day,  
                     'open_a' => $hours['open_a'],
                     'close_a' => $hours['close_a'],
-                    'open_b' => $hours['open_b'],
-                    'close_b' => $hours['close_b'],
+                     'open_b' => $hours['open_b'] ?? null, // Asegurar que open_b y close_b sean opcionales
+                    'close_b' => $hours['close_b'] ?? null,
             
                 ];
 
