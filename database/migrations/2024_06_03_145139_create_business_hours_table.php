@@ -15,10 +15,10 @@ return new class extends Migration
         $table->id();
         $table->unsignedBigInteger('business_id'); 
         $table->string('day')->nullable(); 
-        $table->time('open_a')->nullable();
-        $table->time('close_a')->nullable();
-        $table->time('open_b')->nullable();
-        $table->time('close_b')->nullable();
+        $table->string('open_a')->nullable();
+        $table->string('close_a')->nullable();
+        $table->string('open_b')->nullable();
+        $table->string('close_b')->nullable();
         $table->timestamps();
 
       
