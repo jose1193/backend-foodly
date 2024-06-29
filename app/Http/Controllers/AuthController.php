@@ -58,10 +58,18 @@ private function createTokenForUser($user, $remember = false)
     }
     return $token;
 }
-
-     private function createCookieForToken($token)
-{
-    return cookie('token', $token, 60 * 24 * 30); // Cookie válida por 30 días
+private function createCookieForToken($token) {
+    return cookie(
+        'token', 
+        $token,
+        60 * 24 * 30, // 30 días
+        '/', 
+        '.foodly.world', 
+        true, 
+        true, 
+        false, 
+        'Lax' // o 'None' si necesitas permitir todas las solicitudes cross-site
+    );
 }
 
 

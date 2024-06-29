@@ -55,12 +55,12 @@ class CreateUserController extends Controller
         DB::commit();
         
         // Crear una cookie con el token
-        $cookie = cookie('token', $tokenData['token'], 60 * 24 * 30); // Cookie válida por 30 días
+        $cookie = $this->createCookieForToken($tokenData['token']);
         
-        // Devolver respuesta exitosa con datos del usuario y token en una cookie y en el JSON.
+        // Devolver respuesta exitosa con datos del usuario y token.
         return response()->json([
             'message' => 'User created successfully',
-            'token' => $tokenData['token'],  // Enviamos el token en el JSON
+            'token' => $tokenData['token'],
             'token_type' => 'Bearer',
             'token_created_at' => $tokenData['created_at'],
             'user' => new UserResource($user)
@@ -119,13 +119,26 @@ private function handleUserProviderData(CreateUserRequest $request, array $data,
     }
 }
 
-private function createUserToken(User $user): array
-{
+private function createUserToken(User $user): array {
     $userToken = $user->createToken('API Token User Register')->plainTextToken;
     $token = PersonalAccessToken::findToken(explode('|', $userToken)[1]);
     $formattedTokenCreatedAt = $token ? $token->created_at->format('Y-m-d H:i:s') : null;
-
+    
     return ['token' => explode('|', $userToken)[1], 'created_at' => $formattedTokenCreatedAt];
+}
+
+private function createCookieForToken($token) {
+    return cookie(
+        'token', 
+        $token,
+        60 * 24 * 30, // 30 días
+        '/', 
+        '.foodly.world', 
+        true, 
+        true, 
+        false, 
+        'Lax'
+    );
 }
 
 //protected function createUser(array $input): User
