@@ -33,45 +33,35 @@ class AuthController extends BaseController
 // USER LOGIN
     
     public function login(LoginRequest $request)
-    {
-        $user = User::where('email', $request->email)->firstOrFail();
-
-        if (!Hash::check($request->password, $user->password)) {
-            return $this->sendFailedLoginResponse();
-        }
-
-        $token = $this->createTokenForUser($user, $request->filled('remember'));
-        $cookie = $this->createCookieForToken($token);
-
-        $this->cacheUser($user);
-
-        return $this->sendSuccessLoginResponse($user, $token)->withCookie($cookie);
-    }
-
-    // Private methods for token and cookie creation
-    private function createTokenForUser($user, $remember = false)
-    {
-        $token = $user->createToken('auth_token')->plainTextToken;
-        if ($remember) {
-            $rememberToken = Str::random(60);
-            $user->forceFill(['remember_token' => hash('sha256', $rememberToken)])->save();
-        }
-        return $token;
-    }
-
-      private function createCookieForToken($token)
 {
-    return cookie(
-        'token', 
-        $token, 
-        60 * 24 * 365, // 1 año
-        '/', // Path
-        '.foodly.world', // Dominio, asegúrate de incluir el punto para todos los subdominios
-        true, // Secure (true para HTTPS)
-        true, // HttpOnly
-        false, // Raw
-        'None' // SameSite (permite solicitudes de origen cruzado)
-    );
+    $user = User::where('email', $request->email)->firstOrFail();
+
+    if (!Hash::check($request->password, $user->password)) {
+        return $this->sendFailedLoginResponse();
+    }
+
+    $token = $this->createTokenForUser($user, $request->filled('remember'));
+    $cookie = $this->createCookieForToken($token);
+
+    $this->cacheUser($user);
+
+    return $this->sendSuccessLoginResponse($user, $token)->withCookie($cookie);
+}
+
+   // Private methods for token and cookie creation
+private function createTokenForUser($user, $remember = false)
+{
+    $token = $user->createToken('auth_token')->plainTextToken;
+    if ($remember) {
+        $rememberToken = Str::random(60);
+        $user->forceFill(['remember_token' => hash('sha256', $rememberToken)])->save();
+    }
+    return $token;
+}
+
+     private function createCookieForToken($token)
+{
+    return cookie('token', $token, 60 * 24 * 30); // Cookie válida por 30 días
 }
 
 

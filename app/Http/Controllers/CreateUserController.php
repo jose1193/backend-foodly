@@ -55,14 +55,16 @@ class CreateUserController extends Controller
         // Confirmar todas las operaciones.
         DB::commit();
 
-        // Devolver respuesta exitosa con datos del usuario y token.
+       // Crear una cookie con el token
+        $cookie = cookie('token', $tokenData['token'], 60 * 24 * 30); // Cookie válida por 30 días
+        
+        // Devolver respuesta exitosa con datos del usuario y token en una cookie.
         return response()->json([
             'message' => 'User created successfully',
-            'token' => $tokenData['token'],
             'token_type' => 'Bearer',
             'token_created_at' => $tokenData['created_at'],
             'user' => new UserResource($user)
-        ], 200);
+        ], 200)->withCookie($cookie);
 
     } catch (\Exception $e) {
         // Revertir todos los cambios en caso de error.
