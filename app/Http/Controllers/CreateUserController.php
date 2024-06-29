@@ -33,39 +33,39 @@ class CreateUserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-  public function store(CreateUserRequest $request)
-{
+  public function store(CreateUserRequest $request) {
     DB::beginTransaction();
-
+    
     try {
         // Validar y extraer datos.
         $data = $request->validated();
         $user = $this->createUser($data);
-
+        
         // Asignar roles y otros datos sin dependencia de la subida de archivos.
         $this->assignUserRole($data, $user);
         $this->handleUserProviderData($request, $data, $user);
-
+        
         // Crear token de usuario.
         $tokenData = $this->createUserToken($user);
-
+        
         // Manejar foto de perfil
         $this->handleUserProfilePhoto($request, $user);
-
+        
         // Confirmar todas las operaciones.
         DB::commit();
-
-       // Crear una cookie con el token
+        
+        // Crear una cookie con el token
         $cookie = cookie('token', $tokenData['token'], 60 * 24 * 30); // Cookie válida por 30 días
         
-        // Devolver respuesta exitosa con datos del usuario y token en una cookie.
+        // Devolver respuesta exitosa con datos del usuario y token en una cookie y en el JSON.
         return response()->json([
             'message' => 'User created successfully',
+            'token' => $tokenData['token'],  // Enviamos el token en el JSON
             'token_type' => 'Bearer',
             'token_created_at' => $tokenData['created_at'],
             'user' => new UserResource($user)
         ], 200)->withCookie($cookie);
-
+        
     } catch (\Exception $e) {
         // Revertir todos los cambios en caso de error.
         DB::rollback();
