@@ -15,9 +15,9 @@ return Application::configure(basePath: dirname(__DIR__))
        $middleware->alias([
             'check.permission' => \App\Http\Middleware\CheckPermission::class,
             'json_throttle' => \App\Http\Middleware\JsonThrottleMiddleware::class,
-            'auth.routes' => \App\Http\Middleware\AuthenticateRoutes::class,
+            //'auth.routes' => \App\Http\Middleware\AuthenticateRoutes::class,
             'handle.notfound' => \App\Http\Middleware\Json404Middleware::class,
-            'token.auth' => \App\Http\Middleware\TokenAuthentication::class,
+            //'token.auth' => \App\Http\Middleware\TokenAuthentication::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

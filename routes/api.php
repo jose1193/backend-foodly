@@ -68,7 +68,7 @@ Route::post('/twitter/user-details', [TwitterController::class, 'getUserDetails'
 
 
 
-Route::middleware(['auth.routes','handle.notfound','token.auth'])->group(function() {
+Route::middleware(['auth:sanctum','handle.notfound'])->group(function() {
     //Route::get('/user', function (Request $request) {
         //return $request->user();
     //});

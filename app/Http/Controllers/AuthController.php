@@ -59,17 +59,7 @@ private function createTokenForUser($user, $remember = false)
     return $token;
 }
 private function createCookieForToken($token) {
-    return cookie(
-        'token', 
-        $token,
-        60 * 24 * 30, // 30 días
-        '/', 
-        '.foodly.world', 
-        true, 
-        true, 
-        false, 
-        'Lax' // o 'None' si necesitas permitir todas las solicitudes cross-site
-    );
+     return cookie('token', $token, 60 * 24 * 365); 
 }
 
 
@@ -86,7 +76,7 @@ private function createCookieForToken($token) {
         'token_type' => 'Bearer',
         'token_created_at' => $user->tokens()->where('name', 'auth_token')->first()->created_at->format('Y-m-d H:i:s'),
         'user' => new UserResource($user),
-    ], 200)->withCookie($this->createCookieForToken($tokenString));
+    ], 200);
 }
 
 

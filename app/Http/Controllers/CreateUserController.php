@@ -55,7 +55,7 @@ class CreateUserController extends Controller
         DB::commit();
         
         // Crear una cookie con el token
-        $cookie = $this->createCookieForToken($tokenData['token']);
+        //$cookie = $this->createCookieForToken($tokenData['token']);
         
         // Devolver respuesta exitosa con datos del usuario y token.
         return response()->json([
@@ -64,7 +64,7 @@ class CreateUserController extends Controller
             'token_type' => 'Bearer',
             'token_created_at' => $tokenData['created_at'],
             'user' => new UserResource($user)
-        ], 200)->withCookie($cookie);
+        ], 200);
         
     } catch (\Exception $e) {
         // Revertir todos los cambios en caso de error.
@@ -128,17 +128,7 @@ private function createUserToken(User $user): array {
 }
 
 private function createCookieForToken($token) {
-    return cookie(
-        'token', 
-        $token,
-        60 * 24 * 30, // 30 días
-        '/', 
-        '.foodly.world', 
-        true, 
-        true, 
-        false, 
-        'Lax'
-    );
+     return cookie('token', $token, 60 * 24 * 365); 
 }
 
 //protected function createUser(array $input): User
