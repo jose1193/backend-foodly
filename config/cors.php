@@ -18,8 +18,6 @@ return [
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
     'allowed_methods' => ['*'],
-   
-    'allowed_origins' => ['http://localhost:8888', 'https://foodly.world'],
 
     'allowed_origins' => ['*'],
 

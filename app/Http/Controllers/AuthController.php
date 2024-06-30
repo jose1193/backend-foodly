@@ -59,18 +59,16 @@ private function createTokenForUser($user, $remember = false)
     return $token;
 }
 private function createCookieForToken($token) {
-    $domain = env('APP_ENV') === 'local' ? null : '.foodly.world';
-    
     return cookie(
-        'token',
+        'token', 
         $token,
         60 * 24 * 30, // 30 días
-        '/',
-        $domain,
-        true,
-        true,
-        false,
-        'Lax'
+        '/', 
+        '.foodly.world', 
+        true, 
+        true, 
+        false, 
+        'Lax' // o 'None' si necesitas permitir todas las solicitudes cross-site
     );
 }
 
