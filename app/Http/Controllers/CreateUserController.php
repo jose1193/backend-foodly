@@ -128,15 +128,17 @@ private function createUserToken(User $user): array {
 }
 
 private function createCookieForToken($token) {
+    $domain = env('APP_ENV') === 'local' ? null : '.foodly.world';
+    
     return cookie(
-        'token', 
+        'token',
         $token,
         60 * 24 * 30, // 30 días
-        '/', 
-        '.foodly.world', 
-        true, 
-        true, 
-        false, 
+        '/',
+        $domain,
+        true,
+        true,
+        false,
         'Lax'
     );
 }
