@@ -110,7 +110,6 @@ public function show($uuid)
     }
 }
 
-
 public function store(BusinessRequest $request)
 {
     $data = $request->validated();
@@ -141,7 +140,7 @@ public function store(BusinessRequest $request)
             $services = collect($data['business_services'] ?? []);
             $business->services()->attach($services);
 
-            // Create business hours
+             // Create business hours
             //$hours = collect($data['business_hours'] ?? []);
             //$hours->each(function ($hour) use ($business) {
                 //$hour['business_id'] = $business->id;
@@ -150,43 +149,31 @@ public function store(BusinessRequest $request)
             //});
 
 
-    $businessOpeningHours = $request->input('business_opening_hours');
+            // Create business hours only if they are provided
+            $businessOpeningHours = $request->input('business_opening_hours');
+            if (is_array($businessOpeningHours)) {
+                foreach ($businessOpeningHours as $day => $hours) {
+                    if (!is_array($hours)) continue;
 
-    // Inicializar un array para almacenar las horas procesadas
-    $processedHours = [];
+                    $hours = array_filter($hours, function($time, $key) {
+                        return !is_null($time) && in_array($key, ['open_a', 'close_a', 'open_b', 'close_b']);
+                    }, ARRAY_FILTER_USE_BOTH);
 
-    foreach ($businessOpeningHours as $day => $hours) {
-    // Filtrar y validar los horarios
-        $hours = array_filter($hours, function($time, $key) {
-        return !is_null($time) && in_array($key, ['open_a', 'close_a', 'open_b', 'close_b']);
-        }, ARRAY_FILTER_USE_BOTH);
+                    $hour = [
+                        'business_id' => $business->id,
+                        'day' => $day,
+                        'open_a' => $hours['open_a'] ?? null,
+                        'close_a' => $hours['close_a'] ?? null,
+                        'open_b' => $hours['open_b'] ?? null,
+                        'close_b' => $hours['close_b'] ?? null,
+                    ];
 
-        $hour = [
-        'business_id' => $business->id,
-        'day' => $day,
-        'open_a' => $hours['open_a'] ?? null,
-        'close_a' => $hours['close_a'] ?? null,
-        'open_b' => $hours['open_b'] ?? null,
-        'close_b' => $hours['close_b'] ?? null,
-        ];
-
-        // Verificar que cada apertura tiene un cierre correspondiente
-        if (($hour['open_a'] && !$hour['close_a']) || (!$hour['open_a'] && $hour['close_a'])) {
-        continue; // O manejar el error según sea necesario
-        }
-        if (($hour['open_b'] && !$hour['close_b']) || (!$hour['open_b'] && $hour['close_b'])) {
-        continue; // O manejar el error según sea necesario
-        }
-
-    // Guardar los datos en el array procesado para respuesta
-    $processedHours[] = $hour;
-
-    // Crear el registro asociado utilizando la relación
-    $business->businessHours()->create($hour);
-}
-
-   
-
+                    // Verificar que cada apertura tiene un cierre correspondiente
+                    if (($hour['open_a'] && $hour['close_a']) || ($hour['open_b'] && $hour['close_b'])) {
+                        $business->businessHours()->create($hour);
+                    }
+                }
+            }
 
             // Dispatch welcome email
             SendWelcomeEmailBusiness::dispatch($business->user, $business);
@@ -209,6 +196,7 @@ public function store(BusinessRequest $request)
         return response()->json(['message' => 'An error occurred: ' . $e->getMessage()], 500);
     }
 }
+
 
 
 
