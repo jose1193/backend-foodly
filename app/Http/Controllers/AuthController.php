@@ -41,11 +41,11 @@ class AuthController extends BaseController
     }
 
     $token = $this->createTokenForUser($user, $request->filled('remember'));
-    $cookie = $this->createCookieForToken($token);
+    //$cookie = $this->createCookieForToken($token);
 
     $this->cacheUser($user);
 
-    return $this->sendSuccessLoginResponse($user, $token)->withCookie($cookie);
+    return $this->sendSuccessLoginResponse($user, $token);
 }
 
    // Private methods for token and cookie creation
@@ -58,6 +58,8 @@ private function createTokenForUser($user, $remember = false)
     }
     return $token;
 }
+
+
 private function createCookieForToken($token) {
      return cookie('token', $token, 60 * 24 * 365); 
 }
