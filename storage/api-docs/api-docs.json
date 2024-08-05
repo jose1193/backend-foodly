@@ -12,7 +12,7 @@
     },
     "servers": [
         {
-            "url": "https://www.foodly.world/api/"
+            "url": "https://www.foodly.world/api"
         }
     ],
     "tags": [
@@ -2547,7 +2547,12 @@
                                     "business_additional_info": "Información Adicional",
                                     "business_latitude": 123.456,
                                     "business_longitude": -78.91,
-                                    "category_id": "Cocina Portuguesa",
+                                    "business_menus": [
+                                        {
+                                            "uuid": "02b5929e-6a5f-4752-a0f8-fe23f42ce122"
+                                        }
+                                    ],
+                                    "category_id": 1,
                                     "business_opening_hours": [
                                         {
                                             "day_0": {
