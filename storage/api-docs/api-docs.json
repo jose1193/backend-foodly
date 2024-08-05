@@ -65,6 +65,42 @@
             "description": "Business Users Foodly"
         },
         {
+            "name": "Business Menus",
+            "description": "Business Menus"
+        },
+        {
+            "name": "Business Food Categories",
+            "description": "Business Food Categories"
+        },
+        {
+            "name": "Business Food Items",
+            "description": "Business Food Items"
+        },
+        {
+            "name": "Business Food Reference Photos",
+            "description": "Business Food Reference Photos"
+        },
+        {
+            "name": "Business Drink Categories",
+            "description": "Business Drink Categories"
+        },
+        {
+            "name": "Business Drink Items",
+            "description": "Business Drink Items"
+        },
+        {
+            "name": "Business Drink Reference Photos",
+            "description": "Business Drink Reference Photos"
+        },
+        {
+            "name": "Business Combos",
+            "description": "Business Combos"
+        },
+        {
+            "name": "Business Combo Photos",
+            "description": "Business Combo Images"
+        },
+        {
             "name": "Business Cover Images",
             "description": "Business Cover Images"
         },
@@ -2218,6 +2254,11 @@
                                         "business_additional_info": "Información Adicional",
                                         "business_latitude": 123.456,
                                         "business_longitude": -78.91,
+                                        "business_menus": [
+                                            {
+                                                "uuid": "02b5929e-6a5f-4752-a0f8-fe23f42ce122"
+                                            }
+                                        ],
                                         "category_id": 1,
                                         "business_opening_hours": [
                                             {
@@ -2298,6 +2339,11 @@
                                         "business_additional_info": "Información Adicional",
                                         "business_latitude": 12.345,
                                         "business_longitude": -67.89,
+                                        "business_menus": [
+                                            {
+                                                "uuid": "78b59297-6a5f-4752-a0f8-fe23f42ce122"
+                                            }
+                                        ],
                                         "category_id": 2,
                                         "business_opening_hours": [
                                             {
@@ -2994,6 +3040,2273 @@
                                     "business_image_uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
                                     "business_image_path": "/path/to/the/example.png",
                                     "business_id": 1
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-menu": {
+            "get": {
+                "tags": ["Business Menus"],
+                "summary": "Get all Registered Business Menu",
+                "responses": {
+                    "200": {
+                        "description": "List of registered business menus",
+                        "content": {
+                            "application/json": {
+                                "example": [
+                                    {
+                                        "id": 1,
+                                        "uuid": "d84e7fa6-9171-4ba1-bd2a-3e8322ae4c53",
+                                        "bussiness_id": 1,
+                                        "business_food_categories": [
+                                            {
+                                                "id": 1,
+                                                "uuid": "4f4607a0-94b7-4b91-bb1-721dc64fe83e",
+                                                "name": "entradas",
+                                                "business_menu_id": 1,
+                                                "created_at": "2024-08-05 15:22:25",
+                                                "items": [
+                                                    {
+                                                        "id": 1,
+                                                        "uuid": "2f71b41a-7c26-4852-abd0-dd13817114c1",
+                                                        "business_food_category_id": 1,
+                                                        "name": "Ensalada César",
+                                                        "description": "Ensalada fresca con aderezo César",
+                                                        "versions": [
+                                                            "regular",
+                                                            "medium",
+                                                            "big"
+                                                        ],
+                                                        "prices": {
+                                                            "regular": 3,
+                                                            "medium": 4.5,
+                                                            "big": 6
+                                                        },
+                                                        "favorites_count": 7,
+                                                        "available": true,
+                                                        "business_food_reference_photos": [
+                                                            {
+                                                                "id": 1,
+                                                                "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                                                "business_food_photo_url": "https://url/business_drink_item_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                                                "business_food_item_id": 1
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "business_drink_categories": [
+                                            {
+                                                "id": 1,
+                                                "uuid": "4f4607a0-94b7-4b91-bb1-721dc64fe83e",
+                                                "name": "bebidas",
+                                                "business_menu_id": 1,
+                                                "created_at": "2024-08-05 15:22:25",
+                                                "items": [
+                                                    {
+                                                        "id": 1,
+                                                        "uuid": "2f71b41a-7c26-4852-abd0-dd13817114c1",
+                                                        "business_drink_category_id": 1,
+                                                        "name": "Jugo de Naranja",
+                                                        "description": "Jugo de naranja recién exprimido",
+                                                        "versions": [
+                                                            "regular",
+                                                            "medium",
+                                                            "big"
+                                                        ],
+                                                        "prices": {
+                                                            "regular": 3,
+                                                            "medium": 4.5,
+                                                            "big": 6
+                                                        },
+                                                        "favorites_count": 7,
+                                                        "available": true,
+                                                        "business_drink_reference_photos": [
+                                                            {
+                                                                "id": 1,
+                                                                "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                                                "business_drink_photo_url": "https://url/business_drink_item_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                                                "business_drink_item_id": 1
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-menu/store": {
+            "post": {
+                "tags": ["Business Menus"],
+                "summary": "Store a new Business Menu",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BusinessMenuStore"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business Menu created successfully"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "422": {
+                        "description": "(Unprocessable Entity) Validation failed"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-menu/{uuid}": {
+            "get": {
+                "tags": ["Business Menus"],
+                "summary": "Get a Business Menu by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business Menu details retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "example": [
+                                    {
+                                        "id": 1,
+                                        "uuid": "d84e7fa6-9171-4ba1-bd2a-3e8322ae4c53",
+                                        "bussiness_id": 1,
+                                        "business_food_categories": [
+                                            {
+                                                "id": 1,
+                                                "uuid": "4f4607a0-94b7-4b91-bb1-721dc64fe83e",
+                                                "name": "entradas",
+                                                "business_menu_id": 1,
+                                                "created_at": "2024-08-05 15:22:25",
+                                                "items": [
+                                                    {
+                                                        "id": 1,
+                                                        "uuid": "2f71b41a-7c26-4852-abd0-dd13817114c1",
+                                                        "business_food_category_id": 1,
+                                                        "name": "Ensalada César",
+                                                        "description": "Ensalada fresca con aderezo César",
+                                                        "versions": [
+                                                            "regular",
+                                                            "medium",
+                                                            "big"
+                                                        ],
+                                                        "prices": {
+                                                            "regular": 3,
+                                                            "medium": 4.5,
+                                                            "big": 6
+                                                        },
+                                                        "favorites_count": 7,
+                                                        "available": true,
+                                                        "business_food_reference_photos": [
+                                                            {
+                                                                "id": 1,
+                                                                "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                                                "business_food_photo_url": "https://url/business_drink_item_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                                                "business_food_item_id": 1
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "business_drink_categories": [
+                                            {
+                                                "id": 1,
+                                                "uuid": "4f4607a0-94b7-4b91-bb1-721dc64fe83e",
+                                                "name": "bebidas",
+                                                "business_menu_id": 1,
+                                                "created_at": "2024-08-05 15:22:25",
+                                                "items": [
+                                                    {
+                                                        "id": 1,
+                                                        "uuid": "2f71b41a-7c26-4852-abd0-dd13817114c1",
+                                                        "business_drink_category_id": 1,
+                                                        "name": "Jugo de Naranja",
+                                                        "description": "Jugo de naranja recién exprimido",
+                                                        "versions": [
+                                                            "regular",
+                                                            "medium",
+                                                            "big"
+                                                        ],
+                                                        "prices": {
+                                                            "regular": 3,
+                                                            "medium": 4.5,
+                                                            "big": 6
+                                                        },
+                                                        "favorites_count": 7,
+                                                        "available": true,
+                                                        "business_drink_reference_photos": [
+                                                            {
+                                                                "id": 1,
+                                                                "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                                                "business_drink_photo_url": "https://url/business_drink_item_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                                                "business_drink_item_id": 1
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/business-menu/delete/{uuid}": {
+            "delete": {
+                "tags": ["Business Menus"],
+                "summary": "Delete a Business Menu by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business Menu successfully removed",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": 1,
+                                    "uuid": "3f2504e0-4f89-41d3-9a0c-0305e82c3301"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-food-categories": {
+            "get": {
+                "tags": ["Business Food Categories"],
+                "summary": "Get all Registered Business Food Categories",
+                "responses": {
+                    "200": {
+                        "description": "List of registered business food categories",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "business_food_categories": [
+                                        {
+                                            "id": 1,
+                                            "uuid": "4f4607a0-94b7-4b91-bb1-721dc64fe83e",
+                                            "name": "entradas",
+                                            "business_menu_id": 1,
+                                            "created_at": "2024-08-05 15:22:25",
+                                            "items": [
+                                                {
+                                                    "id": 1,
+                                                    "uuid": "2f71b41a-7c26-4852-abd0-dd13817114c1",
+                                                    "business_food_category_id": 1,
+                                                    "name": "Ensalada César",
+                                                    "description": "Ensalada fresca con aderezo César",
+                                                    "versions": [
+                                                        "regular",
+                                                        "medium",
+                                                        "big"
+                                                    ],
+                                                    "prices": {
+                                                        "regular": 3,
+                                                        "medium": 4.5,
+                                                        "big": 6
+                                                    },
+                                                    "favorites_count": 7,
+                                                    "available": true,
+                                                    "business_food_reference_photos": [
+                                                        {
+                                                            "id": 1,
+                                                            "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                                            "business_food_photo_url": "https://url/business_food_item_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                                            "business_food_item_id": 1
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-food-categories/store": {
+            "post": {
+                "tags": ["Business Food Categories"],
+                "summary": "Store a new Business Food Category",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BusinessFoodCategoryStore"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business Food Category created successfully"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "422": {
+                        "description": "(Unprocessable Entity) Validation failed"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-food-categories/{uuid}": {
+            "get": {
+                "tags": ["Business Food Categories"],
+                "summary": "Get a Business Food Category by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business Food Category details retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "business_food_categories": [
+                                        {
+                                            "id": 1,
+                                            "uuid": "4f4607a0-94b7-4b91-bb1-721dc64fe83e",
+                                            "name": "entradas",
+                                            "business_menu_id": 1,
+                                            "created_at": "2024-08-05 15:22:25",
+                                            "items": [
+                                                {
+                                                    "id": 1,
+                                                    "uuid": "2f71b41a-7c26-4852-abd0-dd13817114c1",
+                                                    "business_food_category_id": 1,
+                                                    "name": "Ensalada César",
+                                                    "description": "Ensalada fresca con aderezo César",
+                                                    "versions": [
+                                                        "regular",
+                                                        "medium",
+                                                        "big"
+                                                    ],
+                                                    "prices": {
+                                                        "regular": 3,
+                                                        "medium": 4.5,
+                                                        "big": 6
+                                                    },
+                                                    "favorites_count": 7,
+                                                    "available": true,
+                                                    "business_food_reference_photos": [
+                                                        {
+                                                            "id": 1,
+                                                            "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                                            "business_food_photo_url": "https://url/business_food_item_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                                            "business_food_item_id": 1
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-food-categories/update/{uuid}": {
+            "patch": {
+                "tags": ["Business Food Categories"],
+                "summary": "Update a Business Food Category by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateBusinessFoodCategory"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business Food Category updated successfully"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-food-categories/delete/{uuid}": {
+            "delete": {
+                "tags": ["Business Food Categories"],
+                "summary": "Delete a Business Food Category by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business Food Category successfully removed",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": 1,
+                                    "uuid": "3f2504e0-4f89-41d3-9a0c-0305e82c3301"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-food-item": {
+            "get": {
+                "tags": ["Business Food Items"],
+                "summary": "Get all Registered Business Food Items",
+                "responses": {
+                    "200": {
+                        "description": "List of registered business foods items",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "items": [
+                                        {
+                                            "id": 1,
+                                            "uuid": "2f71b41a-7c26-4852-abd0-dd13817114c1",
+                                            "business_food_category_id": 1,
+                                            "name": "Ensalada César",
+                                            "description": "Ensalada fresca con aderezo César",
+                                            "versions": [
+                                                "regular",
+                                                "medium",
+                                                "big"
+                                            ],
+                                            "prices": {
+                                                "regular": 3,
+                                                "medium": 4.5,
+                                                "big": 6
+                                            },
+                                            "favorites_count": 7,
+                                            "available": true,
+                                            "business_food_reference_photos": [
+                                                {
+                                                    "id": 1,
+                                                    "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                                    "business_food_photo_url": "https://url/business_food_item_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                                    "business_food_item_id": 1
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-food-item/store": {
+            "post": {
+                "tags": ["Business Food Items"],
+                "summary": "Store a new Business Food Item",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BusinessFoodItemStore"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business Food Item created successfully"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "422": {
+                        "description": "(Unprocessable Entity) Validation failed"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-food-item/{uuid}": {
+            "get": {
+                "tags": ["Business Food Items"],
+                "summary": "Get a Business Food Item by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business Food Item details retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "example": [
+                                    {
+                                        "id": 1,
+                                        "uuid": "2f71b41a-7c26-4852-abd0-dd13817114c1",
+                                        "business_food_category_id": 1,
+                                        "name": "Ensalada César",
+                                        "description": "Ensalada fresca con aderezo César",
+                                        "versions": [
+                                            "regular",
+                                            "medium",
+                                            "big"
+                                        ],
+                                        "prices": {
+                                            "regular": 3,
+                                            "medium": 4.5,
+                                            "big": 6
+                                        },
+                                        "favorites_count": 7,
+                                        "available": true,
+                                        "business_food_reference_photos": [
+                                            {
+                                                "id": 1,
+                                                "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                                "business_food_photo_url": "https://url/business_food_item_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                                "business_food_item_id": 1
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-food-item/update/{uuid}": {
+            "patch": {
+                "tags": ["Business Food Items"],
+                "summary": "Update a Business Food Item by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateBusinessFoodItem"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business Food Item updated successfully"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-food-item/delete/{uuid}": {
+            "delete": {
+                "tags": ["Business Food Items"],
+                "summary": "Delete a Business Food Item by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business Food Item successfully removed",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": 1,
+                                    "uuid": "3f2504e0-4f89-41d3-9a0c-0305e82c3301"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-food-item-photos": {
+            "get": {
+                "tags": ["Business Food Reference Photos"],
+                "summary": "Get all Registered Business Food Photos",
+                "responses": {
+                    "200": {
+                        "description": "List of registered business foods photos",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "items": {
+                                        "business_food_reference_photos": [
+                                            {
+                                                "id": 1,
+                                                "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                                "business_food_photo_url": "https://url/business_food_item_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                                "business_food_item_id": 1
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-food-item-photos/store": {
+            "post": {
+                "tags": ["Business Food Reference Photos"],
+                "summary": "Store a new Business Food Photo",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BusinessFoodReferencePhotos"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business Food Photo created successfully"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "422": {
+                        "description": "(Unprocessable Entity) Validation failed"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-food-item-photos/{uuid}": {
+            "get": {
+                "tags": ["Business Food Reference Photos"],
+                "summary": "Get a Business Food Reference Photo by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business Food Photo details retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "example": [
+                                    {
+                                        "id": 1,
+                                        "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                        "business_food_photo_url": "https://url/business_food_item_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                        "business_food_item_id": 1
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-food-item-photos/update/{uuid}": {
+            "post": {
+                "tags": ["Business Food Reference Photos"],
+                "summary": "Update Business Food Photos",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateBusinessFoodReferencePhotos"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business Food Photo updated successfully"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-food-item-photos/delete/{uuid}": {
+            "delete": {
+                "tags": ["Business Food Reference Photos"],
+                "summary": "Delete a Business Food Reference Photo by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business Reference Photo successfully removed",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": 1,
+                                    "uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-drink-categories": {
+            "get": {
+                "tags": ["Business Drink Categories"],
+                "summary": "Get all Registered Business Drink Categories",
+                "responses": {
+                    "200": {
+                        "description": "List of registered business drink categories",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "business_drink_categories": [
+                                        {
+                                            "id": 1,
+                                            "uuid": "4f4607a0-94b7-4b91-bb1-721dc64fe83e",
+                                            "name": "bebidas",
+                                            "business_menu_id": 1,
+                                            "created_at": "2024-08-05 15:22:25",
+                                            "items": [
+                                                {
+                                                    "id": 1,
+                                                    "uuid": "2f71b41a-7c26-4852-abd0-dd13817114c1",
+                                                    "business_drink_category_id": 1,
+                                                    "name": "Jugo de Naranja",
+                                                    "description": "Jugo de naranja recién exprimido",
+                                                    "versions": [
+                                                        "regular",
+                                                        "medium",
+                                                        "big"
+                                                    ],
+                                                    "prices": {
+                                                        "regular": 3,
+                                                        "medium": 4.5,
+                                                        "big": 6
+                                                    },
+                                                    "favorites_count": 7,
+                                                    "available": true,
+                                                    "business_drink_reference_photos": [
+                                                        {
+                                                            "id": 1,
+                                                            "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                                            "business_drink_photo_url": "https://url/business_drink_item_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                                            "business_drink_item_id": 1
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-drink-categories/store": {
+            "post": {
+                "tags": ["Business Drink Categories"],
+                "summary": "Store a new Business Drink Category",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BusinessDrinkCategoryStore"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business Drink Category created successfully"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "422": {
+                        "description": "(Unprocessable Entity) Validation failed"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-drink-categories/{uuid}": {
+            "get": {
+                "tags": ["Business Drink Categories"],
+                "summary": "Get a Business Drink Category by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business Drink Category details retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "business_drink_categories": [
+                                        {
+                                            "id": 1,
+                                            "uuid": "4f4607a0-94b7-4b91-bb1-721dc64fe83e",
+                                            "name": "entradas",
+                                            "business_menu_id": 1,
+                                            "created_at": "2024-08-05 15:22:25",
+                                            "items": [
+                                                {
+                                                    "id": 1,
+                                                    "uuid": "2f71b41a-7c26-4852-abd0-dd13817114c1",
+                                                    "business_drink_category_id": 1,
+                                                    "name": "Jugo de naranja",
+                                                    "description": "Jugo de naranja recién exprimido",
+                                                    "versions": [
+                                                        "regular",
+                                                        "medium",
+                                                        "big"
+                                                    ],
+                                                    "prices": {
+                                                        "regular": 3,
+                                                        "medium": 4.5,
+                                                        "big": 6
+                                                    },
+                                                    "favorites_count": 7,
+                                                    "available": true,
+                                                    "business_drink_reference_photos": [
+                                                        {
+                                                            "id": 1,
+                                                            "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                                            "business_drink_photo_url": "https://url/business_drink_item_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                                            "business_drink_item_id": 1
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-drink-categories/update/{uuid}": {
+            "patch": {
+                "tags": ["Business Drink Categories"],
+                "summary": "Update a Business Drink Category by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateBusinessDrinkCategory"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business Drink Category updated successfully"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-drink-categories/delete/{uuid}": {
+            "delete": {
+                "tags": ["Business Drink Categories"],
+                "summary": "Delete a Business Drink Category by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business Drink Category successfully removed",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": 1,
+                                    "uuid": "3f2504e0-4f89-41d3-9a0c-0305e82c3301"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-drink-item": {
+            "get": {
+                "tags": ["Business Drink Items"],
+                "summary": "Get all Registered Business Drink Items",
+                "responses": {
+                    "200": {
+                        "description": "List of registered business drinks items",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "items": [
+                                        {
+                                            "id": 1,
+                                            "uuid": "2f71b41a-7c26-4852-abd0-dd13817114c1",
+                                            "business_drink_category_id": 1,
+                                            "name": "Jugo de Naranja",
+                                            "description": "Jugo de naranja recién exprimido",
+                                            "versions": [
+                                                "regular",
+                                                "medium",
+                                                "big"
+                                            ],
+                                            "prices": {
+                                                "regular": 3,
+                                                "medium": 4.5,
+                                                "big": 6
+                                            },
+                                            "favorites_count": 7,
+                                            "available": true,
+                                            "business_drink_reference_photos": [
+                                                {
+                                                    "id": 1,
+                                                    "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                                    "business_drink_photo_url": "https://url/business_drink_item_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                                    "business_drink_item_id": 1
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-drink-item/store": {
+            "post": {
+                "tags": ["Business Drink Items"],
+                "summary": "Store a new Business Drink Item",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BusinessDrinkItemStore"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business Drink Item created successfully"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "422": {
+                        "description": "(Unprocessable Entity) Validation failed"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-drink-item/{uuid}": {
+            "get": {
+                "tags": ["Business Drink Items"],
+                "summary": "Get a Business Drink Item by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business Drink Item details retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "uuid": "2f71b41a-7c26-4852-abd0-dd13817114c1",
+                                    "business_drink_category_id": 1,
+                                    "name": "Jugo de Naranja",
+                                    "description": "Jugo de naranja recién exprimido",
+                                    "versions": ["regular", "medium", "big"],
+                                    "prices": {
+                                        "regular": 3,
+                                        "medium": 4.5,
+                                        "big": 6
+                                    },
+                                    "favorites_count": 7,
+                                    "available": true,
+                                    "business_drink_reference_photos": [
+                                        {
+                                            "id": 1,
+                                            "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                            "business_drink_photo_url": "https://url/business_drink_item_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                            "business_drink_item_id": 1
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-drink-item/update/{uuid}": {
+            "patch": {
+                "tags": ["Business Drink Items"],
+                "summary": "Update a Business Drink Item by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateBusinessDrinkItem"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business Food Item updated successfully"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-drink-item/delete/{uuid}": {
+            "delete": {
+                "tags": ["Business Drink Items"],
+                "summary": "Delete a Business Drink Item by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business Food Item successfully removed",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": 1,
+                                    "uuid": "3f2504e0-4f89-41d3-9a0c-0305e82c3301"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-drink-item-photos": {
+            "get": {
+                "tags": ["Business Drink Reference Photos"],
+                "summary": "Get all Registered Business Drink Photos",
+                "responses": {
+                    "200": {
+                        "description": "List of registered business drinks photos",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "items": {
+                                        "business_drink_reference_photos": [
+                                            {
+                                                "id": 1,
+                                                "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                                "business_drink_photo_url": "https://url/business_drink_item_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                                "business_drink_item_id": 1
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-drink-item-photos/store": {
+            "post": {
+                "tags": ["Business Drink Reference Photos"],
+                "summary": "Store a new Business Drink Photo",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BusinessDrinkReferencePhotos"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business Drink Photo Item created successfully"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "422": {
+                        "description": "(Unprocessable Entity) Validation failed"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-drink-item-photos/{uuid}": {
+            "get": {
+                "tags": ["Business Drink Reference Photos"],
+                "summary": "Get a Business Drink Reference Photo by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business Drink Photo details retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "example": [
+                                    {
+                                        "id": 1,
+                                        "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                        "business_drink_photo_url": "https://url/business_drink_item_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                        "business_drink_item_id": 1
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-drink-item-photos/update/{uuid}": {
+            "post": {
+                "tags": ["Business Drink Reference Photos"],
+                "summary": "Update Business Drink Photos",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateBusinessDrinkReferencePhotos"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business Drink Photo updated successfully"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-drink-item-photos/delete/{uuid}": {
+            "delete": {
+                "tags": ["Business Drink Reference Photos"],
+                "summary": "Delete a Business Drink Reference Photo by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business Reference Photo successfully removed",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": 1,
+                                    "uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-combos": {
+            "get": {
+                "tags": ["Business Combos"],
+                "summary": "Get all Registered Business Combos",
+                "responses": {
+                    "200": {
+                        "description": "List of registered business combos",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "business_combos": [
+                                        {
+                                            "id": 1,
+                                            "uuid": "2f71b41a-7c26-4852-abd0-dd13817114c1",
+                                            "business_menu_id": 1,
+                                            "name": "Combo Familiar",
+                                            "description": "Incluye una pizza grande, una ensalada y un refresco",
+                                            "versions": [
+                                                "regular",
+                                                "medium",
+                                                "big"
+                                            ],
+                                            "prices": {
+                                                "regular": 3,
+                                                "medium": 4.5,
+                                                "big": 6
+                                            },
+                                            "favorites_count": 7,
+                                            "available": true,
+                                            "business_combos_reference_photos": [
+                                                {
+                                                    "id": 1,
+                                                    "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                                    "business_combos_photo_url": "https://url/business_combos_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                                    "business_combos_id": 1
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-combos/store": {
+            "post": {
+                "tags": ["Business Combos"],
+                "summary": "Store a new Business Combo",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BusinessComboStore"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business Combo created successfully"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "422": {
+                        "description": "(Unprocessable Entity) Validation failed"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-combos/{uuid}": {
+            "get": {
+                "tags": ["Business Combos"],
+                "summary": "Get a Business Drink Item by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business Drink Item details retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "example": [
+                                    {
+                                        "id": 1,
+                                        "uuid": "993a621d-4d93-4df4-8357-4ec94d5c4486",
+                                        "business_menu_id": 1,
+                                        "name": "Combo Familiar",
+                                        "description": "Incluye una pizza grande, una ensalada y un refresco",
+                                        "versions": [
+                                            "regular",
+                                            "medium",
+                                            "big"
+                                        ],
+                                        "regular": 3,
+                                        "medium": 4.5,
+                                        "big": 6,
+                                        "favorites_count": 7,
+                                        "available": true,
+                                        "business_combos_reference_photos": [
+                                            {
+                                                "id": 1,
+                                                "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                                "business_combos_photo_url": "https://url/business_combo_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                                "business_combos_id": 1
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-combos/update/{uuid}": {
+            "patch": {
+                "tags": ["Business Combos"],
+                "summary": "Update a Business Combo Item by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateBusinessCombo"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business Combo Item updated successfully"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-combos/delete/{uuid}": {
+            "delete": {
+                "tags": ["Business Combos"],
+                "summary": "Delete a Business Combo by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business Reference Photo successfully removed",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": 1,
+                                    "uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-combo-photos": {
+            "get": {
+                "tags": ["Business Combo Photos"],
+                "summary": "Get all Registered Business Combo Photos",
+                "responses": {
+                    "200": {
+                        "description": "List of registered business combo photos",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "items": {
+                                        "business_combo_photos": [
+                                            {
+                                                "id": 1,
+                                                "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                                "business_combos_photo_url": "https://url/business_combo_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                                "business_combos_id": 1
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-combos-photos/store": {
+            "post": {
+                "tags": ["Business Combo Photos"],
+                "summary": "Store a new Business Combo Photo",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BusinessComboPhotos"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business Combo Photo created successfully"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "422": {
+                        "description": "(Unprocessable Entity) Validation failed"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-combos-photos/{uuid}": {
+            "get": {
+                "tags": ["Business Combo Photos"],
+                "summary": "Get a Business Combo Photo by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business Combo Photo details retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "example": [
+                                    {
+                                        "id": 1,
+                                        "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                        "business_combos_photo_url": "https://url/business_drink_item_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                        "business_combos_id": 1
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "404": {
+                        "description": "(NotFound) No information found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-combos-photos/update/{uuid}": {
+            "post": {
+                "tags": ["Business Combo Photos"],
+                "summary": "Update Business Combo Photos",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateBusinessComboPhotos"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business Combo Photo updated successfully"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) No authorization to call the service"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-combos-photos/delete/{uuid}": {
+            "delete": {
+                "tags": ["Business Combo Photos"],
+                "summary": "Delete a Business Drink Reference Photo by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business Combo Photo successfully removed",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": 1,
+                                    "uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
                                 }
                             }
                         }
@@ -5536,6 +7849,338 @@
                     }
                 }
             },
+            "BusinessMenuStore": {
+                "required": ["business_id"],
+                "type": "object",
+                "properties": {
+                    "business_id": {
+                        "type": "integer",
+                        "description": "Id of the Business"
+                    }
+                }
+            },
+            "BusinessFoodCategoryStore": {
+                "type": "object",
+                "properties": {
+                    "business_menu_id": {
+                        "type": "integer",
+                        "description": "Id of the Business Menu"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the Food Category"
+                    }
+                }
+            },
+            "BusinessDrinkCategoryStore": {
+                "type": "object",
+                "properties": {
+                    "business_menu_id": {
+                        "type": "integer",
+                        "description": "Id of the Business Menu"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the Food Category"
+                    }
+                }
+            },
+            "UpdateBusinessFoodCategory": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UpdateBusinessDrinkCategory": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "BusinessFoodItemStore": {
+                "type": "object",
+                "properties": {
+                    "business_food_category_id": {
+                        "type": "integer",
+                        "description": "Id of the Business Food Category"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the Food Item"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Ensalada fresca con aderezo César"
+                    },
+                    "versions": {
+                        "type": "array",
+                        "example": ["regular", "medium", "big"],
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "prices": {
+                        "$ref": "#/components/schemas/BusinessFoodItemStore_prices"
+                    },
+                    "favorites_count": {
+                        "type": "integer",
+                        "example": 7
+                    },
+                    "available": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                }
+            },
+            "UpdateBusinessFoodItem": {
+                "type": "object",
+                "properties": {
+                    "business_food_category_id": {
+                        "type": "integer",
+                        "description": "Id of the Business Food Category"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the Food Item"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "versions": {
+                        "type": "array",
+                        "example": ["regular", "medium", "big"],
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "prices": {
+                        "$ref": "#/components/schemas/BusinessFoodItemStore_prices"
+                    },
+                    "favorites_count": {
+                        "type": "integer",
+                        "example": 7
+                    },
+                    "available": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                }
+            },
+            "BusinessDrinkItemStore": {
+                "type": "object",
+                "properties": {
+                    "business_drink_category_id": {
+                        "type": "integer",
+                        "description": "Id of the Business Drink Category"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the Drink Item"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "versions": {
+                        "type": "array",
+                        "example": ["regular", "medium", "big"],
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "prices": {
+                        "$ref": "#/components/schemas/BusinessFoodItemStore_prices"
+                    },
+                    "favorites_count": {
+                        "type": "integer",
+                        "example": 7
+                    },
+                    "available": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                }
+            },
+            "UpdateBusinessDrinkItem": {
+                "type": "object",
+                "properties": {
+                    "business_drink_category_id": {
+                        "type": "integer",
+                        "description": "Id of the Business Drink Category"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the Food Item"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "versions": {
+                        "type": "array",
+                        "example": ["regular", "medium", "big"],
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "prices": {
+                        "$ref": "#/components/schemas/BusinessFoodItemStore_prices"
+                    },
+                    "favorites_count": {
+                        "type": "integer",
+                        "example": 7
+                    },
+                    "available": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                }
+            },
+            "BusinessFoodReferencePhotos": {
+                "type": "object",
+                "properties": {
+                    "business_food_photo_url": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "binary"
+                        }
+                    },
+                    "business_food_item_id": {
+                        "type": "integer",
+                        "description": "Id of the Business Food"
+                    }
+                }
+            },
+            "UpdateBusinessFoodReferencePhotos": {
+                "type": "object",
+                "properties": {
+                    "business_food_photo_url": {
+                        "type": "string",
+                        "format": "binary"
+                    }
+                }
+            },
+            "BusinessDrinkReferencePhotos": {
+                "type": "object",
+                "properties": {
+                    "business_drink_photo_url": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "binary"
+                        }
+                    },
+                    "business_drink_item_id": {
+                        "type": "integer",
+                        "description": "Id of the Business Drink"
+                    }
+                }
+            },
+            "UpdateBusinessDrinkReferencePhotos": {
+                "type": "object",
+                "properties": {
+                    "business_drink_photo_url": {
+                        "type": "string",
+                        "format": "binary"
+                    }
+                }
+            },
+            "BusinessComboStore": {
+                "type": "object",
+                "properties": {
+                    "business_menu_id": {
+                        "type": "integer",
+                        "description": "Id of the Business Menu"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the Business Combo"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "versions": {
+                        "type": "array",
+                        "example": ["regular", "medium", "big"],
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "prices": {
+                        "$ref": "#/components/schemas/BusinessFoodItemStore_prices"
+                    },
+                    "favorites_count": {
+                        "type": "integer",
+                        "example": 7
+                    },
+                    "available": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                }
+            },
+            "UpdateBusinessCombo": {
+                "type": "object",
+                "properties": {
+                    "business_menu_id": {
+                        "type": "integer",
+                        "description": "Id of the Business Menu"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the Business Combo"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "versions": {
+                        "type": "array",
+                        "example": ["regular", "medium", "big"],
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "prices": {
+                        "$ref": "#/components/schemas/BusinessFoodItemStore_prices"
+                    },
+                    "favorites_count": {
+                        "type": "integer",
+                        "example": 7
+                    },
+                    "available": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                }
+            },
+            "BusinessComboPhotos": {
+                "type": "object",
+                "properties": {
+                    "business_combos_photo_url": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "binary"
+                        }
+                    },
+                    "business_combos_id": {
+                        "type": "integer",
+                        "description": "Id of the Business Combo"
+                    }
+                }
+            },
+            "UpdateBusinessComboPhotos": {
+                "type": "object",
+                "properties": {
+                    "business_combos_photo_url": {
+                        "type": "string",
+                        "format": "binary"
+                    }
+                }
+            },
             "updatepassword_body": {
                 "required": ["current_password", "new_password"],
                 "type": "object",
@@ -5624,6 +8269,24 @@
                         "$ref": "#/components/schemas/BusinessRegistration_business_opening_hours_day_0"
                     }
                 }
+            },
+            "BusinessFoodItemStore_prices": {
+                "type": "object",
+                "properties": {
+                    "regular": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "medium": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "big": {
+                        "type": "number",
+                        "format": "float"
+                    }
+                },
+                "example": "{\"regular\":3.0,\"medium\":4.5,\"big\":6.0}"
             }
         },
         "responses": {

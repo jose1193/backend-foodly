@@ -29,6 +29,16 @@ use App\Http\Controllers\CreateUserController;
 use App\Http\Controllers\PasswordResetUserController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TwitterController;
+use App\Http\Controllers\BusinessMenuController;
+use App\Http\Controllers\BusinessFoodCategoryController;
+use App\Http\Controllers\BusinessDrinkCategoryController;
+use App\Http\Controllers\BusinessComboController;
+use App\Http\Controllers\BusinessComboPhotosController;
+use App\Http\Controllers\BusinessFoodItemController;
+use App\Http\Controllers\BusinessDrinkItemController;
+use App\Http\Controllers\BusinessFoodItemPhotoController;
+use App\Http\Controllers\BusinessDrinkItemPhotoController;
+
 //Route::get('/user', function (Request $request) {
     //return $request->user();
 //})->middleware('auth:sanctum');
@@ -47,6 +57,9 @@ Route::get('/categories', [CategoryController::class, 'index']);
 Route::post('/social-login', [SocialLoginController::class, 'handleProviderCallback']);
 
 
+// Public route to list menus of all businesses
+Route::get('/public', [BusinessMenuController::class, 'publicIndex']);
+
 Route::controller(PasswordResetUserController::class)->group(function () {
     Route::post('/forgot-password', 'store'); 
     Route::post('/enter-pin', 'verifyResetPassword');
@@ -56,7 +69,7 @@ Route::controller(PasswordResetUserController::class)->group(function () {
 
 Route::get('/services', [ServiceController::class, 'index']);
 
-
+Route::get('business-menu/{uuid}', [BusinessMenuController::class, 'show']);
 //Route::controller(RegisterController::class)->group(function(){
     //Route::post('register', 'register');
     //Route::post('login', 'login');
@@ -207,6 +220,82 @@ Route::middleware(['auth:sanctum','handle.notfound'])->group(function() {
     Route::delete('delete/{uuid}', [ServiceController::class, 'destroy']); 
     });
 
+
+
+Route::group(['prefix' => 'business-menu'], function () {
+    Route::get('/', [BusinessMenuController::class, 'index']);
+    Route::post('/store', [BusinessMenuController::class, 'store']);
+   
+    Route::patch('/update/{uuid}', [BusinessMenuController::class, 'update']);
+    Route::delete('/delete/{uuid}', [BusinessMenuController::class, 'destroy']);
+});
+
+Route::group(['prefix' => 'business-food-categories'], function () {
+    Route::get('/', [BusinessFoodCategoryController::class, 'index']);
+    Route::post('/store', [BusinessFoodCategoryController::class, 'store']);
+    Route::get('/{uuid}', [BusinessFoodCategoryController::class, 'show']);
+    Route::patch('/update/{uuid}', [BusinessFoodCategoryController::class, 'update']);
+    Route::delete('/delete/{uuid}', [BusinessFoodCategoryController::class, 'destroy']);
+});
+
+Route::group(['prefix' => 'business-drink-categories'], function () {
+    Route::get('/', [BusinessDrinkCategoryController::class, 'index']);
+    Route::post('/store', [BusinessDrinkCategoryController::class, 'store']);
+    Route::get('/{uuid}', [BusinessDrinkCategoryController::class, 'show']);
+    Route::patch('/update/{uuid}', [BusinessDrinkCategoryController::class, 'update']);
+    Route::delete('/delete/{uuid}', [BusinessDrinkCategoryController::class, 'destroy']);
+});
+
+
+Route::group(['prefix' => 'business-combos'], function () {
+    Route::get('/', [BusinessComboController::class, 'index']);
+    Route::post('/store', [BusinessComboController::class, 'store']);
+    Route::get('/{uuid}', [BusinessComboController::class, 'show']);
+    Route::patch('/update/{uuid}', [BusinessComboController::class, 'update']);
+    Route::delete('/delete/{uuid}', [BusinessComboController::class, 'destroy']);
+});
+
+
+Route::group(['prefix' => 'business-combos-photos'], function () {
+    Route::get('/', [BusinessComboPhotosController::class, 'index']);
+    Route::post('/store', [BusinessComboPhotosController::class, 'store']);
+    Route::get('/{uuid}', [BusinessComboPhotosController::class, 'show']);
+    Route::post('/{uuid}', [BusinessComboPhotosController::class, 'update']);
+    Route::delete('/delete/{uuid}', [BusinessComboPhotosController::class, 'destroy']);
+});
+
+
+Route::group(['prefix' => 'business-food-item'], function () {
+    Route::get('/', [BusinessFoodItemController::class, 'index']);
+    Route::post('/store', [BusinessFoodItemController::class, 'store']);
+    Route::get('/{uuid}', [BusinessFoodItemController::class, 'show']);
+    Route::patch('/update/{uuid}', [BusinessFoodItemController::class, 'update']);
+    Route::delete('/delete/{uuid}', [BusinessFoodItemController::class, 'destroy']);
+});
+
+Route::group(['prefix' => 'business-drink-item'], function () {
+    Route::get('/', [BusinessDrinkItemController::class, 'index']);
+    Route::post('/store', [BusinessDrinkItemController::class, 'store']);
+    Route::get('/{uuid}', [BusinessDrinkItemController::class, 'show']);
+    Route::patch('/update/{uuid}', [BusinessDrinkItemController::class, 'update']);
+    Route::delete('/delete/{uuid}', [BusinessDrinkItemController::class, 'destroy']);
+});
+
+Route::group(['prefix' => 'business-food-item-photos'], function () {
+    Route::get('/', [BusinessFoodItemPhotoController::class, 'index']);
+    Route::post('/store', [BusinessFoodItemPhotoController::class, 'store']);
+    Route::get('/{uuid}', [BusinessFoodItemPhotoController::class, 'show']);
+    Route::post('/update/{uuid}', [BusinessFoodItemPhotoController::class, 'update']);
+    Route::delete('/delete/{uuid}', [BusinessFoodItemPhotoController::class, 'destroy']);
+});
+
+Route::group(['prefix' => 'business-drink-item-photos'], function () {
+    Route::get('/', [BusinessDrinkItemPhotoController::class, 'index']);
+    Route::post('/store', [BusinessDrinkItemPhotoController::class, 'store']);
+    Route::get('/{uuid}', [BusinessDrinkItemPhotoController::class, 'show']);
+    Route::post('/update/{uuid}', [BusinessDrinkItemPhotoController::class, 'update']);
+    Route::delete('/delete/{uuid}', [BusinessDrinkItemPhotoController::class, 'destroy']);
+});
 
     // Otras rutas protegidas...
 });

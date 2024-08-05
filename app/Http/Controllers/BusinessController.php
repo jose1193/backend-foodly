@@ -58,27 +58,23 @@ public function index()
             return $this->updateBusinessCache($userId);
         });
 
-        if ($businesses->isEmpty()) {
-            return response()->json(['message' => 'No businesses found'], 404);
-        }
+       
+        return response()->json([
+            'business' => BusinessResource::collection($businesses)
+        ], 200);
 
-        return response()->json(['business' => BusinessResource::collection($businesses)], 200);
     } catch (QueryException $e) {
         Log::error('Database error: ' . $e->getMessage());
-        return response()->json(['message' => 'A database error occurred. Please try again later.'], 500);
+        return response()->json(['message' => 'A database error occurred. Please try again later.'. $e->getMessage()], 500);
     } catch (\Exception $e) {
-        Log::error('Error retrieving business: ' . $e->getMessage());
-        return response()->json(['message' => 'An error occurred while retrieving businesses. Please try again later.'], 500);
+        Log::error('Error retrieving businesses: ' . $e->getMessage());
+        return response()->json(['message' => 'An error occurred while retrieving businesses. Please try again later.' . $e->getMessage()], 500);
     }
 }
 
 private function updateBusinessCache($userId)
 {
     $businesses = Business::withTrashed()->where('user_id', $userId)->orderBy('id', 'desc')->get();
-
-    if ($businesses->isEmpty()) {
-        throw new \Exception('No businesses found');
-    }
 
     $this->refreshCache($this->cacheKey, $this->cacheTime, function () use ($businesses) {
         return $businesses;

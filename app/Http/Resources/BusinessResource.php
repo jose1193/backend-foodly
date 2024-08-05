@@ -26,6 +26,7 @@ class BusinessResource extends JsonResource
         'business_phone' => $this->business_phone,
         'business_about_us' => $this->business_about_us,
         'business_services' => ServiceResource::collection($this->services), 
+         
         'business_additional_info' => $this->business_additional_info,
         'business_address' => $this->business_address,
         'business_zipcode' => $this->business_zipcode,
@@ -34,6 +35,9 @@ class BusinessResource extends JsonResource
         'business_website' => $this->business_website,
         'business_latitude' => (double) $this->business_latitude,
         'business_longitude' => (double) $this->business_longitude,
+        'business_menus' => $this->businessMenus->map(function ($menu) {
+            return ['uuid' => $menu->uuid];
+        })->toArray(),
         'category_id' => $this->category ? $this->category->id : null,
         'category' => $this->category ? new CategoryResource($this->category): null,
         //'business_opening_hours' =>  BusinessHourResource::collection($this->businessHours),

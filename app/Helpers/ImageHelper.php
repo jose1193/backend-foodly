@@ -72,22 +72,28 @@ class ImageHelper
 
 
     //DELETE IMAGE FROM STORAGE
-public static function deleteFileFromStorage($filePath)
+public static function deleteFileFromStorage($fullUrl)
 {
-    // Obtener la URL base desde la variable de entorno
-    $baseUrl = env('AWS_URL');
+    // Extraer la ruta relativa de la URL completa
+    $parsedUrl = parse_url($fullUrl);
+    $relativePath = ltrim($parsedUrl['path'], '/');
 
-    // Asegurarse de que la URL base termina con una barra diagonal para la comparación
-    if (substr($baseUrl, -1) !== '/') {
-        $baseUrl .= '/';
-    }
+    // Eliminar el nombre del bucket si está presente en la ruta
+    $bucketName = env('AWS_BUCKET');
+    $relativePath = preg_replace("/^{$bucketName}\//", '', $relativePath);
 
-    // Extraer el path relativo de la URL completa de S3
-    $path = str_replace($baseUrl, '', $filePath);
-
-    // Comprobar si el archivo existe en S3 y eliminarlo
-    if (Storage::disk('s3')->exists($path)) {
-        Storage::disk('s3')->delete($path);
+    try {
+        if (Storage::disk('s3')->exists($relativePath)) {
+            $deleted = Storage::disk('s3')->delete($relativePath);
+           
+            return $deleted;
+        } else {
+            \Log::warning("El archivo no existe en S3: {$relativePath}");
+            return false;
+        }
+    } catch (\Exception $e) {
+        \Log::error("Error al eliminar archivo de S3: {$relativePath}. Error: " . $e->getMessage());
+        return false;
     }
 }
 

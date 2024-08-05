@@ -71,5 +71,12 @@ public function services()
     
     }
 
+    public function businessMenus()
+    {
+
+    return $this->hasMany(BusinessMenu::class);
+    
+    }
+
 
 }
