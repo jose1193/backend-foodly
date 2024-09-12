@@ -13,6 +13,9 @@ use Ramsey\Uuid\Uuid;
 use App\Actions\Fortify\CreateNewUser;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Http;
+use App\Services\FacebookUser;
+
 
 use Illuminate\Routing\Controller as BaseController;
 
@@ -66,13 +69,38 @@ class SocialLoginController extends BaseController
     }
 }
 
-private function getProviderUser($validatedData)
+    private function getProviderUser($validatedData)    
+    {
+        $cacheKey = 'provider_user_' . $validatedData['provider'] . '_' . md5($validatedData['access_provider_token']);
+        return Cache::remember($cacheKey, 43200, function () use ($validatedData) {
+            if ($validatedData['provider'] === 'facebook') {
+                return $this->getFacebookUserData($validatedData['access_provider_token']);
+            }
+            return Socialite::driver($validatedData['provider'])->userFromToken($validatedData['access_provider_token']);
+        });
+    }
+
+    private function getFacebookUserData($accessToken)
 {
-    $cacheKey = 'provider_user_' . $validatedData['provider'] . '_' . md5($validatedData['access_provider_token']);
-    return Cache::remember($cacheKey, 43200, function () use ($validatedData) {
-        return Socialite::driver($validatedData['provider'])->userFromToken($validatedData['access_provider_token']);
-    });
+    $url = env('FACEBOOK_GRAPH_URL');
+    $params = [
+        'fields' => 'id,name,first_name,last_name,email,picture,birthday,gender',
+        'access_token' => $accessToken,
+    ];
+
+    $response = Http::get($url, $params);
+
+    if ($response->successful()) {
+        $userData = $response->json();
+        // Verifica que el campo birthday esté presente en los datos
+        $userData['birthday'] = $userData['birthday'] ?? null; 
+        $userData['gender'] = $userData['gender'] ?? null;
+        return $userData;
+    } else {
+        throw new \Exception('Failed to retrieve Facebook user data');
+    }
 }
+
 
 private function validateEmail($email)
 {
@@ -141,16 +169,29 @@ private function successResponse($user, $token, $userResource)
     ], 200);
 }
 
-private function newUserResponse($providerUser, $validatedData, $email)
-{
+    private function newUserResponse($providerUser, $validatedData, $email)
+    {
+    $fullName = $providerUser->getName();
+    $nameParts = explode(' ', $fullName, 2); // Dividir en dos partes, si es posible
+
+    $firstName = $nameParts[0] ?? null;
+    $lastName = $nameParts[1] ?? null;
+
     $userData = [
-        'provider' => $validatedData['provider'],
-        'provider_id' => $providerUser->getId(),
-        'provider_avatar' => $providerUser->getAvatar(),
-        'name' => $providerUser->getName(),
-        'username' => $providerUser->getNickname(),
-        'email' => $email,
+        // Obtener el nombre completo y dividirlo en nombre y apellido
+
+    'provider' => $validatedData['provider'],
+    'provider_id' => $providerUser->getId(),
+    'provider_avatar' => $providerUser->getAvatar(),
+    'name' => $firstName, // Asignar primer nombre a 'name'
+    'last_name' => $lastName, // Asignar apellido a 'last_name'
+    'username' => $providerUser->getNickname(),
+    'date_of_birth' => $this->getProviderUserDateOfBirth($providerUser),
+    'gender' => $this->getProviderUserGender($providerUser),
+    'email' => $email,
+    
     ];
+
 
     $userResource = new SocialLoginResource($userData);
 
@@ -158,7 +199,36 @@ private function newUserResponse($providerUser, $validatedData, $email)
         'message' => 'User fetched successfully from provider',
         'user' => $userResource,
     ], 200);
+    }
+
+    private function getProviderUserLastName($providerUser)
+    {
+    // Verifica si el método getLastName está disponible en el proveedor
+    return method_exists($providerUser, 'getLastName') ? $providerUser->getLastName() : null;
+    }
+
+private function getProviderUserDateOfBirth($providerUser)
+{
+    if (is_array($providerUser)) {
+        return $providerUser['birthday'] ?? null;
+    }
+    
+    // Aquí puedes manejar otros tipos de proveedores si es necesario
+    return method_exists($providerUser, 'getBirthday') ? $providerUser->getBirthday() : null;
 }
+
+
+private function getProviderUserGender($providerUser)
+{
+    if (is_array($providerUser)) {
+        return $providerUser['gender'] ?? null;
+    }
+    
+    // Aquí puedes manejar otros tipos de proveedores si es necesario
+    return method_exists($providerUser, 'getGender') ? $providerUser->getGender() : null;
+}
+
+
 
 private function errorResponse(\Throwable $e)
 {

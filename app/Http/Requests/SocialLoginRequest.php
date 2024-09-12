@@ -22,13 +22,13 @@ class SocialLoginRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
     public function rules(): array
-{
+    {
     return [
         'provider' => 'required|string|min:3|max:10',
-        'access_provider_token' => 'required|string|max:255',
+        'access_provider_token' => 'required|string',
          
     ];
-}
+    }
 
 
 
