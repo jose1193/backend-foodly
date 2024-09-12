@@ -70,15 +70,17 @@ class SocialLoginController extends BaseController
 }
 
     private function getProviderUser($validatedData)    
-    {
-        $cacheKey = 'provider_user_' . $validatedData['provider'] . '_' . md5($validatedData['access_provider_token']);
-        return Cache::remember($cacheKey, 43200, function () use ($validatedData) {
-            if ($validatedData['provider'] === 'facebook') {
-                return $this->getFacebookUserData($validatedData['access_provider_token']);
-            }
-            return Socialite::driver($validatedData['provider'])->userFromToken($validatedData['access_provider_token']);
-        });
-    }
+{
+    $cacheKey = 'provider_user_' . $validatedData['provider'] . '_' . md5($validatedData['access_provider_token']);
+    return Cache::remember($cacheKey, 43200, function () use ($validatedData) {
+        if ($validatedData['provider'] === 'facebook') {
+            $userData = $this->getFacebookUserData($validatedData['access_provider_token']);
+            return new FacebookUser($userData);  // Asegúrate de pasar un objeto FacebookUser
+        }
+        return Socialite::driver($validatedData['provider'])->userFromToken($validatedData['access_provider_token']);
+    });
+}
+
 
     private function getFacebookUserData($accessToken)
 {
@@ -92,14 +94,12 @@ class SocialLoginController extends BaseController
 
     if ($response->successful()) {
         $userData = $response->json();
-        // Verifica que el campo birthday esté presente en los datos
-        $userData['birthday'] = $userData['birthday'] ?? null; 
-        $userData['gender'] = $userData['gender'] ?? null;
         return $userData;
     } else {
-        throw new \Exception('Failed to retrieve Facebook user data');
+        throw new \Exception('Failed to retrieve Facebook user data: ' . $response->body());
     }
 }
+
 
 
 private function validateEmail($email)
