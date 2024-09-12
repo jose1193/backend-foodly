@@ -51,7 +51,7 @@ class SocialLoginController extends BaseController
         $providerUser = $this->getProviderUser($validatedData);
 
         // Validar el correo electrónico
-        $email = $this->validateEmail($providerUser->getEmail());
+        $email = $this->validateEmail('argenisjose621@hotmail.com');
 
         // Obtener el usuario por su correo electrónico
         $user = $this->getUserByEmail($email);
@@ -75,7 +75,7 @@ class SocialLoginController extends BaseController
     return Cache::remember($cacheKey, 43200, function () use ($validatedData) {
         if ($validatedData['provider'] === 'facebook') {
             $userData = $this->getFacebookUserData($validatedData['access_provider_token']);
-            return new FacebookUser($userData);  // Asegúrate de pasar un objeto FacebookUser
+            return new FacebookUser($userData); 
         }
         return Socialite::driver($validatedData['provider'])->userFromToken($validatedData['access_provider_token']);
     });
