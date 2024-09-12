@@ -51,7 +51,9 @@ class SocialLoginController extends BaseController
         $providerUser = $this->getProviderUser($validatedData);
 
         // Validar el correo electrónico
-        $email = $this->validateEmail($providerUser->getEmail());
+        $email = is_array($providerUser) ? $providerUser['email'] ?? null : $providerUser->getEmail();
+
+        $email = $this->validateEmail($email);
 
         // Obtener el usuario por su correo electrónico
         $user = $this->getUserByEmail($email);
