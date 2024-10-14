@@ -22,14 +22,13 @@ class BusinessFoodItemPhotoRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+   public function rules(): array
 {
-     $isStoreRoute = $this->is('api/business-food-item-photos/store');
+    $isStoreRoute = $this->is('api/business-food-item-photos/store');
     return [
-        'business_food_photo_url' => 'required',
-        'business_food_photo_url.*' => 'image|mimes:jpeg,png,jpg,gif|max:10048', // Validación para cada archivo si es un array
+        'business_food_photo_url' => 'required|array',
+        'business_food_photo_url.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:10048',
         'business_food_item_id' => ($isStoreRoute ? 'required|' : '') . 'exists:business_food_items,id',
-        
     ];
 }
 

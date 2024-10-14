@@ -23,12 +23,11 @@ class BusinessComboPhotoRequest extends FormRequest
      */
      public function rules(): array
 {
-     $isStoreRoute = $this->is('api/business-combos-photos/store');
+    $isStoreRoute = $this->is('api/business-combos-photos/store');
     return [
-        'business_combos_photo_url' => 'required',
-        'business_combos_photo_url.*' => 'image|mimes:jpeg,png,jpg,gif|max:10048', // Validación para cada archivo si es un array
+        'business_combos_photo_url' => 'required|array',
+        'business_combos_photo_url.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:10048',
         'business_combos_id' => ($isStoreRoute ? 'required|' : '') . 'exists:business_combos,id',
-        
     ];
 }
 

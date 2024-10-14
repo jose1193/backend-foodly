@@ -12,7 +12,8 @@
     },
     "servers": [
         {
-            "url": "https://www.foodly.world/api"
+            "url": "https://www.foodly.world/api",
+            "description": "SwaggerHub API Auto Mocking"
         }
     ],
     "tags": [
@@ -3960,7 +3961,27 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Business Food Photo created successfully"
+                        "description": "Business Food Photo created successfully",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "business_food_reference_photos": [
+                                        {
+                                            "id": 1,
+                                            "uuid": "1342d1de-8172-492d-854e-e3a86089f141",
+                                            "business_food_photo_url": "https://url/public/business_food_item_photos/kcxBWVllDqwdiUymyfqPFEk2XxWI48yWs8lC7Bc2.jpg",
+                                            "business_food_item_id": 1
+                                        },
+                                        {
+                                            "id": 2,
+                                            "uuid": "2453e2ef-9283-593e-965f-f4b97190f252",
+                                            "business_food_photo_url": "https://url/public/business_food_item_photos/lmzCXWmmErxejVznzgrQGFl3YyXJ59zXt9mD8Cd3.jpg",
+                                            "business_food_item_id": 1
+                                        }
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "401": {
                         "description": "(Unauthorized) No authorization to call the service"
@@ -4470,7 +4491,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Business Drink Item created successfully"
+                        "description": "Business Drink Item created successfully",
+                        "content": {
+                            "application/json": {}
+                        }
                     },
                     "401": {
                         "description": "(Unauthorized) No authorization to call the service"
@@ -4701,7 +4725,27 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Business Drink Photo Item created successfully"
+                        "description": "Business Drink Photo Item created successfully",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "business_drink_reference_photos": [
+                                        {
+                                            "id": 1,
+                                            "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                            "business_drink_photo_url": "https://url/business_drink_item_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                            "business_drink_item_id": 1
+                                        },
+                                        {
+                                            "id": 2,
+                                            "uuid": "12121212-6402-4b09-9655-4272812c8080",
+                                            "business_drink_photo_url": "https://url/business_drink_item_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                            "business_drink_item_id": 1
+                                        }
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "401": {
                         "description": "(Unauthorized) No authorization to call the service"
@@ -5170,7 +5214,27 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Business Combo Photo created successfully"
+                        "description": "Business Combo Photo created successfully",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "business_combo_photos": [
+                                        {
+                                            "id": 1,
+                                            "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                            "business_combos_photo_url": "https://url/business_combo_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                            "business_combos_id": 1
+                                        },
+                                        {
+                                            "id": 2,
+                                            "uuid": "12121212-6402-4b09-9655-4272812c8080",
+                                            "business_combos_photo_url": "https://url/business_drink_item_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                            "business_combos_id": 1
+                                        }
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "401": {
                         "description": "(Unauthorized) No authorization to call the service"

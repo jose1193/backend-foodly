@@ -22,16 +22,14 @@ class BusinessDrinkItemPhotoRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-{
-     $isStoreRoute = $this->is('api/business-drink-item-photos/store');
+    {
+    $isStoreRoute = $this->is('api/business-drink-item-photos/store');
     return [
-        'business_drink_photo_url' => 'required',
-        'business_drink_photo_url.*' => 'image|mimes:jpeg,png,jpg,gif|max:10048', // Validación para cada archivo si es un array
+        'business_drink_photo_url' => 'required|array',
+        'business_drink_photo_url.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:10048',
         'business_drink_item_id' => ($isStoreRoute ? 'required|' : '') . 'exists:business_drink_items,id',
-        
     ];
-}
-
+    }
      public function failedValidation(Validator $validator)
 
     {

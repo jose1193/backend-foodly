@@ -61,48 +61,51 @@ class BusinessDrinkItemPhotoController extends BaseController
      * Store a newly created resource in storage.
      */
     public function store(BusinessDrinkItemPhotoRequest $request)
-    {
-        DB::beginTransaction();
-        try {
-            $this->authorizeBusinessDrinkItem($request->business_drink_item_id);
+{
+    DB::beginTransaction();
+    try {
+        $this->authorizeBusinessDrinkItem($request->business_drink_item_id);
 
-            $validatedData = $request->validated();
+        $validatedData = $request->validated();
 
-            $imagePaths = $validatedData['business_drink_photo_url'];
-            if (!is_array($imagePaths)) {
-                $imagePaths = [$imagePaths];
-            }
-
-            $drinkItemPhotos = collect($imagePaths)->map(function ($image) use ($validatedData) {
-                $storedImagePath = ImageHelper::storeAndResize($image, 'public/business_drink_item_photos');
-
-                return BusinessDrinkItemPhoto::create([
-                    'business_drink_photo_url' => $storedImagePath,
-                    'business_drink_item_id' => $validatedData['business_drink_item_id'],
-                    'uuid' => Uuid::uuid4()->toString(),
-                ]);
-            })->map(function ($businessDrinkItemPhoto) {
-                return new BusinessDrinkItemPhotoResource($businessDrinkItemPhoto);
-            });
-
-            $drinkItemPhotos->each(function ($businessDrinkItemPhotoResource) {
-                $this->updateCache("business_drink_item_photo_{$businessDrinkItemPhotoResource->uuid}", $this->cacheTime, function () use ($businessDrinkItemPhotoResource) {
-                    return $businessDrinkItemPhotoResource;
-                });
-            });
-
-            $this->updateAllPhotosCache($validatedData['business_drink_item_id']);
-
-            DB::commit();
-
-            return response()->json($drinkItemPhotos, 200);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error('Error creating business drink item photos: ' . $e->getMessage());
-            return response()->json(['error' => 'Error creating business drink item photos'. $e->getMessage()], 500);
+        // Ensure business_drink_photo_url is always an array
+        $photoUrls = $validatedData['business_drink_photo_url'];
+        if (!is_array($photoUrls)) {
+            $photoUrls = [$photoUrls];
         }
-    }
+        $validatedData['business_drink_photo_url'] = $photoUrls;
 
+        $drinkItemPhotos = collect($photoUrls)->map(function ($image) use ($validatedData) {
+            $storedImagePath = ImageHelper::storeAndResize($image, 'public/business_drink_item_photos');
+
+            return BusinessDrinkItemPhoto::create([
+                'business_drink_photo_url' => $storedImagePath,
+                'business_drink_item_id' => $validatedData['business_drink_item_id'],
+                'uuid' => Uuid::uuid4()->toString(),
+            ]);
+        });
+
+        $businessDrinkItemPhotoResources = BusinessDrinkItemPhotoResource::collection($drinkItemPhotos);
+
+        $businessDrinkItemPhotoResources->each(function ($businessDrinkItemPhotoResource) {
+            $this->updateCache("business_drink_item_photo_{$businessDrinkItemPhotoResource->uuid}", $this->cacheTime, function () use ($businessDrinkItemPhotoResource) {
+                return $businessDrinkItemPhotoResource;
+            });
+        });
+
+        $this->updateAllPhotosCache($validatedData['business_drink_item_id']);
+
+        DB::commit();
+
+        return response()->json([
+            'business_drink_reference_photos' => $businessDrinkItemPhotoResources
+        ], 200);
+    } catch (\Exception $e) {
+        DB::rollBack();
+        Log::error('Error creating business drink item photos: ' . $e->getMessage());
+        return response()->json(['error' => 'Error creating business drink item photos: ' . $e->getMessage()], 500);
+    }
+}
     /**
      * Display the specified resource.
      */

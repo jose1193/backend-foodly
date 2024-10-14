@@ -61,47 +61,51 @@ class BusinessFoodItemPhotoController extends BaseController
      * Store a newly created resource in storage.
      */
     public function store(BusinessFoodItemPhotoRequest $request)
-    {
-        DB::beginTransaction();
-        try {
-            $this->authorizeBusinessFoodItem($request->business_food_item_id);
-
-            $validatedData = $request->validated();
-
-            $imagePaths = $validatedData['business_food_photo_url'];
-            if (!is_array($imagePaths)) {
-                $imagePaths = [$imagePaths];
-            }
-
-            $foodItemPhotos = collect($imagePaths)->map(function ($image) use ($validatedData) {
-                $storedImagePath = ImageHelper::storeAndResize($image, 'public/business_food_item_photos');
-
-                return BusinessFoodItemPhoto::create([
-                    'business_food_photo_url' => $storedImagePath,
-                    'business_food_item_id' => $validatedData['business_food_item_id'],
-                    'uuid' => Uuid::uuid4()->toString(),
-                ]);
-            })->map(function ($businessFoodItemPhoto) {
-                return new BusinessFoodItemPhotoResource($businessFoodItemPhoto);
-            });
-
-            $foodItemPhotos->each(function ($businessFoodItemPhotoResource) {
-                $this->updateCache("business_food_item_photo_{$businessFoodItemPhotoResource->uuid}", $this->cacheTime, function () use ($businessFoodItemPhotoResource) {
-                    return $businessFoodItemPhotoResource;
-                });
-            });
-
-            $this->updateAllPhotosCache($validatedData['business_food_item_id']);
-
-            DB::commit();
-
-            return response()->json($foodItemPhotos, 200);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error('Error creating business food item photos: ' . $e->getMessage());
-            return response()->json(['error' => 'Error creating business food item photos' . $e->getMessage()], 500);
+{
+    DB::beginTransaction();
+    try {
+        $this->authorizeBusinessFoodItem($request->business_food_item_id);
+        
+        $validatedData = $request->validated();
+        
+        // Ensure business_food_photo_url is always an array
+        $photoUrls = $validatedData['business_food_photo_url'];
+        if (!is_array($photoUrls)) {
+            $photoUrls = [$photoUrls];
         }
+        $validatedData['business_food_photo_url'] = $photoUrls;
+        
+        $foodItemPhotos = collect($photoUrls)->map(function ($image) use ($validatedData) {
+            $storedImagePath = ImageHelper::storeAndResize($image, 'public/business_food_item_photos');
+            
+            return BusinessFoodItemPhoto::create([
+                'business_food_photo_url' => $storedImagePath,
+                'business_food_item_id' => $validatedData['business_food_item_id'],
+                'uuid' => Uuid::uuid4()->toString(),
+            ]);
+        });
+
+        $businessFoodItemPhotoResources = BusinessFoodItemPhotoResource::collection($foodItemPhotos);
+        
+        $businessFoodItemPhotoResources->each(function ($businessFoodItemPhotoResource) {
+            $this->updateCache("business_food_item_photo_{$businessFoodItemPhotoResource->uuid}", $this->cacheTime, function () use ($businessFoodItemPhotoResource) {
+                return $businessFoodItemPhotoResource;
+            });
+        });
+        
+        $this->updateAllPhotosCache($validatedData['business_food_item_id']);
+        
+        DB::commit();
+        
+        return response()->json([
+            'business_food_reference_photos' => $businessFoodItemPhotoResources
+        ], 200);
+    } catch (\Exception $e) {
+        DB::rollBack();
+        Log::error('Error creating business food item photos: ' . $e->getMessage());
+        return response()->json(['error' => 'Error creating business food item photos: ' . $e->getMessage()], 500);
     }
+}
 
     /**
      * Display the specified resource.

@@ -59,42 +59,46 @@ class BusinessComboPhotosController extends BaseController
     {
         DB::beginTransaction();
         try {
-            $this->authorizeBusinessCombo($request->business_combos_id);
+        $this->authorizeBusinessCombo($request->business_combos_id);
 
-            $validatedData = $request->validated();
+        $validatedData = $request->validated();
 
-            $imagePaths = $validatedData['business_combos_photo_url'];
-            if (!is_array($imagePaths)) {
-                $imagePaths = [$imagePaths];
-            }
+        // Ensure business_combos_photo_url is always an array
+        $photoUrls = $validatedData['business_combos_photo_url'];
+        if (!is_array($photoUrls)) {
+            $photoUrls = [$photoUrls];
+        }
+        $validatedData['business_combos_photo_url'] = $photoUrls;
 
-            $comboPhotos = collect($imagePaths)->map(function ($image) use ($validatedData) {
-                $storedImagePath = ImageHelper::storeAndResize($image, 'public/business_combo_photos');
+        $comboPhotos = collect($photoUrls)->map(function ($image) use ($validatedData) {
+            $storedImagePath = ImageHelper::storeAndResize($image, 'public/business_combo_photos');
 
-                return BusinessComboPhoto::create([
-                    'business_combos_photo_url' => $storedImagePath,
-                    'business_combos_id' => $validatedData['business_combos_id'],
-                    'uuid' => Uuid::uuid4()->toString(),
-                ]);
-            })->map(function ($businessComboPhoto) {
-                return new BusinessComboPhotoResource($businessComboPhoto);
+            return BusinessComboPhoto::create([
+                'business_combos_photo_url' => $storedImagePath,
+                'business_combos_id' => $validatedData['business_combos_id'],
+                'uuid' => Uuid::uuid4()->toString(),
+            ]);
+        });
+
+        $businessComboPhotoResources = BusinessComboPhotoResource::collection($comboPhotos);
+
+        $businessComboPhotoResources->each(function ($businessComboPhotoResource) {
+            $this->updateCache("business_combo_photo_{$businessComboPhotoResource->uuid}", $this->cacheTime, function () use ($businessComboPhotoResource) {
+                return $businessComboPhotoResource;
             });
+        });
 
-            $comboPhotos->each(function ($businessComboPhotoResource) {
-                $this->updateCache("business_combo_photo_{$businessComboPhotoResource->uuid}", $this->cacheTime, function () use ($businessComboPhotoResource) {
-                    return $businessComboPhotoResource;
-                });
-            });
+        $this->updateAllPhotosCache($validatedData['business_combos_id']);
 
-            $this->updateAllPhotosCache($validatedData['business_combos_id']);
+        DB::commit();
 
-            DB::commit();
-
-            return response()->json($comboPhotos, 200);
+        return response()->json([
+            'business_combo_photos' => $businessComboPhotoResources
+        ], 200);
         } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error('Error creating business combo photos: ' . $e->getMessage());
-            return response()->json(['error' => 'Error creating business combo photos' . $e->getMessage()], 500);
+        DB::rollBack();
+        Log::error('Error creating business combo photos: ' . $e->getMessage());
+        return response()->json(['error' => 'Error creating business combo photos: ' . $e->getMessage()], 500);
         }
     }
 
