@@ -87,7 +87,7 @@ class BusinessComboPhotosController extends BaseController
                 return $businessComboPhotoResource;
             });
         });
-
+        $this->invalidateCache("user_{$this->userId}_business_combo_photos");
         $this->updateAllPhotosCache($validatedData['business_combos_id']);
 
         DB::commit();

@@ -92,7 +92,7 @@ class BusinessDrinkItemPhotoController extends BaseController
                 return $businessDrinkItemPhotoResource;
             });
         });
-
+        $this->invalidateCache("user_{$this->userId}_business_drink_item_photos");
         $this->updateAllPhotosCache($validatedData['business_drink_item_id']);
 
         DB::commit();

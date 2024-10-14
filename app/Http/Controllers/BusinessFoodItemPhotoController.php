@@ -93,6 +93,7 @@ class BusinessFoodItemPhotoController extends BaseController
             });
         });
         
+        $this->invalidateCache("user_{$this->userId}_business_food_item_photos");
         $this->updateAllPhotosCache($validatedData['business_food_item_id']);
         
         DB::commit();
