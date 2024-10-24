@@ -38,7 +38,9 @@ class BusinessResource extends JsonResource
         'business_menus' => $this->businessMenus->map(function ($menu) {
             return [
                 'id' => (int) $menu->id,
-                'uuid' => $menu->uuid];
+                'uuid' => $menu->uuid,
+                'business_uuid' => $this->business_uuid
+            ];
         })->toArray(),
         'category_id' => $this->category ? $this->category->id : null,
         'category' => $this->category ? new CategoryResource($this->category): null,

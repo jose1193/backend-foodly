@@ -18,6 +18,7 @@ class BusinessMenuResource extends JsonResource
             'id' => $this->id,
             'uuid' => $this->uuid,
             'business_id' => (int) $this->business_id,
+            'business_uuid' => $this->business->business_uuid, 
             'business_food_categories' => BusinessFoodCategoryResource::collection($this->businessFoodCategories),
             'business_drink_categories' => BusinessDrinkCategoryResource::collection($this->businessDrinkCategories),
             'business_combos' => BusinessComboResource::collection($this->businessCombo),
