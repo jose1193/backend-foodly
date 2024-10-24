@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\BaseController as BaseController;
 use Illuminate\Http\Request;
 use App\Models\Business;
-
+use App\Models\BusinessMenu;
 use App\Http\Requests\BusinessRequest;
 use App\Http\Resources\BusinessResource;
 use Ramsey\Uuid\Uuid;
@@ -107,91 +107,104 @@ public function show($uuid)
 }
 
 public function store(BusinessRequest $request)
-{
-    $data = $request->validated();
+    {
+        $data = $request->validated();
 
-    // Ensure the user ID is set
-    $userId = $this->userId;
-    if (!$userId) {
-        Log::error('Authenticated user not found.');
-        return response()->json(['message' => 'Authenticated user not found.'], 401);
-    }
+        // Ensure the user ID is set
+        $userId = $this->userId;
+        if (!$userId) {
+            Log::error('Authenticated user not found.');
+            return response()->json(['message' => 'Authenticated user not found.'], 401);
+        }
 
-    try {
-        return DB::transaction(function () use ($request, $data, $userId) {
-            // Generate a UUID
-            $data['business_uuid'] = Uuid::uuid4()->toString();
-            $data['user_id'] = $userId;
+        try {
+            return DB::transaction(function () use ($request, $data, $userId) {
+                // Generate a UUID
+                $data['business_uuid'] = Uuid::uuid4()->toString();
+                $data['user_id'] = $userId;
 
-            // Save the business logo if it exists
-            if ($request->hasFile('business_logo')) {
-                $image = $request->file('business_logo');
-                $data['business_logo'] = ImageHelper::storeAndResize($image, 'public/business_logos');
-            }
+                // Save the business logo if it exists
+                if ($request->hasFile('business_logo')) {
+                    $image = $request->file('business_logo');
+                    $data['business_logo'] = ImageHelper::storeAndResize($image, 'public/business_logos');
+                }
 
-            // Create the business
-            $business = Business::create($data);
+                // Create the business
+                $business = Business::create($data);
 
-            // Attach services
-            $services = collect($data['business_services'] ?? []);
-            $business->services()->attach($services);
+                // Create default menu with just business_id
+                $menu = BusinessMenu::create([
+                    'uuid' => Uuid::uuid4()->toString(),
+                    'business_id' => $business->id
+                ]);
 
-             // Create business hours
-            //$hours = collect($data['business_hours'] ?? []);
-            //$hours->each(function ($hour) use ($business) {
+                // Cache the new menu
+                $menuCacheKey = "business_menu_{$menu->uuid}";
+                Cache::put($menuCacheKey, $menu, now()->addMinutes(720));
+
+                // Update business menus cache
+                $businessMenusCacheKey = "user_{$userId}_business_{$business->id}_business_menus";
+                Cache::put($businessMenusCacheKey, collect([$menu]), now()->addMinutes(720));
+
+                // Attach services
+                $services = collect($data['business_services'] ?? []);
+                $business->services()->attach($services);
+                // Create business hours
+                //$hours = collect($data['business_hours'] ?? []);
+                //$hours->each(function ($hour) use ($business) {
                 //$hour['business_id'] = $business->id;
             
                 //$business->businessHours()->create($hour);
-            //});
+                //});
+                // Create business hours if provided
+                $businessOpeningHours = $request->input('business_opening_hours');
+                if (is_array($businessOpeningHours)) {
+                    foreach ($businessOpeningHours as $day => $hours) {
+                        if (!is_array($hours)) continue;
 
+                        $hours = array_filter($hours, function($time, $key) {
+                            return !is_null($time) && in_array($key, ['open_a', 'close_a', 'open_b', 'close_b']);
+                        }, ARRAY_FILTER_USE_BOTH);
 
-            // Create business hours only if they are provided
-            $businessOpeningHours = $request->input('business_opening_hours');
-            if (is_array($businessOpeningHours)) {
-                foreach ($businessOpeningHours as $day => $hours) {
-                    if (!is_array($hours)) continue;
+                        $hour = [
+                            'business_id' => $business->id,
+                            'day' => $day,
+                            'open_a' => $hours['open_a'] ?? null,
+                            'close_a' => $hours['close_a'] ?? null,
+                            'open_b' => $hours['open_b'] ?? null,
+                            'close_b' => $hours['close_b'] ?? null,
+                        ];
 
-                    $hours = array_filter($hours, function($time, $key) {
-                        return !is_null($time) && in_array($key, ['open_a', 'close_a', 'open_b', 'close_b']);
-                    }, ARRAY_FILTER_USE_BOTH);
-
-                    $hour = [
-                        'business_id' => $business->id,
-                        'day' => $day,
-                        'open_a' => $hours['open_a'] ?? null,
-                        'close_a' => $hours['close_a'] ?? null,
-                        'open_b' => $hours['open_b'] ?? null,
-                        'close_b' => $hours['close_b'] ?? null,
-                    ];
-
-                    // Verificar que cada apertura tiene un cierre correspondiente
-                    if (($hour['open_a'] && $hour['close_a']) || ($hour['open_b'] && $hour['close_b'])) {
-                        $business->businessHours()->create($hour);
+                        // Verify each opening has a corresponding closing time
+                        if (($hour['open_a'] && $hour['close_a']) || ($hour['open_b'] && $hour['close_b'])) {
+                            $business->businessHours()->create($hour);
+                        }
                     }
                 }
-            }
 
-            // Dispatch welcome email
-            SendWelcomeEmailBusiness::dispatch($business->user, $business);
+                // Dispatch welcome email
+                SendWelcomeEmailBusiness::dispatch($business->user, $business);
 
-            // Handle caching
-            $cacheKey = 'business_' . $business->business_uuid;
-            $this->refreshCache($cacheKey, $this->cacheTime, fn() => $business);
-            $this->updateBusinessCache($userId);
+                // Handle caching
+                $cacheKey = 'business_' . $business->business_uuid;
+                $this->refreshCache($cacheKey, $this->cacheTime, fn() => $business);
+                $this->updateBusinessCache($userId);
 
-            return response()->json(new BusinessResource($business), 200);
-        });
-    } catch (QueryException $e) {
-        Log::error('Database error storing business: ' . $e->getMessage());
-        return response()->json(['message' => 'A database error occurred: ' . $e->getMessage()], 500);
-    } catch (MailException $e) {
-        Log::error('Mail error storing business: ' . $e->getMessage());
-        return response()->json(['message' => 'A mail error occurred: ' . $e->getMessage()], 500);
-    } catch (\Exception $e) {
-        Log::error('Error storing business: ' . $e->getMessage());
-        return response()->json(['message' => 'An error occurred: ' . $e->getMessage()], 500);
+                // Include menu in response
+                $business->load('businessMenus');
+                return response()->json(new BusinessResource($business), 200);
+            });
+        } catch (QueryException $e) {
+            Log::error('Database error storing business: ' . $e->getMessage());
+            return response()->json(['message' => 'A database error occurred: ' . $e->getMessage()], 500);
+        } catch (MailException $e) {
+            Log::error('Mail error storing business: ' . $e->getMessage());
+            return response()->json(['message' => 'A mail error occurred: ' . $e->getMessage()], 500);
+        } catch (\Exception $e) {
+            Log::error('Error storing business: ' . $e->getMessage());
+            return response()->json(['message' => 'An error occurred: ' . $e->getMessage()], 500);
+        }
     }
-}
 
 
 
