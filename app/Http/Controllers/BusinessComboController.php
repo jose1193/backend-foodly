@@ -82,23 +82,24 @@ class BusinessComboController extends BaseController
      * Display the specified resource.
      */
     public function show(string $uuid)
-    {
-        try {
-            $cacheKey = "business_combo_{$uuid}";
-            $combo = $this->getCachedData($cacheKey, $this->cacheTime, function () use ($uuid) {
-                return BusinessCombo::findOrFail($uuid);
-            });
+{
+    try {
+        $cacheKey = "business_combo_{$uuid}";
+        $combo = $this->getCachedData($cacheKey, $this->cacheTime, function () use ($uuid) {
+            return BusinessCombo::where('uuid', $uuid)->firstOrFail();
+        });
 
-            $this->authorizeBusinessMenu($combo->business_menu_id);
+        $this->authorizeBusinessMenu($combo->business_menu_id);
 
-            return response()->json(new BusinessComboResource($combo), 200);
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['message' => 'Business combo not found'], 404);
-        } catch (\Exception $e) {
-            Log::error('Error fetching business combo: ' . $e->getMessage());
-            return response()->json(['message' => 'Error fetching business combo'], 500);
-        }
+        return response()->json(new BusinessComboResource($combo), 200);
+    } catch (ModelNotFoundException $e) {
+        Log::error('Business combo not found: ' . $e->getMessage());
+        return response()->json(['message' => 'Business combo not found'], 404);
+    } catch (\Exception $e) {
+        Log::error('Error fetching business combo: ' . $e->getMessage());
+        return response()->json(['message' => 'Error fetching business combo'], 500);
     }
+}
 
     /**
      * Update the specified resource in storage.
@@ -107,24 +108,25 @@ class BusinessComboController extends BaseController
     {
         DB::beginTransaction();
         try {
-            $combo = BusinessCombo::findOrFail($uuid);
-            $this->authorizeBusinessMenu($combo->business_menu_id);
+        $combo = BusinessCombo::where('uuid', $uuid)->firstOrFail();
+        $this->authorizeBusinessMenu($combo->business_menu_id);
 
-            $validatedData = $request->validated();
-            $combo->update($validatedData);
+        $validatedData = $request->validated();
+        $combo->update($validatedData);
 
-            $this->updateComboCache($combo);
-            $this->updateAllCombosCache();
+        $this->updateComboCache($combo);
+        $this->updateAllCombosCache();
 
-            DB::commit();
-            return response()->json(new BusinessComboResource($combo), 200);
+        DB::commit();
+        return response()->json(new BusinessComboResource($combo), 200);
         } catch (ModelNotFoundException $e) {
-            DB::rollBack();
-            return response()->json(['message' => 'Business combo not found'], 404);
+        DB::rollBack();
+        Log::error('Business combo not found: ' . $e->getMessage());
+        return response()->json(['message' => 'Business combo not found'], 404);
         } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error('Error updating business combo: ' . $e->getMessage());
-            return response()->json(['error' => 'Error updating business combo'], 500);
+        DB::rollBack();
+        Log::error('Error updating business combo: ' . $e->getMessage());
+        return response()->json(['error' => 'Error updating business combo'], 500);
         }
     }
 
@@ -135,23 +137,24 @@ class BusinessComboController extends BaseController
     {
         DB::beginTransaction();
         try {
-            $combo = BusinessCombo::findOrFail($uuid);
-            $this->authorizeBusinessMenu($combo->business_menu_id);
+        $combo = BusinessCombo::where('uuid', $uuid)->firstOrFail();
+        $this->authorizeBusinessMenu($combo->business_menu_id);
 
-            $combo->delete();
+        $combo->delete();
 
-            $this->invalidateComboCache($combo);
-            $this->updateAllCombosCache();
+        $this->invalidateComboCache($combo);
+        $this->updateAllCombosCache();
 
-            DB::commit();
-            return response()->json(['message' => 'Business combo deleted successfully'], 200);
+        DB::commit();
+        return response()->json(['message' => 'Business combo deleted successfully'], 200);
         } catch (ModelNotFoundException $e) {
-            DB::rollBack();
-            return response()->json(['message' => 'Business combo not found'], 404);
+        DB::rollBack();
+        Log::error('Business combo not found: ' . $e->getMessage());
+        return response()->json(['message' => 'Business combo not found'], 404);
         } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error('Error deleting business combo: ' . $e->getMessage());
-            return response()->json(['error' => 'Error deleting business combo'], 500);
+        DB::rollBack();
+        Log::error('Error deleting business combo: ' . $e->getMessage());
+        return response()->json(['error' => 'Error deleting business combo'], 500);
         }
     }
 
