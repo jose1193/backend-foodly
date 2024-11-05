@@ -13,7 +13,7 @@
     "servers": [
         {
             "url": "https://www.foodly.world/api",
-            "description": "SwaggerHub API Auto Mocking"
+            "description": "Foodly API"
         }
     ],
     "tags": [
@@ -4061,7 +4061,7 @@
             }
         },
         "/business-food-item-photos/update/{uuid}": {
-            "post": {
+            "patch": {
                 "tags": ["Business Food Reference Photos"],
                 "summary": "Update Business Food Photos",
                 "parameters": [
@@ -4825,7 +4825,7 @@
             }
         },
         "/business-drink-item-photos/update/{uuid}": {
-            "post": {
+            "patch": {
                 "tags": ["Business Drink Reference Photos"],
                 "summary": "Update Business Drink Photos",
                 "parameters": [

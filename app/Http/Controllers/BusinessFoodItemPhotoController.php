@@ -138,13 +138,14 @@ class BusinessFoodItemPhotoController extends BaseController
 
 
     public function update(BusinessFoodItemPhotoRequest $request, string $uuid)
-{
-    try {
-        $businessFoodItemPhoto = BusinessFoodItemPhoto::where('uuid', $uuid)->firstOrFail();
-        $this->authorizeBusinessFoodItem($businessFoodItemPhoto->business_food_item_id);
+    {
+        try {
+            $businessFoodItemPhoto = BusinessFoodItemPhoto::where('uuid', $uuid)->firstOrFail();
+            $this->authorizeBusinessFoodItem($businessFoodItemPhoto->business_food_item_id);
 
-        if ($request->hasFile('business_food_photo_url')) {
-            DB::transaction(function () use ($request, $businessFoodItemPhoto) {
+            DB::beginTransaction();
+
+            if ($request->hasFile('business_food_photo_url')) {
                 // Store and resize the new image
                 $storedImagePath = ImageHelper::storeAndResize(
                     $request->file('business_food_photo_url'),
@@ -158,30 +159,35 @@ class BusinessFoodItemPhotoController extends BaseController
 
                 // Update the image path in the BusinessFoodItemPhoto model
                 $businessFoodItemPhoto->business_food_photo_url = $storedImagePath;
-                $businessFoodItemPhoto->save();
+            }
+
+            // Update other fields if they exist in the request
+            if ($request->has('business_food_item_id')) {
+                $businessFoodItemPhoto->business_food_item_id = $request->business_food_item_id;
+            }
+
+            $businessFoodItemPhoto->save();
+
+            DB::commit();
+
+            // Update cache
+            $this->updateCache("business_food_item_photo_{$uuid}", $this->cacheTime, function () use ($businessFoodItemPhoto) {
+                return new BusinessFoodItemPhotoResource($businessFoodItemPhoto);
             });
+
+            // Refresh the cache for all photos of this food item
+            $this->updateAllPhotosCache($businessFoodItemPhoto->business_food_item_id);
+
+            return response()->json(new BusinessFoodItemPhotoResource($businessFoodItemPhoto), 200);
+        } catch (ModelNotFoundException $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Business food item photo not found'], 404);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error updating business food item photo: ' . $e->getMessage());
+            return response()->json(['error' => 'Error updating business food item photo: ' . $e->getMessage()], 500);
         }
-
-        // Only update the other fields if necessary
-        $validatedData = $request->except(['business_food_photo_url']);
-        $businessFoodItemPhoto->update($validatedData);
-
-        // Cache the new response
-        $this->updateCache("business_food_item_photo_{$uuid}", $this->cacheTime, function () use ($businessFoodItemPhoto) {
-            return new BusinessFoodItemPhotoResource($businessFoodItemPhoto);
-        });
-
-        // Refresh the cache for all photos of this food item
-        $this->updateAllPhotosCache($businessFoodItemPhoto->business_food_item_id);
-
-        return response()->json(new BusinessFoodItemPhotoResource($businessFoodItemPhoto), 200);
-    } catch (ModelNotFoundException $e) {
-        return response()->json(['message' => 'Business food item photo not found'], 404);
-    } catch (\Exception $e) {
-        Log::error('Error updating business food item photo: ' . $e->getMessage());
-        return response()->json(['error' => 'Error updating business food item photo: ' . $e->getMessage()], 500);
     }
-}
 
     /**
      * Remove the specified resource from storage.

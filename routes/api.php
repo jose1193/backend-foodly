@@ -285,7 +285,7 @@ Route::group(['prefix' => 'business-food-item-photos'], function () {
     Route::get('/', [BusinessFoodItemPhotoController::class, 'index']);
     Route::post('/store', [BusinessFoodItemPhotoController::class, 'store']);
     Route::get('/{uuid}', [BusinessFoodItemPhotoController::class, 'show']);
-    Route::post('/update/{uuid}', [BusinessFoodItemPhotoController::class, 'update']);
+    Route::patch('/update/{uuid}', [BusinessFoodItemPhotoController::class, 'update']);
     Route::delete('/delete/{uuid}', [BusinessFoodItemPhotoController::class, 'destroy']);
 });
 
