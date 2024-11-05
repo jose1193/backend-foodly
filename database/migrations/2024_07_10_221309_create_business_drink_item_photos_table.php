@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('business_drink_item_photos', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->foreignId('business_drink_item_id')->constrained('business_food_items')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('business_drink_item_id')->constrained('business_drink_items')->onUpdate('cascade')->onDelete('cascade');
             $table->string('business_drink_photo_url');
             $table->timestamps();
         });

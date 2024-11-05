@@ -220,7 +220,7 @@ class BusinessDrinkItemPhotoController extends BaseController
         })->where('id', $businessDrinkItemId)->exists();
 
         if (!$isUserBusinessDrinkItem) {
-            abort(403, 'The provided business_food_item_id does not belong to the authenticated user');
+            abort(403, 'The provided business_drink_item_id does not belong to the authenticated user');
         }
     }
 
