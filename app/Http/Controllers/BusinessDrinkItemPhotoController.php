@@ -136,30 +136,34 @@ class BusinessDrinkItemPhotoController extends BaseController
         $businessDrinkItemPhoto = BusinessDrinkItemPhoto::where('uuid', $uuid)->firstOrFail();
         $this->authorizeBusinessDrinkItem($businessDrinkItemPhoto->business_drink_item_id);
 
+        DB::beginTransaction();
+
         if ($request->hasFile('business_drink_photo_url')) {
-            DB::transaction(function () use ($request, $businessDrinkItemPhoto) {
-                // Store and resize the new image
-                $storedImagePath = ImageHelper::storeAndResize(
-                    $request->file('business_drink_photo_url'),
-                    'public/business_drink_item_photos'
-                );
+            // Store and resize the new image
+            $storedImagePath = ImageHelper::storeAndResize(
+                $request->file('business_drink_photo_url'),
+                'public/business_drink_item_photos'
+            );
 
-                // Delete the old image if it exists
-                if ($businessDrinkItemPhoto->business_drink_photo_url) {
-                    ImageHelper::deleteFileFromStorage($businessDrinkItemPhoto->business_drink_photo_url);
-                }
+            // Delete the old image if it exists
+            if ($businessDrinkItemPhoto->business_drink_photo_url) {
+                ImageHelper::deleteFileFromStorage($businessDrinkItemPhoto->business_drink_photo_url);
+            }
 
-                // Update the image path in the BusinessDrinkItemPhoto model
-                $businessDrinkItemPhoto->business_drink_photo_url = $storedImagePath;
-                $businessDrinkItemPhoto->save();
-            });
+            // Update the image path in the BusinessDrinkItemPhoto model
+            $businessDrinkItemPhoto->business_drink_photo_url = $storedImagePath;
         }
 
-        // Only update the other fields if necessary
-        $validatedData = $request->except(['business_drink_photo_url']);
-        $businessDrinkItemPhoto->update($validatedData);
+        // Update other fields if they exist in the request
+        if ($request->has('business_drink_item_id')) {
+            $businessDrinkItemPhoto->business_drink_item_id = $request->business_drink_item_id;
+        }
 
-        // Cache the new response
+        $businessDrinkItemPhoto->save();
+
+        DB::commit();
+
+        // Update cache
         $this->updateCache("business_drink_item_photo_{$uuid}", $this->cacheTime, function () use ($businessDrinkItemPhoto) {
             return new BusinessDrinkItemPhotoResource($businessDrinkItemPhoto);
         });
@@ -169,8 +173,10 @@ class BusinessDrinkItemPhotoController extends BaseController
 
         return response()->json(new BusinessDrinkItemPhotoResource($businessDrinkItemPhoto), 200);
     } catch (ModelNotFoundException $e) {
+        DB::rollBack();
         return response()->json(['message' => 'Business drink item photo not found'], 404);
     } catch (\Exception $e) {
+        DB::rollBack();
         Log::error('Error updating business drink item photo: ' . $e->getMessage());
         return response()->json(['error' => 'Error updating business drink item photo: ' . $e->getMessage()], 500);
     }

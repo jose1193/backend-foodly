@@ -21,29 +21,29 @@ class BusinessComboPhotoRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-     public function rules(): array
-{
-    $isStoreRoute = $this->is('api/business-combos-photos/store');
-    return [
-        'business_combos_photo_url' => 'required|array',
-        'business_combos_photo_url.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:10048',
-        'business_combos_id' => ($isStoreRoute ? 'required|' : '') . 'exists:business_combos,id',
-    ];
-}
+    public function rules(): array
+    {
+        $method = $this->method();
+
+        if ($method === 'POST') {
+            return [
+                'business_combos_photo_url' => 'required|array',
+                'business_combos_photo_url.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:10048',
+                'business_combos_id' => 'required|exists:business_combos,id',
+            ];
+        }
+
+        return [
+            'business_combos_photo_url' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:10048',
+        ];
+    }
 
     public function failedValidation(Validator $validator)
-
     {
-
         throw new HttpResponseException(response()->json([
-
             'success'   => false,
-
             'message'   => 'Validation errors',
-
             'errors'      => $validator->errors()
-
         ], 422));
-
     }
 }

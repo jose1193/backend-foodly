@@ -5009,7 +5009,7 @@
         "/business-combos/{uuid}": {
             "get": {
                 "tags": ["Business Combos"],
-                "summary": "Get a Business Drink Item by UUID",
+                "summary": "Get a Business Combos Item by UUID",
                 "parameters": [
                     {
                         "name": "uuid",
@@ -5314,7 +5314,7 @@
             }
         },
         "/business-combos-photos/update/{uuid}": {
-            "post": {
+            "patch": {
                 "tags": ["Business Combo Photos"],
                 "summary": "Update Business Combo Photos",
                 "parameters": [

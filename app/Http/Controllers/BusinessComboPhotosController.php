@@ -121,36 +121,42 @@ class BusinessComboPhotosController extends BaseController
         }
     }
 
-    public function update(BusinessComboPhotoRequest $request, string $uuid)
+    
+
+public function update(BusinessComboPhotoRequest $request, string $uuid)
 {
     try {
         $businessComboPhoto = BusinessComboPhoto::where('uuid', $uuid)->firstOrFail();
         $this->authorizeBusinessCombo($businessComboPhoto->business_combos_id);
 
+        DB::beginTransaction();
+
         if ($request->hasFile('business_combos_photo_url')) {
-            DB::transaction(function () use ($request, $businessComboPhoto) {
-                // Store and resize the new image
-                $storedImagePath = ImageHelper::storeAndResize(
-                    $request->file('business_combos_photo_url'),
-                    'public/business_combo_photos'
-                );
+            // Store and resize the new image
+            $storedImagePath = ImageHelper::storeAndResize(
+                $request->file('business_combos_photo_url'),
+                'public/business_combo_photos'
+            );
 
-                // Delete the old image if it exists
-                if ($businessComboPhoto->business_combos_photo_url) {
-                    ImageHelper::deleteFileFromStorage($businessComboPhoto->business_combos_photo_url);
-                }
+            // Delete the old image if it exists
+            if ($businessComboPhoto->business_combos_photo_url) {
+                ImageHelper::deleteFileFromStorage($businessComboPhoto->business_combos_photo_url);
+            }
 
-                // Update the image path in the BusinessComboPhoto model
-                $businessComboPhoto->business_combos_photo_url = $storedImagePath;
-                $businessComboPhoto->save();
-            });
+            // Update the image path in the BusinessComboPhoto model
+            $businessComboPhoto->business_combos_photo_url = $storedImagePath;
         }
 
-        // Only update the other fields if necessary
-        $validatedData = $request->except(['business_combos_photo_url']);
-        $businessComboPhoto->update($validatedData);
+        // Update other fields if they exist in the request
+        if ($request->has('business_combos_id')) {
+            $businessComboPhoto->business_combos_id = $request->business_combos_id;
+        }
 
-        // Cache the new response
+        $businessComboPhoto->save();
+
+        DB::commit();
+
+        // Update cache
         $this->updateCache("business_combo_photo_{$uuid}", $this->cacheTime, function () use ($businessComboPhoto) {
             return new BusinessComboPhotoResource($businessComboPhoto);
         });
@@ -160,13 +166,14 @@ class BusinessComboPhotosController extends BaseController
 
         return response()->json(new BusinessComboPhotoResource($businessComboPhoto), 200);
     } catch (ModelNotFoundException $e) {
+        DB::rollBack();
         return response()->json(['message' => 'Business combo photo not found'], 404);
     } catch (\Exception $e) {
+        DB::rollBack();
         Log::error('Error updating business combo photo: ' . $e->getMessage());
         return response()->json(['error' => 'Error updating business combo photo: ' . $e->getMessage()], 500);
     }
 }
-
 
 
     public function destroy(string $uuid)
