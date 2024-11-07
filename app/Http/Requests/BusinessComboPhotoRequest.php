@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -21,11 +20,12 @@ class BusinessComboPhotoRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules(): array 
     {
-        $method = $this->method();
+        $isStoreRoute = $this->is('api/business-combos-photos/store');
+        $isUpdateRoute = $this->isMethod('POST') && $this->is('*/update/*');
 
-        if ($method === 'POST') {
+        if ($isStoreRoute) {
             return [
                 'business_combos_photo_url' => 'required|array',
                 'business_combos_photo_url.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:10048',
@@ -33,17 +33,27 @@ class BusinessComboPhotoRequest extends FormRequest
             ];
         }
 
+        if ($isUpdateRoute) {
+            return [
+                'business_combos_photo_url' => 'required|image|mimes:jpeg,png,jpg,gif|max:10048',
+            ];
+        }
+
+        // Default rules if neither store nor update
         return [
-            'business_combos_photo_url' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:10048',
+            'business_combos_photo_url' => 'required',
         ];
     }
 
+    /**
+     * Handle failed validation
+     */
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
             'success'   => false,
             'message'   => 'Validation errors',
-            'errors'      => $validator->errors()
+            'errors'    => $validator->errors()
         ], 422));
     }
 }

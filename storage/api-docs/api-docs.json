@@ -4061,7 +4061,7 @@
             }
         },
         "/business-food-item-photos/update/{uuid}": {
-            "patch": {
+            "post": {
                 "tags": ["Business Food Reference Photos"],
                 "summary": "Update Business Food Photos",
                 "parameters": [
@@ -4825,7 +4825,7 @@
             }
         },
         "/business-drink-item-photos/update/{uuid}": {
-            "patch": {
+            "post": {
                 "tags": ["Business Drink Reference Photos"],
                 "summary": "Update Business Drink Photos",
                 "parameters": [
@@ -5314,7 +5314,7 @@
             }
         },
         "/business-combos-photos/update/{uuid}": {
-            "patch": {
+            "post": {
                 "tags": ["Business Combo Photos"],
                 "summary": "Update Business Combo Photos",
                 "parameters": [

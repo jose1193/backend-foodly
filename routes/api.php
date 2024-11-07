@@ -260,7 +260,7 @@ Route::group(['prefix' => 'business-combos-photos'], function () {
     Route::get('/', [BusinessComboPhotosController::class, 'index']);
     Route::post('/store', [BusinessComboPhotosController::class, 'store']);
     Route::get('/{uuid}', [BusinessComboPhotosController::class, 'show']);
-    Route::patch('/update/{uuid}', [BusinessComboPhotosController::class, 'update']);
+    Route::post('/update/{uuid}', [BusinessComboPhotosController::class, 'update']);
     Route::delete('/delete/{uuid}', [BusinessComboPhotosController::class, 'destroy']);
 });
 
@@ -285,7 +285,7 @@ Route::group(['prefix' => 'business-food-item-photos'], function () {
     Route::get('/', [BusinessFoodItemPhotoController::class, 'index']);
     Route::post('/store', [BusinessFoodItemPhotoController::class, 'store']);
     Route::get('/{uuid}', [BusinessFoodItemPhotoController::class, 'show']);
-    Route::patch('/update/{uuid}', [BusinessFoodItemPhotoController::class, 'update']);
+    Route::post('/update/{uuid}', [BusinessFoodItemPhotoController::class, 'update']);
     Route::delete('/delete/{uuid}', [BusinessFoodItemPhotoController::class, 'destroy']);
 });
 
@@ -293,7 +293,7 @@ Route::group(['prefix' => 'business-drink-item-photos'], function () {
     Route::get('/', [BusinessDrinkItemPhotoController::class, 'index']);
     Route::post('/store', [BusinessDrinkItemPhotoController::class, 'store']);
     Route::get('/{uuid}', [BusinessDrinkItemPhotoController::class, 'show']);
-    Route::patch('/update/{uuid}', [BusinessDrinkItemPhotoController::class, 'update']);
+    Route::post('/update/{uuid}', [BusinessDrinkItemPhotoController::class, 'update']);
     Route::delete('/delete/{uuid}', [BusinessDrinkItemPhotoController::class, 'destroy']);
 });
 
