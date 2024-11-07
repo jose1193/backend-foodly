@@ -28,14 +28,14 @@ class BusinessDrinkItemPhotoRequest extends FormRequest
         if ($isStoreRoute) {
             return [
                 'business_drink_photo_url' => 'required|array',
-                'business_drink_photo_url.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:10048',
+                'business_drink_photo_url.*' => 'required',
                 'business_drink_item_id' => 'required|exists:business_drink_items,id',
             ];
         }
 
         if ($isUpdateRoute) {
             return [
-                'business_drink_photo_url' => 'required|image|mimes:jpeg,png,jpg,gif|max:10048',
+                'business_drink_photo_url' => 'required',
             ];
         }
 

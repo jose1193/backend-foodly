@@ -28,14 +28,14 @@ class BusinessFoodItemPhotoRequest extends FormRequest
         if ($isStoreRoute) {
             return [
                 'business_food_photo_url' => 'required|array',
-                'business_food_photo_url.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:10048',
+                'business_food_photo_url.*' => 'required',
                 'business_food_item_id' => 'required|exists:business_food_items,id',
             ];
         }
 
         if ($isUpdateRoute) {
             return [
-                'business_food_photo_url' => 'required|image|mimes:jpeg,png,jpg,gif|max:10048',
+                'business_food_photo_url' => 'required',
                
             ];
         }
