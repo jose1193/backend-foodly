@@ -134,108 +134,128 @@ class BusinessFoodItemPhotoController extends BaseController
      * Update the specified resource in storage.
      */
 
-      
-
-   public function update(BusinessFoodItemPhotoRequest $request, string $uuid)
+      public function update(BusinessFoodItemPhotoRequest $request, string $uuid)
     {
         try {
+            Log::info('Starting photo update process', [
+                'uuid' => $uuid,
+                'request_data' => $request->except('business_food_photo_url')
+            ]);
+
             $businessFoodItemPhoto = BusinessFoodItemPhoto::where('uuid', $uuid)->firstOrFail();
             $this->authorizeBusinessFoodItem($businessFoodItemPhoto->business_food_item_id);
 
+            Log::info('Authorization successful', [
+                'business_food_item_id' => $businessFoodItemPhoto->business_food_item_id
+            ]);
+
             DB::beginTransaction();
 
-            $validatedData = $request->validated();
-            $imageData = $validatedData['business_food_photo_url'];
+            if ($request->hasFile('business_food_photo_url') || $request->has('business_food_photo_url')) {
+                try {
+                    $imageInput = $request->hasFile('business_food_photo_url') 
+                        ? $request->file('business_food_photo_url')
+                        : $request->get('business_food_photo_url');
 
-            // Log detallado de la imagen recibida
-            \Log::info("=== DEBUG IMAGEN RECIBIDA ===");
-            \Log::info("Tipo de dato: " . gettype($imageData));
-            \Log::info("Longitud de datos: " . (is_string($imageData) ? strlen($imageData) : 'No es string'));
-            
-            if (is_string($imageData)) {
-                // Ver si es base64
-                if (preg_match('/^data:image\/(\w+);base64,/', $imageData)) {
-                    \Log::info("Formato: Base64 image");
-                    \Log::info("Mime type: " . explode(';', explode(':', $imageData)[1])[0]);
-                    \Log::info("Primeros 100 caracteres: " . substr($imageData, 0, 100));
-                }
-                // Ver si es binary
-                elseif (!is_file($imageData)) {
-                    \Log::info("Formato: Binary data");
-                    \Log::info("Primeros bytes en hex: " . bin2hex(substr($imageData, 0, 10)));
-                }
-            }
-            // Ver si es un archivo
-            elseif (is_object($imageData)) {
-                \Log::info("Formato: File upload");
-                \Log::info("Clase: " . get_class($imageData));
-                if (method_exists($imageData, 'getClientOriginalName')) {
-                    \Log::info("Nombre original: " . $imageData->getClientOriginalName());
-                    \Log::info("Mime type: " . $imageData->getClientMimeType());
-                    \Log::info("Tamaño: " . $imageData->getSize());
-                }
-            }
-            \Log::info("=== FIN DEBUG IMAGEN ===");
+                    Log::info('Processing image input', [
+                        'type' => $request->hasFile('business_food_photo_url') ? 'file' : 'binary',
+                        'input_size' => $request->hasFile('business_food_photo_url') 
+                            ? $request->file('business_food_photo_url')->getSize() 
+                            : strlen($request->get('business_food_photo_url'))
+                    ]);
 
-            try {
-                if (is_string($imageData) && !is_file($imageData)) {
-                    $storedImagePath = ImageHelper::storeAndResizeBinaryImage(
-                        $imageData,
-                        'public/business_food_item_photos'
-                    );
-                } else {
+                    // Store and resize the new image using ImageHelper
                     $storedImagePath = ImageHelper::storeAndResize(
-                        $imageData,
+                        $imageInput,
                         'public/business_food_item_photos'
                     );
-                }
 
-                // Eliminar la imagen anterior si existe
-                if ($businessFoodItemPhoto->business_food_photo_url) {
-                    ImageHelper::deleteFileFromStorage($businessFoodItemPhoto->business_food_photo_url);
-                }
+                    Log::info('New image stored successfully', [
+                        'path' => $storedImagePath
+                    ]);
 
-                // Actualizar solo la URL de la imagen
-                $businessFoodItemPhoto->business_food_photo_url = $storedImagePath;
-                $businessFoodItemPhoto->save();
-
-                DB::commit();
-
-                // Actualizar cache
-                $this->updateCache(
-                    "business_food_item_photo_{$uuid}",
-                    $this->cacheTime,
-                    function () use ($businessFoodItemPhoto) {
-                        return new BusinessFoodItemPhotoResource($businessFoodItemPhoto);
+                    // Delete the old image if it exists
+                    if ($businessFoodItemPhoto->business_food_photo_url) {
+                        try {
+                            $deleted = ImageHelper::deleteFileFromStorage($businessFoodItemPhoto->business_food_photo_url);
+                            Log::info('Old image deletion attempt', [
+                                'success' => $deleted,
+                                'old_path' => $businessFoodItemPhoto->business_food_photo_url
+                            ]);
+                        } catch (\Exception $e) {
+                            Log::warning('Failed to delete old image', [
+                                'old_path' => $businessFoodItemPhoto->business_food_photo_url,
+                                'error' => $e->getMessage()
+                            ]);
+                            // Continue execution even if old image deletion fails
+                        }
                     }
-                );
 
-                // Actualizar cache de todas las fotos
-                $this->updateAllPhotosCache($businessFoodItemPhoto->business_food_item_id);
+                    // Update the image path in the BusinessFoodItemPhoto model
+                    $businessFoodItemPhoto->business_food_photo_url = $storedImagePath;
 
-                return response()->json(
-                    new BusinessFoodItemPhotoResource($businessFoodItemPhoto),
-                    200
-                );
-
-            } catch (\Exception $e) {
-                DB::rollBack();
-                \Log::error('Error processing image: ' . $e->getMessage());
-                \Log::error('Stack trace: ' . $e->getTraceAsString());
-                return response()->json([
-                    'error' => 'Error processing image: ' . $e->getMessage()
-                ], 500);
+                } catch (\Exception $e) {
+                    Log::error('Image processing failed', [
+                        'error' => $e->getMessage(),
+                        'trace' => $e->getTraceAsString()
+                    ]);
+                    throw new \Exception('Failed to process image: ' . $e->getMessage());
+                }
             }
+
+            // Update other fields if they exist in the request
+            if ($request->has('business_food_item_id')) {
+                $businessFoodItemPhoto->business_food_item_id = $request->business_food_item_id;
+                Log::info('Updating business_food_item_id', [
+                    'new_id' => $request->business_food_item_id
+                ]);
+            }
+
+            // Save changes
+            $businessFoodItemPhoto->save();
+
+            // Commit transaction
+            DB::commit();
+
+            // Update cache
+            $this->updateCache(
+                "business_food_item_photo_{$uuid}",
+                $this->cacheTime,
+                function () use ($businessFoodItemPhoto) {
+                    return new BusinessFoodItemPhotoResource($businessFoodItemPhoto);
+                }
+            );
+
+            // Refresh the cache for all photos of this food item
+            $this->updateAllPhotosCache($businessFoodItemPhoto->business_food_item_id);
+
+            Log::info('Photo update completed successfully', [
+                'uuid' => $uuid,
+                'business_food_item_id' => $businessFoodItemPhoto->business_food_item_id
+            ]);
+
+            return response()->json(
+                new BusinessFoodItemPhotoResource($businessFoodItemPhoto),
+                200
+            );
 
         } catch (ModelNotFoundException $e) {
             DB::rollBack();
+            Log::error('Business food item photo not found', [
+                'uuid' => $uuid,
+                'error' => $e->getMessage()
+            ]);
             return response()->json([
                 'message' => 'Business food item photo not found'
             ], 404);
+
         } catch (\Exception $e) {
             DB::rollBack();
-            \Log::error('Error updating business food item photo: ' . $e->getMessage());
-            \Log::error('Stack trace: ' . $e->getTraceAsString());
+            Log::error('Error updating business food item photo', [
+                'uuid' => $uuid,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
             return response()->json([
                 'error' => 'Error updating business food item photo: ' . $e->getMessage()
             ], 500);
@@ -243,7 +263,6 @@ class BusinessFoodItemPhotoController extends BaseController
     }
 
 
-    
     public function update2(BusinessFoodItemPhotoRequest $request, string $uuid)
     {
         try {
