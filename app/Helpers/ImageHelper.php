@@ -114,47 +114,83 @@ public static function deleteFileFromStorage($fullUrl)
 }
 
 public static function storeAndResizeBinaryImage($binaryData, $storagePath)
-    {
-        try {
-            // Si es base64, decodificar
-            if (preg_match('/^data:image\/(\w+);base64,/', $binaryData, $matches)) {
-                $binaryData = substr($binaryData, strpos($binaryData, ',') + 1);
-                $binaryData = base64_decode($binaryData);
-            }
+{
+    try {
+        // Debug log para ver qué tipo de datos estamos recibiendo
+        \Log::info("Received data type: " . gettype($binaryData));
+        \Log::info("Data length: " . strlen($binaryData));
 
-            // Crear imagen desde binary string
-            $image = Image::make($binaryData);
-
-            // Obtener las dimensiones originales
-            $originalWidth = $image->width();
-            $originalHeight = $image->height();
-
-            // Redimensionar si es necesario
-            if ($originalWidth > 700 || $originalHeight > 700) {
-                $scaleFactor = min(700 / $originalWidth, 700 / $originalHeight);
-                $newWidth = $originalWidth * $scaleFactor;
-                $newHeight = $originalHeight * $scaleFactor;
-                $image->resize($newWidth, $newHeight);
-            }
-
-            // Generar nombre único
-            $fileName = self::generateUniqueFileName();
-            $s3Path = $storagePath . '/' . $fileName . '.jpg';
-
-            // Convertir la imagen procesada a string
-            $imageStream = $image->encode('jpg');
-
-            // Subir directamente a S3
-            Storage::disk('s3')->put($s3Path, $imageStream);
-
-            // Retornar la URL de S3
-            return Storage::disk('s3')->url($s3Path);
-
-        } catch (\Exception $e) {
-            \Log::error("Error processing binary image: " . $e->getMessage());
-            throw new \Exception("Error processing image: " . $e->getMessage());
+        // Si es base64, decodificar
+        if (is_string($binaryData) && preg_match('/^data:image\/(\w+);base64,/', $binaryData, $matches)) {
+            \Log::info("Detected base64 image");
+            $binaryData = substr($binaryData, strpos($binaryData, ',') + 1);
+            $binaryData = base64_decode($binaryData);
         }
+
+        if (empty($binaryData)) {
+            throw new \Exception("Image data is empty");
+        }
+
+        try {
+            // Intentar crear imagen desde binary string
+            $image = Image::make($binaryData);
+        } catch (\Exception $e) {
+            \Log::error("Failed to create image from data: " . $e->getMessage());
+            
+            // Si falla, intentar guardar temporalmente y cargar desde archivo
+            $tempFile = tempnam(sys_get_temp_dir(), 'img_');
+            file_put_contents($tempFile, $binaryData);
+            
+            try {
+                $image = Image::make($tempFile);
+                unlink($tempFile); // Limpiamos el archivo temporal
+            } catch (\Exception $e2) {
+                unlink($tempFile); // Limpiamos el archivo temporal
+                throw new \Exception("Could not read image data: " . $e2->getMessage());
+            }
+        }
+
+        // Verificar que tenemos una imagen válida
+        if (!$image->width() || !$image->height()) {
+            throw new \Exception("Invalid image dimensions");
+        }
+
+        \Log::info("Successfully created image. Dimensions: {$image->width()}x{$image->height()}");
+
+        // Redimensionar si es necesario
+        if ($image->width() > 700 || $image->height() > 700) {
+            $scaleFactor = min(700 / $image->width(), 700 / $image->height());
+            $newWidth = $image->width() * $scaleFactor;
+            $newHeight = $image->height() * $scaleFactor;
+            $image->resize($newWidth, $newHeight);
+            \Log::info("Image resized to: {$newWidth}x{$newHeight}");
+        }
+
+        // Generar nombre único
+        $fileName = self::generateUniqueFileName();
+        $s3Path = $storagePath . '/' . $fileName . '.jpg';
+
+        // Convertir la imagen procesada a string con calidad específica
+        $imageStream = $image->encode('jpg', 90);
+
+        // Subir a S3
+        $success = Storage::disk('s3')->put($s3Path, $imageStream);
+        
+        if (!$success) {
+            throw new \Exception("Failed to upload image to S3");
+        }
+
+        \Log::info("Successfully uploaded image to S3: {$s3Path}");
+
+        // Retornar la URL de S3
+        return Storage::disk('s3')->url($s3Path);
+
+    } catch (\Exception $e) {
+        \Log::error("Error processing binary image: " . $e->getMessage());
+        \Log::error("Stack trace: " . $e->getTraceAsString());
+        throw new \Exception("Error processing image: " . $e->getMessage());
     }
+}
 
 
 }

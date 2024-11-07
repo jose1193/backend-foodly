@@ -136,75 +136,113 @@ class BusinessFoodItemPhotoController extends BaseController
 
       
 
-public function update(BusinessFoodItemPhotoRequest $request, string $uuid)
-{
-    try {
-        $businessFoodItemPhoto = BusinessFoodItemPhoto::where('uuid', $uuid)->firstOrFail();
-        $this->authorizeBusinessFoodItem($businessFoodItemPhoto->business_food_item_id);
-
-        DB::beginTransaction();
-
-        $validatedData = $request->validated();
-
-        // Determinar si la imagen es binaria/base64 o un archivo
-        $imageData = $validatedData['business_food_photo_url'];
-        
+   public function update(BusinessFoodItemPhotoRequest $request, string $uuid)
+    {
         try {
-            if (is_string($imageData) && !is_file($imageData)) {
-                // Usar el nuevo método para imágenes binarias
-                $storedImagePath = ImageHelper::storeAndResizeBinaryImage(
-                    $imageData,
-                    'public/business_food_item_photos'
+            $businessFoodItemPhoto = BusinessFoodItemPhoto::where('uuid', $uuid)->firstOrFail();
+            $this->authorizeBusinessFoodItem($businessFoodItemPhoto->business_food_item_id);
+
+            DB::beginTransaction();
+
+            $validatedData = $request->validated();
+            $imageData = $validatedData['business_food_photo_url'];
+
+            // Log detallado de la imagen recibida
+            \Log::info("=== DEBUG IMAGEN RECIBIDA ===");
+            \Log::info("Tipo de dato: " . gettype($imageData));
+            \Log::info("Longitud de datos: " . (is_string($imageData) ? strlen($imageData) : 'No es string'));
+            
+            if (is_string($imageData)) {
+                // Ver si es base64
+                if (preg_match('/^data:image\/(\w+);base64,/', $imageData)) {
+                    \Log::info("Formato: Base64 image");
+                    \Log::info("Mime type: " . explode(';', explode(':', $imageData)[1])[0]);
+                    \Log::info("Primeros 100 caracteres: " . substr($imageData, 0, 100));
+                }
+                // Ver si es binary
+                elseif (!is_file($imageData)) {
+                    \Log::info("Formato: Binary data");
+                    \Log::info("Primeros bytes en hex: " . bin2hex(substr($imageData, 0, 10)));
+                }
+            }
+            // Ver si es un archivo
+            elseif (is_object($imageData)) {
+                \Log::info("Formato: File upload");
+                \Log::info("Clase: " . get_class($imageData));
+                if (method_exists($imageData, 'getClientOriginalName')) {
+                    \Log::info("Nombre original: " . $imageData->getClientOriginalName());
+                    \Log::info("Mime type: " . $imageData->getClientMimeType());
+                    \Log::info("Tamaño: " . $imageData->getSize());
+                }
+            }
+            \Log::info("=== FIN DEBUG IMAGEN ===");
+
+            try {
+                if (is_string($imageData) && !is_file($imageData)) {
+                    $storedImagePath = ImageHelper::storeAndResizeBinaryImage(
+                        $imageData,
+                        'public/business_food_item_photos'
+                    );
+                } else {
+                    $storedImagePath = ImageHelper::storeAndResize(
+                        $imageData,
+                        'public/business_food_item_photos'
+                    );
+                }
+
+                // Eliminar la imagen anterior si existe
+                if ($businessFoodItemPhoto->business_food_photo_url) {
+                    ImageHelper::deleteFileFromStorage($businessFoodItemPhoto->business_food_photo_url);
+                }
+
+                // Actualizar solo la URL de la imagen
+                $businessFoodItemPhoto->business_food_photo_url = $storedImagePath;
+                $businessFoodItemPhoto->save();
+
+                DB::commit();
+
+                // Actualizar cache
+                $this->updateCache(
+                    "business_food_item_photo_{$uuid}",
+                    $this->cacheTime,
+                    function () use ($businessFoodItemPhoto) {
+                        return new BusinessFoodItemPhotoResource($businessFoodItemPhoto);
+                    }
                 );
-            } else {
-                // Usar el método existente para archivos
-                $storedImagePath = ImageHelper::storeAndResize(
-                    $imageData,
-                    'public/business_food_item_photos'
+
+                // Actualizar cache de todas las fotos
+                $this->updateAllPhotosCache($businessFoodItemPhoto->business_food_item_id);
+
+                return response()->json(
+                    new BusinessFoodItemPhotoResource($businessFoodItemPhoto),
+                    200
                 );
+
+            } catch (\Exception $e) {
+                DB::rollBack();
+                \Log::error('Error processing image: ' . $e->getMessage());
+                \Log::error('Stack trace: ' . $e->getTraceAsString());
+                return response()->json([
+                    'error' => 'Error processing image: ' . $e->getMessage()
+                ], 500);
             }
 
-            // Eliminar la imagen anterior si existe
-            if ($businessFoodItemPhoto->business_food_photo_url) {
-                ImageHelper::deleteFileFromStorage($businessFoodItemPhoto->business_food_photo_url);
-            }
-
-            // Actualizar la URL de la imagen
-            $businessFoodItemPhoto->business_food_photo_url = $storedImagePath;
-
-            if (isset($validatedData['business_food_item_id'])) {
-                $businessFoodItemPhoto->business_food_item_id = $validatedData['business_food_item_id'];
-            }
-
-            $businessFoodItemPhoto->save();
-
-            DB::commit();
-
-            // Actualizar cache
-            $this->updateCache("business_food_item_photo_{$uuid}", $this->cacheTime, function () use ($businessFoodItemPhoto) {
-                return new BusinessFoodItemPhotoResource($businessFoodItemPhoto);
-            });
-
-            // Actualizar cache de todas las fotos
-            $this->updateAllPhotosCache($businessFoodItemPhoto->business_food_item_id);
-
-            return response()->json(new BusinessFoodItemPhotoResource($businessFoodItemPhoto), 200);
-
+        } catch (ModelNotFoundException $e) {
+            DB::rollBack();
+            return response()->json([
+                'message' => 'Business food item photo not found'
+            ], 404);
         } catch (\Exception $e) {
             DB::rollBack();
-            \Log::error('Error processing image: ' . $e->getMessage());
-            return response()->json(['error' => 'Error processing image: ' . $e->getMessage()], 500);
+            \Log::error('Error updating business food item photo: ' . $e->getMessage());
+            \Log::error('Stack trace: ' . $e->getTraceAsString());
+            return response()->json([
+                'error' => 'Error updating business food item photo: ' . $e->getMessage()
+            ], 500);
         }
-
-    } catch (ModelNotFoundException $e) {
-        DB::rollBack();
-        return response()->json(['message' => 'Business food item photo not found'], 404);
-    } catch (\Exception $e) {
-        DB::rollBack();
-        \Log::error('Error updating business food item photo: ' . $e->getMessage());
-        return response()->json(['error' => 'Error updating business food item photo: ' . $e->getMessage()], 500);
     }
-}
+
+
     
     public function update2(BusinessFoodItemPhotoRequest $request, string $uuid)
     {
