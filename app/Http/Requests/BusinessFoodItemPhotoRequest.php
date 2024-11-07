@@ -37,22 +37,22 @@ class BusinessFoodItemPhotoRequest extends FormRequest
         if ($isUpdateRoute) {
             return [
                 'business_food_photo_url' => ['required', function ($attribute, $value, $fail) {
-                    // Verifica si es un archivo
+                    // Check if it's a file
                     if ($this->hasFile('business_food_photo_url')) {
                         return;
                     }
                     
-                    // Verifica si es base64
+                    // Check if it's base64
                     if (is_string($value) && preg_match('/^data:image\/(\w+);base64,/', $value)) {
                         return;
                     }
                     
-                    // Verifica si es binary
+                    // Check if it's binary
                     if (is_string($value) && strlen($value) > 0) {
                         return;
                     }
                     
-                    $fail('El campo business_food_photo_url debe ser un archivo, base64 o datos binarios.');
+                    $fail('The business_food_photo_url must be a file, base64 string, or binary data.');
                 }],
             ];
         }
@@ -71,8 +71,8 @@ class BusinessFoodItemPhotoRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'business_food_photo_url' => 'imagen',
-            'business_food_item_id' => 'ID del ítem de comida'
+            'business_food_photo_url' => 'image',
+            'business_food_item_id' => 'food item ID'
         ];
     }
 
@@ -84,9 +84,11 @@ class BusinessFoodItemPhotoRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'business_food_photo_url.required' => 'La imagen es requerida.',
-            'business_food_item_id.required' => 'El ID del ítem de comida es requerido.',
-            'business_food_item_id.exists' => 'El ítem de comida seleccionado no existe.'
+            'business_food_photo_url.required' => 'The image is required.',
+            'business_food_photo_url.array' => 'The image must be an array.',
+            'business_food_photo_url.*.required' => 'Each image in the array is required.',
+            'business_food_item_id.required' => 'The food item ID is required.',
+            'business_food_item_id.exists' => 'The selected food item does not exist.'
         ];
     }
 
