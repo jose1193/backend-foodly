@@ -113,4 +113,48 @@ public static function deleteFileFromStorage($fullUrl)
     }
 }
 
+public static function storeAndResizeBinaryImage($binaryData, $storagePath)
+    {
+        try {
+            // Si es base64, decodificar
+            if (preg_match('/^data:image\/(\w+);base64,/', $binaryData, $matches)) {
+                $binaryData = substr($binaryData, strpos($binaryData, ',') + 1);
+                $binaryData = base64_decode($binaryData);
+            }
+
+            // Crear imagen desde binary string
+            $image = Image::make($binaryData);
+
+            // Obtener las dimensiones originales
+            $originalWidth = $image->width();
+            $originalHeight = $image->height();
+
+            // Redimensionar si es necesario
+            if ($originalWidth > 700 || $originalHeight > 700) {
+                $scaleFactor = min(700 / $originalWidth, 700 / $originalHeight);
+                $newWidth = $originalWidth * $scaleFactor;
+                $newHeight = $originalHeight * $scaleFactor;
+                $image->resize($newWidth, $newHeight);
+            }
+
+            // Generar nombre único
+            $fileName = self::generateUniqueFileName();
+            $s3Path = $storagePath . '/' . $fileName . '.jpg';
+
+            // Convertir la imagen procesada a string
+            $imageStream = $image->encode('jpg');
+
+            // Subir directamente a S3
+            Storage::disk('s3')->put($s3Path, $imageStream);
+
+            // Retornar la URL de S3
+            return Storage::disk('s3')->url($s3Path);
+
+        } catch (\Exception $e) {
+            \Log::error("Error processing binary image: " . $e->getMessage());
+            throw new \Exception("Error processing image: " . $e->getMessage());
+        }
+    }
+
+
 }

@@ -145,48 +145,67 @@ public function update(BusinessFoodItemPhotoRequest $request, string $uuid)
         DB::beginTransaction();
 
         $validatedData = $request->validated();
-        
-        // Store and resize the new image
-        $storedImagePath = ImageHelper::storeAndResize(
-            $validatedData['business_food_photo_url'],
-            'public/business_food_item_photos'
-        );
 
-        // Delete the old image if it exists
-        if ($businessFoodItemPhoto->business_food_photo_url) {
-            ImageHelper::deleteFileFromStorage($businessFoodItemPhoto->business_food_photo_url);
+        // Determinar si la imagen es binaria/base64 o un archivo
+        $imageData = $validatedData['business_food_photo_url'];
+        
+        try {
+            if (is_string($imageData) && !is_file($imageData)) {
+                // Usar el nuevo método para imágenes binarias
+                $storedImagePath = ImageHelper::storeAndResizeBinaryImage(
+                    $imageData,
+                    'public/business_food_item_photos'
+                );
+            } else {
+                // Usar el método existente para archivos
+                $storedImagePath = ImageHelper::storeAndResize(
+                    $imageData,
+                    'public/business_food_item_photos'
+                );
+            }
+
+            // Eliminar la imagen anterior si existe
+            if ($businessFoodItemPhoto->business_food_photo_url) {
+                ImageHelper::deleteFileFromStorage($businessFoodItemPhoto->business_food_photo_url);
+            }
+
+            // Actualizar la URL de la imagen
+            $businessFoodItemPhoto->business_food_photo_url = $storedImagePath;
+
+            if (isset($validatedData['business_food_item_id'])) {
+                $businessFoodItemPhoto->business_food_item_id = $validatedData['business_food_item_id'];
+            }
+
+            $businessFoodItemPhoto->save();
+
+            DB::commit();
+
+            // Actualizar cache
+            $this->updateCache("business_food_item_photo_{$uuid}", $this->cacheTime, function () use ($businessFoodItemPhoto) {
+                return new BusinessFoodItemPhotoResource($businessFoodItemPhoto);
+            });
+
+            // Actualizar cache de todas las fotos
+            $this->updateAllPhotosCache($businessFoodItemPhoto->business_food_item_id);
+
+            return response()->json(new BusinessFoodItemPhotoResource($businessFoodItemPhoto), 200);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Log::error('Error processing image: ' . $e->getMessage());
+            return response()->json(['error' => 'Error processing image: ' . $e->getMessage()], 500);
         }
 
-        // Update the image path and other fields
-        $businessFoodItemPhoto->business_food_photo_url = $storedImagePath;
-        
-        if (isset($validatedData['business_food_item_id'])) {
-            $businessFoodItemPhoto->business_food_item_id = $validatedData['business_food_item_id'];
-        }
-
-        $businessFoodItemPhoto->save();
-
-        DB::commit();
-
-        // Update cache
-        $this->updateCache("business_food_item_photo_{$uuid}", $this->cacheTime, function () use ($businessFoodItemPhoto) {
-            return new BusinessFoodItemPhotoResource($businessFoodItemPhoto);
-        });
-
-        // Refresh the cache for all photos of this food item
-        $this->updateAllPhotosCache($businessFoodItemPhoto->business_food_item_id);
-
-        return response()->json(new BusinessFoodItemPhotoResource($businessFoodItemPhoto), 200);
     } catch (ModelNotFoundException $e) {
         DB::rollBack();
         return response()->json(['message' => 'Business food item photo not found'], 404);
     } catch (\Exception $e) {
         DB::rollBack();
-        Log::error('Error updating business food item photo: ' . $e->getMessage());
+        \Log::error('Error updating business food item photo: ' . $e->getMessage());
         return response()->json(['error' => 'Error updating business food item photo: ' . $e->getMessage()], 500);
     }
-    }
-
+}
+    
     public function update2(BusinessFoodItemPhotoRequest $request, string $uuid)
     {
         try {
