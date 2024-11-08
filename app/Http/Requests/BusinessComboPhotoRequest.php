@@ -28,14 +28,14 @@ class BusinessComboPhotoRequest extends FormRequest
         if ($isStoreRoute) {
             return [
                 'business_combos_photo_url' => 'required|array',
-                'business_combos_photo_url.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:10048',
+                'business_combos_photo_url.*' => 'required',
                 'business_combos_id' => 'required|exists:business_combos,id',
             ];
         }
 
         if ($isUpdateRoute) {
             return [
-                'business_combos_photo_url' => 'required|image|mimes:jpeg,png,jpg,gif|max:10048',
+                'business_combos_photo_url' => 'required',
             ];
         }
 

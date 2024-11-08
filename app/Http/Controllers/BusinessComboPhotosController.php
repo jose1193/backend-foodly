@@ -123,58 +123,133 @@ class BusinessComboPhotosController extends BaseController
 
     
 
-public function update(BusinessComboPhotoRequest $request, string $uuid)
-{
-    try {
-        $businessComboPhoto = BusinessComboPhoto::where('uuid', $uuid)->firstOrFail();
-        $this->authorizeBusinessCombo($businessComboPhoto->business_combos_id);
+    public function update(BusinessComboPhotoRequest $request, string $uuid)
+    {
+        try {
+            Log::info('Starting combo photo update process', [
+            'uuid' => $uuid,
+            'request_data' => $request->except('business_combos_photo_url')
+            ]);
 
-        DB::beginTransaction();
+            $businessComboPhoto = BusinessComboPhoto::where('uuid', $uuid)->firstOrFail();
+            $this->authorizeBusinessCombo($businessComboPhoto->business_combos_id);
 
-        if ($request->hasFile('business_combos_photo_url')) {
-            // Store and resize the new image
-            $storedImagePath = ImageHelper::storeAndResize(
-                $request->file('business_combos_photo_url'),
-                'public/business_combo_photos'
-            );
+            Log::info('Authorization successful', [
+            'business_combos_id' => $businessComboPhoto->business_combos_id
+            ]);
 
-            // Delete the old image if it exists
-            if ($businessComboPhoto->business_combos_photo_url) {
-                ImageHelper::deleteFileFromStorage($businessComboPhoto->business_combos_photo_url);
+            DB::beginTransaction();
+
+            if ($request->hasFile('business_combos_photo_url') || $request->has('business_combos_photo_url')) {
+                try {
+                $imageInput = $request->hasFile('business_combos_photo_url') 
+                    ? $request->file('business_combos_photo_url')
+                    : $request->get('business_combos_photo_url');
+
+                Log::info('Processing image input', [
+                    'type' => $request->hasFile('business_combos_photo_url') ? 'file' : 'binary',
+                    'input_size' => $request->hasFile('business_combos_photo_url') 
+                        ? $request->file('business_combos_photo_url')->getSize() 
+                        : strlen($request->get('business_combos_photo_url'))
+                ]);
+
+                // Store and resize the new image using ImageHelper
+                $storedImagePath = ImageHelper::storeAndResize(
+                    $imageInput,
+                    'public/business_combo_photos'
+                );
+
+                Log::info('New image stored successfully', [
+                    'path' => $storedImagePath
+                ]);
+
+                // Delete the old image if it exists
+                if ($businessComboPhoto->business_combos_photo_url) {
+                    try {
+                        $deleted = ImageHelper::deleteFileFromStorage($businessComboPhoto->business_combos_photo_url);
+                        Log::info('Old image deletion attempt', [
+                            'success' => $deleted,
+                            'old_path' => $businessComboPhoto->business_combos_photo_url
+                        ]);
+                    } catch (\Exception $e) {
+                        Log::warning('Failed to delete old image', [
+                            'old_path' => $businessComboPhoto->business_combos_photo_url,
+                            'error' => $e->getMessage()
+                        ]);
+                        // Continue execution even if old image deletion fails
+                    }
+                }
+
+                // Update the image path in the BusinessComboPhoto model
+                $businessComboPhoto->business_combos_photo_url = $storedImagePath;
+
+            } catch (\Exception $e) {
+                Log::error('Image processing failed', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+                throw new \Exception('Failed to process image: ' . $e->getMessage());
             }
-
-            // Update the image path in the BusinessComboPhoto model
-            $businessComboPhoto->business_combos_photo_url = $storedImagePath;
         }
 
         // Update other fields if they exist in the request
         if ($request->has('business_combos_id')) {
             $businessComboPhoto->business_combos_id = $request->business_combos_id;
+            Log::info('Updating business_combos_id', [
+                'new_id' => $request->business_combos_id
+            ]);
         }
 
+        // Save changes
         $businessComboPhoto->save();
 
+        // Commit transaction
         DB::commit();
 
         // Update cache
-        $this->updateCache("business_combo_photo_{$uuid}", $this->cacheTime, function () use ($businessComboPhoto) {
-            return new BusinessComboPhotoResource($businessComboPhoto);
-        });
+        $this->updateCache(
+            "business_combo_photo_{$uuid}",
+            $this->cacheTime,
+            function () use ($businessComboPhoto) {
+                return new BusinessComboPhotoResource($businessComboPhoto);
+            }
+        );
 
         // Refresh the cache for all photos of this combo
         $this->updateAllPhotosCache($businessComboPhoto->business_combos_id);
 
-        return response()->json(new BusinessComboPhotoResource($businessComboPhoto), 200);
-    } catch (ModelNotFoundException $e) {
-        DB::rollBack();
-        return response()->json(['message' => 'Business combo photo not found'], 404);
-    } catch (\Exception $e) {
-        DB::rollBack();
-        Log::error('Error updating business combo photo: ' . $e->getMessage());
-        return response()->json(['error' => 'Error updating business combo photo: ' . $e->getMessage()], 500);
-    }
-}
+        Log::info('Combo photo update completed successfully', [
+            'uuid' => $uuid,
+            'business_combos_id' => $businessComboPhoto->business_combos_id
+        ]);
 
+        return response()->json(
+            new BusinessComboPhotoResource($businessComboPhoto),
+            200
+        );
+
+        } catch (ModelNotFoundException $e) {
+        DB::rollBack();
+        Log::error('Business combo photo not found', [
+            'uuid' => $uuid,
+            'error' => $e->getMessage()
+        ]);
+        return response()->json([
+            'message' => 'Business combo photo not found'
+        ], 404);
+
+        } catch (\Exception $e) {
+        DB::rollBack();
+        Log::error('Error updating business combo photo', [
+            'uuid' => $uuid,
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ]);
+        return response()->json([
+            'error' => 'Error updating business combo photo: ' . $e->getMessage()
+        ], 500);
+        }
+    }
 
     public function destroy(string $uuid)
     {
