@@ -7171,6 +7171,10 @@
                         "type": "string",
                         "description": "Gender of the user"
                     },
+                    "terms_and_conditions": {
+                        "type": "boolean",
+                        "default": false
+                    },
                     "role_id": {
                         "type": "integer",
                         "description": "Role ID of the user"
@@ -7374,6 +7378,10 @@
                     },
                     "gender": {
                         "type": "string"
+                    },
+                    "terms_and_conditions": {
+                        "type": "boolean",
+                        "default": false
                     },
                     "role_id": {
                         "type": "string"
