@@ -7173,6 +7173,7 @@
                     },
                     "terms_and_conditions": {
                         "type": "boolean",
+                        "description": "Acceptance of terms and conditions",
                         "default": false
                     },
                     "role_id": {
