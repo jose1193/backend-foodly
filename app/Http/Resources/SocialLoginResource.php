@@ -31,6 +31,7 @@ class SocialLoginResource extends JsonResource
         'zip_code' => null, 
         'city' => null, 
         'country' => null,
+        'terms_and_conditions' => null,
         'gender' => $this->resource['gender'], 
         'created_at' => null, 
         'updated_at' => null, 

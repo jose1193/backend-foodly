@@ -29,12 +29,13 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
-        'address',    // Add the new fields here
+        'address',   
         'zip_code',
         'city',
         'country',
         'gender',
         'profile_photo_path',
+        'terms_and_conditions',     
     ];
 
     /**

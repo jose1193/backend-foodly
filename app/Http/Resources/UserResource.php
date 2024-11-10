@@ -32,6 +32,7 @@ class UserResource extends JsonResource {
             'zip_code' => $this->zip_code,
             'city' => $this->city,
             'country' => $this->country,
+            'terms_and_conditions' => (boolean) $this->terms_and_conditions,
             'gender' => $this->gender,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

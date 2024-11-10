@@ -221,7 +221,6 @@
                                         "city": "Exampleville",
                                         "country": "Exampleland",
                                         "gender": "Male",
-                                        "terms_and_conditions": true,
                                         "user_role": "Role"
                                     }
                                 ]
@@ -1002,7 +1001,6 @@
                                         "city": "Exampleville",
                                         "country": "Exampleland",
                                         "gender": "Male",
-                                        "terms_and_conditions": true,
                                         "role_id": 1
                                     },
                                     {
@@ -1019,7 +1017,6 @@
                                         "city": "Sampletown",
                                         "country": "Sampleland",
                                         "gender": "Female",
-                                        "terms_and_conditions": true,
                                         "role_id": 2
                                     }
                                 ]
@@ -1158,7 +1155,6 @@
                                     "city": "Exampleville",
                                     "country": "Exampleland",
                                     "gender": "Male",
-                                    "terms_and_conditions": true,
                                     "role_id": 1
                                 }
                             }
@@ -1219,7 +1215,6 @@
                                         "city": "Exampleville",
                                         "country": "Exampleland",
                                         "gender": "Male",
-                                        "terms_and_conditions": true,
                                         "role_id": 1
                                     },
                                     "roles": {
@@ -3169,35 +3164,6 @@
                                                     }
                                                 ]
                                             }
-                                        ],
-                                        "business_combos": [
-                                            {
-                                                "id": 1,
-                                                "uuid": "2f71b41a-7c26-4852-abd0-dd13817114c1",
-                                                "business_menu_id": 1,
-                                                "name": "Combo Familiar",
-                                                "description": "Incluye una pizza grande, una ensalada y un refresco",
-                                                "versions": [
-                                                    "regular",
-                                                    "medium",
-                                                    "big"
-                                                ],
-                                                "prices": {
-                                                    "regular": 3,
-                                                    "medium": 4.5,
-                                                    "big": 6
-                                                },
-                                                "favorites_count": 7,
-                                                "available": true,
-                                                "business_combos_reference_photos": [
-                                                    {
-                                                        "id": 1,
-                                                        "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
-                                                        "business_combos_photo_url": "https://url/business_combos_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
-                                                        "business_combos_id": 1
-                                                    }
-                                                ]
-                                            }
                                         ]
                                     }
                                 ]
@@ -3351,35 +3317,6 @@
                                                                 "business_drink_item_id": 1
                                                             }
                                                         ]
-                                                    }
-                                                ]
-                                            }
-                                        ],
-                                        "business_combos": [
-                                            {
-                                                "id": 1,
-                                                "uuid": "2f71b41a-7c26-4852-abd0-dd13817114c1",
-                                                "business_menu_id": 1,
-                                                "name": "Combo Familiar",
-                                                "description": "Incluye una pizza grande, una ensalada y un refresco",
-                                                "versions": [
-                                                    "regular",
-                                                    "medium",
-                                                    "big"
-                                                ],
-                                                "prices": {
-                                                    "regular": 3,
-                                                    "medium": 4.5,
-                                                    "big": 6
-                                                },
-                                                "favorites_count": 7,
-                                                "available": true,
-                                                "business_combos_reference_photos": [
-                                                    {
-                                                        "id": 1,
-                                                        "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
-                                                        "business_combos_photo_url": "https://url/business_combos_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
-                                                        "business_combos_id": 1
                                                     }
                                                 ]
                                             }

@@ -44,6 +44,7 @@ class CreateUserRequest extends FormRequest
         'zip_code' => ['nullable', 'string', 'max:20'],
         'city' => ['nullable', 'string', 'max:255'],
         'country' => ['nullable', 'string', 'max:255'],
+        'terms_and_conditions' => ['nullable', 'boolean'],
         'gender' => ['nullable', 'in:male,female,other'],
         'role_id' => [$isStoreRoute ? 'required' : 'nullable', 'exists:roles,id'],
         'provider' => ['nullable', 'min:4', 'max:20'],
