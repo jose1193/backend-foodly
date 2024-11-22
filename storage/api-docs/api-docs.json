@@ -158,7 +158,7 @@
                         "description": "Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 }
             }
@@ -186,13 +186,13 @@
                         }
                     },
                     "400": {
-                        "description": "(Bad Request) The data sent is incorrect"
+                        "$ref": "#/components/responses/BadRequest"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 }
             }
@@ -229,10 +229,10 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -260,10 +260,10 @@
                         "description": "Password updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -292,10 +292,10 @@
                         "description": "Password reset instructions sent successfully"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 }
             }
@@ -319,13 +319,13 @@
                         "description": "PIN verified. Proceed with password reset"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "429": {
-                        "description": "(Too Many Requests) The client has sent too many requests in a given amount of time"
+                        "$ref": "#/components/responses/TooManyRequests"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 }
             }
@@ -349,10 +349,10 @@
                         "description": "Reset password instructions sent successfully"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 }
             }
@@ -376,13 +376,13 @@
                         "description": "Profile updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -411,10 +411,10 @@
                         "description": "Photo Profile updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -441,7 +441,7 @@
                         "description": "Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -495,10 +495,10 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -527,10 +527,10 @@
                         "description": "New permission created successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -569,13 +569,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -617,13 +617,13 @@
                         "description": "Permission updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -655,13 +655,13 @@
                         "description": "Permission deleted successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -695,10 +695,10 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -727,10 +727,10 @@
                         "description": "New Role created successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -769,13 +769,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -821,10 +821,10 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -876,13 +876,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -924,13 +924,13 @@
                         "description": "Role updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -962,13 +962,13 @@
                         "description": "Role deleted successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -1027,10 +1027,10 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -1076,10 +1076,10 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -1108,10 +1108,10 @@
                         "description": "User created successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -1121,7 +1121,7 @@
                 ]
             }
         },
-        "/users-profile/{uuid}": {
+        "/user/{uuid}": {
             "get": {
                 "tags": ["Users Data"],
                 "summary": "Get a user by UUID",
@@ -1165,13 +1165,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -1235,13 +1235,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -1284,13 +1284,13 @@
                         "description": "User updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -1323,13 +1323,13 @@
                         "description": "User deleted successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -1362,13 +1362,13 @@
                         "description": "User restored successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -1407,13 +1407,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -1452,13 +1452,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -1499,7 +1499,7 @@
                         }
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 }
             }
@@ -1523,13 +1523,13 @@
                         "description": "Category created successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -1572,13 +1572,13 @@
                         "description": "Category updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -1623,13 +1623,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -1672,10 +1672,10 @@
                         "description": "Category Image updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -1720,13 +1720,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -1765,7 +1765,7 @@
                         }
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -1794,13 +1794,13 @@
                         "description": "Subcategory created successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -1843,16 +1843,16 @@
                         "description": "Subcategory updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -1896,13 +1896,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -1946,13 +1946,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -1993,7 +1993,7 @@
                         }
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 }
             }
@@ -2017,13 +2017,13 @@
                         "description": "Service created successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -2068,13 +2068,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -2117,13 +2117,13 @@
                         "description": "Service updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -2166,10 +2166,10 @@
                         "description": "Service Image updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -2214,13 +2214,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -2419,7 +2419,7 @@
                         }
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -2448,13 +2448,13 @@
                         "description": "Business created successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -2497,13 +2497,13 @@
                         "description": "Business updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -2628,13 +2628,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -2677,10 +2677,10 @@
                         "description": "Business Logo updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -2722,13 +2722,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -2846,13 +2846,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -2889,7 +2889,7 @@
                         }
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -2918,13 +2918,13 @@
                         "description": "Business Images created successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -2967,13 +2967,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -3016,10 +3016,10 @@
                         "description": "Business Image updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -3062,13 +3062,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -3205,7 +3205,7 @@
                         }
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -3234,13 +3234,13 @@
                         "description": "Business Menu created successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -3390,13 +3390,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 }
             }
@@ -3432,13 +3432,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -3501,7 +3501,7 @@
                         }
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -3530,13 +3530,13 @@
                         "description": "Business Food Category created successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -3613,13 +3613,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -3662,13 +3662,13 @@
                         "description": "Business Food Category updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -3709,13 +3709,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -3769,7 +3769,7 @@
                         }
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -3798,13 +3798,13 @@
                         "description": "Business Food Item created successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -3870,13 +3870,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -3919,13 +3919,13 @@
                         "description": "Business Food Item updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -3966,13 +3966,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -4007,7 +4007,7 @@
                         }
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -4056,13 +4056,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -4107,13 +4107,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -4156,10 +4156,10 @@
                         "description": "Business Food Photo updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -4200,13 +4200,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -4269,7 +4269,7 @@
                         }
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -4298,13 +4298,13 @@
                         "description": "Business Drink Category created successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -4381,13 +4381,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -4430,13 +4430,13 @@
                         "description": "Business Drink Category updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -4477,13 +4477,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -4537,7 +4537,7 @@
                         }
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -4569,13 +4569,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -4634,13 +4634,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -4683,13 +4683,13 @@
                         "description": "Business Food Item updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -4730,13 +4730,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -4771,7 +4771,7 @@
                         }
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -4820,13 +4820,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -4871,13 +4871,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -4920,10 +4920,10 @@
                         "description": "Business Drink Photo updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -4964,13 +4964,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -5024,7 +5024,7 @@
                         }
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -5053,13 +5053,13 @@
                         "description": "Business Combo created successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -5123,13 +5123,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -5172,13 +5172,13 @@
                         "description": "Business Combo Item updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -5219,13 +5219,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -5260,7 +5260,7 @@
                         }
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -5309,13 +5309,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -5360,13 +5360,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -5409,10 +5409,10 @@
                         "description": "Business Combo Photo updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -5453,13 +5453,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -5562,7 +5562,7 @@
                         }
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -5591,13 +5591,13 @@
                         "description": "Business Branch created successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -5640,13 +5640,13 @@
                         "description": "Business updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -5724,13 +5724,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -5773,10 +5773,10 @@
                         "description": "Business Branch Logo updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -5818,13 +5818,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -5866,13 +5866,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -5909,7 +5909,7 @@
                         }
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -5938,13 +5938,13 @@
                         "description": "Branch cover images stored successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -5987,13 +5987,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6036,10 +6036,10 @@
                         "description": "Branch Image updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6082,13 +6082,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6135,7 +6135,7 @@
                         }
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6164,13 +6164,13 @@
                         "description": "Promotion created successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6220,13 +6220,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6269,16 +6269,16 @@
                         "description": "Subcategory updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6311,13 +6311,13 @@
                         "description": "Promotion successfully removed"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6367,13 +6367,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6410,7 +6410,7 @@
                         }
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6439,13 +6439,13 @@
                         "description": "Branch cover images stored successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6488,13 +6488,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6537,10 +6537,10 @@
                         "description": "Promotion Image updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6573,13 +6573,13 @@
                         "description": "Promotion Image successfully removed"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6626,7 +6626,7 @@
                         }
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6655,13 +6655,13 @@
                         "description": "Promotion created successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6711,13 +6711,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6760,16 +6760,16 @@
                         "description": "Subcategory updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6802,13 +6802,13 @@
                         "description": "Branch successfully removed"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6858,13 +6858,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6901,7 +6901,7 @@
                         }
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6930,13 +6930,13 @@
                         "description": "Branch Promotion images stored successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6979,13 +6979,13 @@
                         }
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -7028,10 +7028,10 @@
                         "description": "Branch Promotion Image updated successfully"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -7064,13 +7064,13 @@
                         "description": "Branch Promotion Image successfully removed"
                     },
                     "401": {
-                        "description": "(Unauthorized) No authorization to call the service"
+                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "404": {
-                        "description": "(NotFound) No information found"
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -7103,10 +7103,10 @@
                         "description": "Redirect to frontend or dashboard after successful authentication"
                     },
                     "422": {
-                        "description": "(Unprocessable Entity) Validation failed"
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
-                        "description": "Server error"
+                        "$ref": "#/components/responses/ServerError"
                     }
                 }
             }

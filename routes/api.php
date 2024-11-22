@@ -96,6 +96,7 @@ Route::middleware(['auth:sanctum','handle.notfound'])->group(function() {
     Route::post('update-profile', [CreateUserController::class, 'update']);
     Route::post('update-profile-photo', [ProfilePhotoController::class, 'update']);
     
+    Route::get('/user/{uuid}', [AuthController::class, 'getUserByUuid']);
 
     // Rutas relacionadas con roles
     Route::get('roles-list', [RoleController::class, 'index']); // Obtener una lista de roles

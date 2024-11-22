@@ -176,7 +176,26 @@ public function user(Request $request)
     return $user;
     }
 
-
+    public function getUserByUuid($uuid)
+    {
+        try {
+        $user = User::where('uuid', $uuid)->firstOrFail();
+        
+        // Check if user is cached
+        $cachedUser = $this->getCachedUser($user->id);
+        
+        $userResource = new UserResource($cachedUser);
+        $userRoles = $cachedUser->roles->pluck('name')->all();
+        $userResource->additional(['user_role' => $userRoles]);
+        
+        return response()->json($userResource);
+        
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+        return response()->json(['error' => 'User not found'], 404);
+        } catch (\Exception $e) {
+        return response()->json(['error' => 'An error occurred'], 500);
+        }
+    }
 
 
 }
