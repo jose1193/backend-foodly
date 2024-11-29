@@ -680,17 +680,29 @@
                         "description": "List of registered roles",
                         "content": {
                             "application/json": {
-                                "example": [
-                                    {
-                                        "name": "Role 1"
-                                    },
-                                    {
-                                        "name": "Role 2"
-                                    },
-                                    {
-                                        "name": "Role 3"
-                                    }
-                                ]
+                                "schema": {
+                                    "$ref": "#/components/schemas/inline_response_200"
+                                },
+                                "example": {
+                                    "roles": [
+                                        {
+                                            "id": 2,
+                                            "name": "Manager"
+                                        },
+                                        {
+                                            "id": 3,
+                                            "name": "Admin"
+                                        },
+                                        {
+                                            "id": 4,
+                                            "name": "Employee"
+                                        },
+                                        {
+                                            "id": 5,
+                                            "name": "Customer"
+                                        }
+                                    ]
+                                }
                             }
                         }
                     },
@@ -8346,6 +8358,17 @@
                     }
                 }
             },
+            "inline_response_200": {
+                "type": "object",
+                "properties": {
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/inline_response_200_roles"
+                        }
+                    }
+                }
+            },
             "businesscoverimagesstore_body": {
                 "required": ["business_id", "business_image_path"],
                 "type": "object",
@@ -8440,6 +8463,17 @@
                     }
                 },
                 "example": "{\"regular\":3.0,\"medium\":4.5,\"big\":6.0}"
+            },
+            "inline_response_200_roles": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
             }
         },
         "responses": {
