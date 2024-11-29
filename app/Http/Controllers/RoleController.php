@@ -7,6 +7,7 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller as BaseController;
 
 
@@ -20,16 +21,26 @@ class RoleController extends BaseController
 
  public function __construct()
 {
-    $this->middleware('check.permission:Super Admin')->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+    $this->middleware('check.permission:Super Admin')->only(['create', 'store', 'edit', 'update', 'destroy']);
 }
 
 
     public function index()
-{
-    $roles = Role::orderBy('id', 'DESC')->get();
-    return response()->json(['roles' => $roles],200);
-     
-}
+    {
+        $user = Auth::user();
+
+        // If user is Super Admin, show all roles
+        if ($user->hasRole('Super Admin')) {
+            $roles = Role::orderBy('id', 'DESC')->get();
+        } else {
+            // For other roles, exclude Super Admin role
+            $roles = Role::where('name', '!=', 'Super Admin')
+                ->orderBy('id', 'DESC')
+                ->get();
+        }
+
+        return response()->json(['roles' => $roles], 200);
+    }
 
     /**
      * Show the form for creating a new resource.

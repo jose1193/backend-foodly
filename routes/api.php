@@ -99,8 +99,9 @@ Route::middleware(['auth:sanctum','handle.notfound'])->group(function() {
     Route::get('/user/{uuid}', [AuthController::class, 'getUserByUuid']);
 
     // Rutas relacionadas con roles
-    Route::get('roles-list', [RoleController::class, 'index']); // Obtener una lista de roles
-    Route::post('roles', [RoleController::class, 'store']); // Crear un nuevo rol
+    
+    Route::get('roles', [RoleController::class, 'index']); // Obtener una lista de roles
+    Route::post('roles/store', [RoleController::class, 'store']); // Crear un nuevo rol
     Route::get('roles/{id}', [RoleController::class, 'show']); // Mostrar un rol específico
     Route::put('roles-update/{id}', [RoleController::class, 'update']); // Actualizar un rol existente
     Route::delete('roles-delete/{id}', [RoleController::class, 'destroy']); // Eliminar un rol existente

@@ -166,36 +166,34 @@ public function update(CreateUserRequest $request)
         $user = Auth::user();
         $data = $request->validated();
 
-        // Verificar si el usuario tiene permiso para actualizar su perfil
         if ($user->id !== $request->user()->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        // Verificar si el email ya está registrado en otro usuario
         $this->validateEmail($data, $user);
-
-        // Verificar si el nombre de usuario ya está registrado en otro usuario
         $this->validateUsername($data, $user);
 
-        // Verificar si el ID de rol es válido
-        $this->validateRoleId($data);
+        // Update role if role_id is provided
+        if (isset($data['role_id'])) {
+            $this->validateRoleId($data);
+            $role = Role::find($data['role_id']);
+            $user->syncRoles($role);
+        }
 
-        // Excluir la contraseña del arreglo de datos
-        unset($data['password']);
+        unset($data['password'], $data['role_id']);
 
-        // Actualizar el perfil del usuario
         $user->update($data);
 
-        // Confirmar la transacción
         DB::commit();
 
-        // Actualizar la caché del usuario
         $this->updateUserCache($user);
 
-        return response()->json(['message' => 'Profile updated successfully', 'user' => new UserResource($user)], 200);
+        return response()->json([
+            'message' => 'Profile updated successfully', 
+            'user' => new UserResource($user)
+        ], 200);
     } catch (\Exception $e) {
         DB::rollBack();
-        Log::error('An error occurred while updating profile: ' . $e->getMessage());
         return response()->json(['error' => $e->getMessage()], 422);
     }
 }

@@ -671,7 +671,7 @@
                 ]
             }
         },
-        "/roles-list": {
+        "/roles": {
             "get": {
                 "tags": ["Roles"],
                 "summary": "Get all registered roles",
@@ -708,7 +708,7 @@
                 ]
             }
         },
-        "/roles": {
+        "/roles/store": {
             "post": {
                 "tags": ["Roles"],
                 "summary": "Store a new Role",
@@ -7287,6 +7287,9 @@
                     },
                     "gender": {
                         "type": "string"
+                    },
+                    "role_id": {
+                        "type": "integer"
                     }
                 }
             },
