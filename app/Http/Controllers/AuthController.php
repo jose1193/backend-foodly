@@ -24,6 +24,8 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Cache;
+
 
 class AuthController extends BaseController
 {
@@ -164,17 +166,23 @@ public function user(Request $request)
 
 
     private function getCachedUser($userId)
-    {
-    $cachedUser = Redis::get('user:' . $userId);
+{
+    // Intenta obtener el usuario desde el caché
+    $cachedUser = Cache::get('user:' . $userId);
+
     if ($cachedUser) {
-        return unserialize($cachedUser);
+        return unserialize($cachedUser); // Deserializa el usuario si existe en la caché
     }
 
-    $user = User::findOrFail($userId);
+    // Si no está en la caché, lo carga desde la base de datos
+    $user = User::with('roles')->findOrFail($userId);
+
+    // Almacena el usuario en caché
     $this->cacheUser($user);
 
     return $user;
-    }
+}
+
 
     public function getUserByUuid($uuid)
     {
