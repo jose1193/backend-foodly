@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
-
+use App\Helpers\ImageHelper;
 
 class PromotionController extends BaseController
 {
@@ -56,55 +56,56 @@ public function index()
 
     private function getAllPromotions()
     {
-        
-        $businesses = User::findOrFail($this->userId)->businesses;
-
-       
-        $allPromotions = collect();
-
-       
-        foreach ($businesses as $business) {
-            $businessId = $business->id;
-            $promotions = Promotion::withTrashed()->where('business_id', $businessId)->orderBy('created_at', 'desc')->get();
-            $allPromotions = $allPromotions->concat($promotions);
-        }
-
-        return $allPromotions;
+        return Promotion::whereIn('business_id', 
+            User::findOrFail($this->userId)
+                ->businesses()
+                ->pluck('id')
+        )
+        ->orderBy('created_at', 'desc')
+        ->get();
     }
 
 
-public function store(PromotionRequest $request)
+    public function store(PromotionRequest $request)
     {
         $validatedData = $request->validated();
 
         DB::beginTransaction();
         try {
-            $this->authorizeBusiness($validatedData['business_id']);
+        $business = Business::where('business_uuid', $validatedData['business_uuid'])->firstOrFail();
+        $this->authorizeBusiness($business->id);
 
-            $validatedData['promotion_uuid'] = Uuid::uuid4()->toString();
-            $promotion = Promotion::create($validatedData);
+        $validatedData['business_id'] = $business->id;
+        unset($validatedData['business_uuid']);
+        $validatedData['uuid'] = Uuid::uuid4()->toString();
 
-           
+        $promotion = Promotion::create($validatedData);
 
-            $this->refreshCache( "promotion_{$promotion->promotion_uuid}", $this->cacheTime, function () use ($promotion) {
-            return $promotion;
-            });
+        if ($request->filled('promo_active_days')) {
+            $activeDays = $request->input('promo_active_days');
+            $promotion->activeDay()->create([
+                'day_0' => $activeDays['day_0'] ?? false,
+                'day_1' => $activeDays['day_1'] ?? false,
+                'day_2' => $activeDays['day_2'] ?? false,
+                'day_3' => $activeDays['day_3'] ?? false,
+                'day_4' => $activeDays['day_4'] ?? false,
+                'day_5' => $activeDays['day_5'] ?? false,
+                'day_6' => $activeDays['day_6'] ?? false
+            ]);
+        }
 
-            // Obtener todas las promociones nuevamente para actualizar la caché
-            $allPromotions = $this->getAllPromotions();
+        $this->refreshCache("promotion_{$promotion->uuid}", $this->cacheTime, fn() => $promotion);
+        $this->updatePromotionCache($this->getAllPromotions());
 
-            // Actualizar la caché con todas las promociones
-            $this->updatePromotionCache($allPromotions);
-            
-            DB::commit();
-
-            return response()->json(new PromotionResource($promotion), 200);
-        } catch (\Illuminate\Database\QueryException $e) {
-            DB::rollBack();
-            Log::error('Error creating promotion: ' . $e->getMessage());
-            return response()->json(['message' => 'Error creating promotion', 'error' => $e->getMessage()], 500);
+        DB::commit();
+        return response()->json(new PromotionResource($promotion), 200);
+        } catch (\Exception $e) {
+        DB::rollBack();
+        Log::error('Error creating promotion: ' . $e->getMessage());
+        return response()->json(['message' => 'Error creating promotion'], 500);
         }
     }
+
 
     
     
@@ -121,53 +122,46 @@ private function authorizeBusiness($businessId)
 }
 
 
-public function update(PromotionRequest $request, $uuid)
-{
-    DB::beginTransaction();
-    try {
-        $userId = $this->userId;
-        $cacheKey = "promotion_{$uuid}";
-        
-        
-        $promotion = $this->getCachedData($cacheKey, $this->cacheTime, function () use ($uuid, $userId) {
-            return Promotion::where('promotion_uuid', $uuid)
-                            ->whereHas('business', function ($query) use ($userId) {
-                                $query->where('user_id', $userId);
-                            })->firstOrFail();
-        });
-
-        $validatedData = $request->validated();
-
-       
-        if (isset($validatedData['business_id']) && $validatedData['business_id'] != $promotion->business_id) {
-            return response()->json(['message' => 'You are not authorized to update this promotion.'], 403);
-        }
-
-        $promotion->update($validatedData);
-
-        
-        $this->refreshCache($cacheKey, $this->cacheTime, function () use ($promotion) {
-            return $promotion;
-            });
-
+public function update(PromotionRequest $request, $uuid) 
+    {
     
-        $allPromotions = $this->getAllPromotions();
-        // Actualizar la caché con todas las promociones
-        $this->updatePromotionCache($allPromotions);
 
-        DB::commit();
+        DB::beginTransaction();
+        try {
+            $promotion = Promotion::where('uuid', $uuid)
+            ->whereHas('business', function($q) {
+                $q->where('user_id', $this->userId);
+            })->firstOrFail();
 
-        return response()->json(new PromotionResource($promotion), 200);
-    } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-        DB::rollBack();
-        return response()->json(['message' => 'Promotion not found'], 404);
-    } catch (\Exception $e) {
-        DB::rollBack();
-        Log::error('Error updating promotion: ' . $e->getMessage());
-        return response()->json(['message' => 'Error updating promotion'], 500);
+            $promotion->update($request->validated());
+
+            if ($request->filled('promo_active_days')) {
+                $activeDays = $request->input('promo_active_days');
+                $promotion->activeDay()->updateOrCreate(
+                ['promotion_id' => $promotion->id],
+                [
+                    'day_0' => $activeDays['day_0'] ?? false,
+                    'day_1' => $activeDays['day_1'] ?? false,
+                    'day_2' => $activeDays['day_2'] ?? false,
+                    'day_3' => $activeDays['day_3'] ?? false,
+                    'day_4' => $activeDays['day_4'] ?? false,
+                    'day_5' => $activeDays['day_5'] ?? false,
+                    'day_6' => $activeDays['day_6'] ?? false
+                ]
+                );
+            }
+
+            $this->refreshCache("promotion_{$uuid}", $this->cacheTime, fn() => $promotion);
+            $this->updatePromotionCache($this->getAllPromotions());
+
+            DB::commit();
+            return response()->json(new PromotionResource($promotion), 200);
+            } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error updating promotion: ' . $e->getMessage());
+            return response()->json(['message' => 'Error updating promotion'], 500);
+        }
     }
-}
-
 
 
 
@@ -179,7 +173,7 @@ public function show($uuid)
         $cacheKey = "promotion_{$uuid}";
         
         $promotion = $this->getCachedData($cacheKey, $this->cacheTime, function () use ($uuid) {
-            return Promotion::withTrashed()->where('promotion_uuid', $uuid)->firstOrFail();
+            return Promotion::where('uuid', $uuid)->firstOrFail();
         });
 
         return response()->json(new PromotionResource($promotion), 200);
@@ -199,12 +193,20 @@ public function destroy($uuid)
 {
     DB::beginTransaction();
     try {
-        // Intentar encontrar la promoción por su UUID
         $cacheKey = "promotion_{$uuid}";
        
         $promotion = $this->getCachedData($cacheKey, $this->cacheTime, function () use ($uuid) {
-            return Promotion::where('promotion_uuid', $uuid)->firstOrFail();
+            return Promotion::with('promotionMedia')->where('uuid', $uuid)->firstOrFail();
         });
+
+        // Eliminar los archivos físicos de los medias
+        foreach ($promotion->promotionMedia as $media) {
+            if ($media->business_promo_media_url) {
+                ImageHelper::deleteFileFromStorage($media->business_promo_media_url);
+            }
+            // Invalidar el cache de cada media
+            $this->invalidateCache("promotion_media_{$media->uuid}");
+        }
 
         $this->invalidateCache($cacheKey);
       
@@ -216,24 +218,17 @@ public function destroy($uuid)
         $this->updatePromotionCache($allPromotions);
 
         DB::commit();
-
     
-        return response()->json(['message' => 'Promotion deleted successfully'], 200);
+        return response()->json(['message' => 'Promotion and associated media deleted successfully'], 200);
     } catch (ModelNotFoundException $e) {
-        // Revertir la transacción si la promoción no se encuentra
         DB::rollBack();
         return response()->json(['message' => 'Promotion not found'], 404);
     } catch (\Exception $e) {
-        // Revertir la transacción en caso de cualquier otro error
         DB::rollBack();
         Log::error('Error deleting promotion: ' . $e->getMessage());
         return response()->json(['message' => 'Error deleting promotion'], 500);
     }
 }
-
-
-
-
 
 
 public function restore($uuid)
@@ -242,7 +237,7 @@ public function restore($uuid)
     try {
        
          // Buscar la promoción eliminada con el UUID proporcionado
-        $promotion = Promotion::where('promotion_uuid', $uuid)->onlyTrashed()->first();
+        $promotion = Promotion::where('uuid', $uuid)->onlyTrashed()->first();
 
        
 

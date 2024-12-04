@@ -16,21 +16,31 @@ class PromotionResource extends JsonResource
     {
         return [
             'id' => (int) $this->id,
-            'promotion_uuid' => $this->promotion_uuid,
-            'promotion_title' => $this->promotion_title,
-            'promotion_description' => $this->promotion_description,
-            'promotion_start_date' => $this->promotion_start_date,
-            'promotion_end_date' => $this->promotion_end_date,
-            'promotion_type' => $this->promotion_type,
-            'promotion_status' => $this->promotion_status,
-            'business_id' => $this->business->id,
+            'uuid' => $this->uuid,
+            'title' => $this->title,
+            'description' => $this->description,
+            'start_date' => $this->start_date,
+            'expire_date' => $this->expire_date,
+            'versions' => $this->versions ?? null,
+            //'prices' => $this->prices, 
+            'prices' => [
+            'regular' => $this->prices['regular'] !== null ? (double)$this->prices['regular'] : null,
+            'medium' => $this->prices['medium'] !== null ? (double)$this->prices['medium'] : null,
+            'big' => $this->prices['big'] !== null ? (double)$this->prices['big'] : null,
+            ],
+            'favorites_count' => (int) $this->favorites_count ?? 0,
+            'available' => (boolean) $this->available,
+            'business_promo_reference_media' => PromotionMediaResource::collection($this->promotionMedia), 
+            
+            'promo_active_days' => $this->getPromoActiveDays(),
+            //'business_id' => $this->business->id,
+            'business' => new BusinessResource($this->business),
+            
             'created_at' => $this->created_at ? $this->created_at->toDateTimeString() : null,
             'updated_at' => $this->updated_at ? $this->updated_at->toDateTimeString() : null,
-            'deleted_at' => $this->deleted_at ? $this->deleted_at->toDateTimeString() : null,
+            //'deleted_at' => $this->deleted_at ? $this->deleted_at->toDateTimeString() : null,
           
-            'business_promotions_images' => PromotionImageResource::collection($this->promotionImages), 
-            
-            
+           
             //'promotions_images' => $this->promotionImages->map(function ($image) {
             //return [
                 //'id' => $image->id,
@@ -48,6 +58,21 @@ class PromotionResource extends JsonResource
             //'business_logo' => $this->business->business_logo ? asset($this->business->business_logo) : null,
             //'business_name' => $this->business->business_name,
             //],
+
+            
         ];
+
+
+    }
+        private function getPromoActiveDays()
+    {
+        $days = ['day_0', 'day_1', 'day_2', 'day_3', 'day_4', 'day_5', 'day_6'];
+        $activeDays = [];
+
+        foreach ($days as $day) {
+       $activeDays[$day] = (bool) $this->activeDay?->$day ?? false;
+        }
+
+    return $activeDays;
     }
 }

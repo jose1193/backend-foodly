@@ -21,7 +21,7 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\BranchCoverImageController;
 use App\Http\Controllers\BiometricAuthController;
 use App\Http\Controllers\PromotionController;
-use App\Http\Controllers\PromotionCoverImageController;
+use App\Http\Controllers\PromotionMediaController;
 use App\Http\Controllers\PromotionBranchController;
 use App\Http\Controllers\PromotionBranchImageController;
 use App\Http\Controllers\SocialLoginController;
@@ -182,22 +182,32 @@ Route::middleware(['auth:sanctum','handle.notfound'])->group(function() {
     // Routes related to Biometric Login
     Route::post('/biometric-login', [BiometricAuthController::class, 'store']);
 
-    // Routes related to Business Cover Images
-    Route::get('/promotions', [PromotionController::class, 'index']);
-    Route::post('/promotions-store', [PromotionController::class, 'store']);
-    Route::put('/promotions-update/{uuid}', [PromotionController::class, 'update']);
-    Route::get('/promotions/{uuid}', [PromotionController::class, 'show']);
-    Route::delete('/promotions-delete/{uuid}', [PromotionController::class, 'destroy']);
-    Route::put('/promotions-restore/{uuid}', [PromotionController::class, 'restore']);
+    // Routes related to Business Promotions
+
+    Route::prefix('promotions')->group(function () {
+    Route::get('/', [PromotionController::class, 'index']);    
+    Route::post('/store', [PromotionController::class, 'store']); 
+    Route::get('/{uuid}', [PromotionController::class, 'show']); 
+    Route::patch('/update/{uuid}', [PromotionController::class, 'update']); 
+    Route::delete('/delete/{uuid}', [PromotionController::class, 'destroy']);
+    Route::put('/restore/{uuid}', [PromotionController::class, 'restore']);
+   
+    });
+
+     // Routes related to Promotions Business Images
+
+    Route::prefix('promotions-media')->group(function () {
+    Route::get('/', [PromotionMediaController::class, 'index']);    
+    Route::post('/store', [PromotionMediaController::class, 'store']); 
+    Route::get('/{uuid}', [PromotionMediaController::class, 'show']); 
+    Route::post('/update/{uuid}', [PromotionMediaController::class, 'update']); 
+    Route::delete('/delete/{uuid}', [PromotionMediaController::class, 'destroy']);
+   
+   
+    });
 
 
-    // Routes related to Promotions Business Images
-    Route::get('/promotions-images', [PromotionCoverImageController::class, 'index']);
-    Route::post('/promotions-images-store', [PromotionCoverImageController::class, 'store']);
-    Route::get('/promotions-images/{uuid}', [PromotionCoverImageController::class, 'show']);
-    Route::delete('/promotions-images-delete/{uuid}', [PromotionCoverImageController::class, 'destroy']);
-    Route::post('/promotions-images-update/{uuid}', [PromotionCoverImageController::class, 'updateImage']);
-    
+   
     // Routes related to Promotions Branch 
     Route::get('/branch-promotions', [PromotionBranchController::class, 'index']);
     Route::post('/branch-promotions-store', [PromotionBranchController::class, 'store']);

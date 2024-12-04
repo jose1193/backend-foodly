@@ -50,7 +50,35 @@ class BusinessResource extends JsonResource
         'updated_at' => $this->updated_at ? $this->updated_at->toDateTimeString() : null,
         'deleted_at' => $this->deleted_at ? $this->deleted_at->toDateTimeString() : null,
         'cover_images' => BusinessCoverImageResource::collection($this->coverImages), 
-        'business_promotions' => PromotionResource::collection($this->promotions),
+        'business_promotions' => $this->promotions->map(function ($promotion) {
+    return [
+        'id' => (int) $promotion->id,
+        'uuid' => $promotion->uuid,
+        'title' => $promotion->title,
+        'sub_title' => $promotion->sub_title,
+        'description' => $promotion->description,
+        'start_date' => $promotion->start_date,
+        'expire_date' => $promotion->expire_date,
+        'versions' => $promotion->versions ?? null,  // Cambiado de $this->versions
+        'prices' => isset($promotion->prices) ? [    // Cambiado de $this->prices
+            'regular' => $promotion->prices['regular'] ?? null,
+            'medium' => $promotion->prices['medium'] ?? null,
+            'big' => $promotion->prices['big'] ?? null,
+        ] : null,
+        'available' => (boolean) $promotion->available,
+        'business_promo_reference_media' => $promotion->promotionMedia->map(function ($media) {
+            return [
+                'id' => (int) $media->id,
+                'uuid' => $media->uuid,
+                'business_promo_item_id' => (int) $media->business_promo_item_id,
+                'media_type' => $media->media_type,
+                'business_promo_media_url' => $media->business_promo_media_url,
+                'created_at' => $media->created_at,
+                'updated_at' => $media->updated_at
+            ];
+        })->toArray()
+    ];
+})->toArray(),
         'business_branches' => BranchResource::collection($this->branches),
        
          

@@ -4,34 +4,48 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Promotion extends Model
 {
     use HasFactory;
-    use SoftDeletes;
+
 
     protected $fillable = [
-        'promotion_uuid',
-        'promotion_title',
-        'promotion_description',
-        'promotion_start_date',
-        'promotion_end_date',
-        'promotion_type',
-        'promotion_status',
+        'uuid',
+        'title',
+        'sub_title',
+        'description',
+        'start_date',
+        'expire_date',
+        'versions',
+        'prices',
+        'favorites_count',
+        'available',
         'business_id',
 
     ];
 
+
+    protected $casts = [
+        'versions' => 'array',
+        'prices' => 'array',
+        'available' => 'boolean',
+        
+    ];
 
     public function business()
     {
         return $this->belongsTo(Business::class);
     }
 
-    public function promotionImages()
+    public function promotionMedia()
     {
-        return $this->hasMany(PromotionImage::class, 'promotion_id');
+        return $this->hasMany(PromotionMedia::class, 'business_promo_item_id');
+    }
+
+    public function activeDay() {
+    return $this->hasOne(PromoActiveDay::class);
     }
     
 }

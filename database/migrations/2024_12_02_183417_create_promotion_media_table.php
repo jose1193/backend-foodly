@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('promotion_images', function (Blueprint $table) {
+        Schema::create('promotion_media', function (Blueprint $table) {
             $table->id();
-            $table->uuid('promotion_image_uuid')->unique();
-            $table->string('promotion_image_path');
-            $table->foreignId('promotion_id')->constrained('promotions')->onUpdate('cascade')->onDelete('cascade');
+            $table->uuid('uuid')->unique();
+            $table->string('business_promo_media_url');
+            $table->string('media_type');
+            $table->foreignId('business_promo_item_id')->constrained('promotions')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('promotion_images');
+        Schema::dropIfExists('promotion_media');
     }
 };

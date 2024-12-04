@@ -13,23 +13,24 @@ return new class extends Migration
     {
         Schema::create('promotions', function (Blueprint $table) {
             $table->id();
-            $table->uuid('promotion_uuid')->unique();
-            $table->string('promotion_title');
-            $table->string('promotion_description')->nullable();
+            $table->uuid('uuid')->unique();
+            $table->string('title');
+            $table->string('sub_title')->nullable();
+            $table->string('description')->nullable();
             //Time of promotion
-            $table->string('promotion_start_date')->nullable();
-            $table->string('promotion_end_date')->nullable();
+            $table->string('start_date')->nullable();
+            $table->string('expire_date')->nullable();
             
-            //type of promotion
-            $table->string('promotion_type')->nullable();
-            //promotion status
-            $table->string('promotion_status')->nullable();
+            $table->json('versions')->nullable();
+            $table->json('prices')->nullable();
+            $table->integer('favorites_count')->default(0);
+            $table->boolean('available')->default(true);
            
             
             //relation with business
             $table->foreignId('business_id')->constrained('businesses')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
-            $table->softDeletes();
+            
         });
     }
 

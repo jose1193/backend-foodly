@@ -106,20 +106,20 @@
             "description": "Business Cover Images"
         },
         {
+            "name": "Business Promotions",
+            "description": "Business Promotions"
+        },
+        {
+            "name": "Business Promotions Media",
+            "description": "Business Promotions Images"
+        },
+        {
             "name": "Business Branch",
             "description": "Business Branch Users Foodly"
         },
         {
             "name": "Business Branch Cover Images",
             "description": "Business Branches Cover Images"
-        },
-        {
-            "name": "Business Promotions",
-            "description": "Business Promotions"
-        },
-        {
-            "name": "Business Promotions Images",
-            "description": "Business Promotions Images"
         },
         {
             "name": "Branch Promotions",
@@ -2424,6 +2424,39 @@
                                                     "close_b": "18:00"
                                                 }
                                             }
+                                        ],
+                                        "business_promotions": [
+                                            {
+                                                "id": 1,
+                                                "uuid": "8a256d16-55c0-4e37-a8f4-8db7c1e764d8",
+                                                "sub_title": "¡2x1 en Pizzas Tradicionales!",
+                                                "description": "Llévate dos pizzas tradicionales por el precio de una. Elige entre pepperoni, hawaiana, margherita o vegetariana.",
+                                                "start_date": "2024-06-15",
+                                                "expire_date": "2024-08-31",
+                                                "versions": [
+                                                    "regular",
+                                                    "medium",
+                                                    "big"
+                                                ],
+                                                "prices": {
+                                                    "regular": 5.99,
+                                                    "medium": 12,
+                                                    "big": 15
+                                                },
+                                                "favorites_count": 7,
+                                                "available": true,
+                                                "business_promo_reference_media": [
+                                                    {
+                                                        "id": 1,
+                                                        "uuid": "7c256d16-45c0-4e37-a8f4-8db7c1e764d8",
+                                                        "business_promo_item_id": 1,
+                                                        "business_promo_media_url": "storage/promotion_media_images/image_123456.jpg",
+                                                        "media_type": "Image",
+                                                        "created_at": "2024-03-15T10:30:00",
+                                                        "updated_at": "2024-03-15T10:30:00"
+                                                    }
+                                                ]
+                                            }
                                         ]
                                     }
                                 ]
@@ -2633,6 +2666,39 @@
                                                 "open_b": "14:00",
                                                 "close_b": "18:00"
                                             }
+                                        }
+                                    ],
+                                    "business_promotions": [
+                                        {
+                                            "id": 1,
+                                            "uuid": "8a256d16-55c0-4e37-a8f4-8db7c1e764d8",
+                                            "sub_title": "¡2x1 en Pizzas Tradicionales!",
+                                            "description": "Llévate dos pizzas tradicionales por el precio de una. Elige entre pepperoni, hawaiana, margherita o vegetariana.",
+                                            "start_date": "2024-06-15",
+                                            "expire_date": "2024-08-31",
+                                            "versions": [
+                                                "regular",
+                                                "medium",
+                                                "big"
+                                            ],
+                                            "prices": {
+                                                "regular": 5.99,
+                                                "medium": 12,
+                                                "big": 15
+                                            },
+                                            "favorites_count": 7,
+                                            "available": true,
+                                            "business_promo_reference_media": [
+                                                {
+                                                    "id": 1,
+                                                    "uuid": "7c256d16-45c0-4e37-a8f4-8db7c1e764d8",
+                                                    "business_promo_item_id": 1,
+                                                    "business_promo_media_url": "storage/promotion_media_images/image_123456.jpg",
+                                                    "media_type": "Image",
+                                                    "created_at": "2024-03-15T10:30:00",
+                                                    "updated_at": "2024-03-15T10:30:00"
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
@@ -6122,25 +6188,139 @@
                                 "example": [
                                     {
                                         "id": 1,
-                                        "promotion_uuid": "8a256d16-55c0-4e37-a8f4-8db7c1e764d8",
-                                        "promotion_title": "Descuento de verano",
-                                        "promotion_description": "¡Aprovecha nuestro descuento especial de verano!",
-                                        "promotion_start_date": "2024-06-15",
-                                        "promotion_end_date": "2024-08-31",
-                                        "promotion_type": "Descuento",
-                                        "promotion_status": "Active",
-                                        "business_id": 1
+                                        "uuid": "8a256d16-55c0-4e37-a8f4-8db7c1e764d8",
+                                        "title": "Descuento de verano",
+                                        "sub_title": "Descuento de verano",
+                                        "description": "¡Aprovecha nuestro descuento especial de verano!",
+                                        "start_date": "2024-06-15",
+                                        "expire_date": "2024-08-31",
+                                        "business": [
+                                            {
+                                                "id": 1,
+                                                "business_uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+                                                "business_logo": "https://example.com/business_logo.png",
+                                                "business_name": "Restaurante Internacional",
+                                                "business_email": "info@restauranteinternacional.com",
+                                                "business_phone": "+1 (555) 123-4567",
+                                                "business_address": "Calle Principal, 123",
+                                                "business_zipcode": "12345",
+                                                "business_city": "Ciudad Principal",
+                                                "business_country": "País Principal",
+                                                "business_website": "https://www.restauranteinternacional.com",
+                                                "business_about_us": "Acerca de"
+                                            }
+                                        ],
+                                        "versions": [
+                                            "regular",
+                                            "medium",
+                                            "big"
+                                        ],
+                                        "prices": {
+                                            "regular": 5.99,
+                                            "medium": 12,
+                                            "big": 15
+                                        },
+                                        "favorites_count": 7,
+                                        "available": true,
+                                        "business_promo_reference_media": [
+                                            {
+                                                "id": 1,
+                                                "uuid": "7c256d16-45c0-4e37-a8f4-8db7c1e764d8",
+                                                "business_promo_item_id": 1,
+                                                "business_promo_media_url": "storage/promotion_media_images/image_123456.jpg",
+                                                "media_type": "Image",
+                                                "created_at": "2024-03-15T10:30:00",
+                                                "updated_at": "2024-03-15T10:30:00"
+                                            },
+                                            {
+                                                "id": 2,
+                                                "uuid": "8d367e27-56d1-4f38-b9f5-9ec8c1e765e9",
+                                                "business_promo_item_id": 1,
+                                                "business_promo_media_url": "storage/promotion_media_video/video_789012.mp4",
+                                                "media_type": "Video",
+                                                "created_at": "2024-03-15T10:35:00",
+                                                "updated_at": "2024-03-15T10:35:00"
+                                            }
+                                        ],
+                                        "promo_active_days": {
+                                            "day_0": true,
+                                            "day_1": false,
+                                            "day_2": true,
+                                            "day_3": true,
+                                            "day_4": false,
+                                            "day_5": true,
+                                            "day_6": false
+                                        },
+                                        "created_at": "2024-03-15T10:30:00",
+                                        "updated_at": "2024-03-15T10:30:00"
                                     },
                                     {
                                         "id": 2,
-                                        "promotion_uuid": "4f8329b8-3e43-4f20-9752-fb4d77f5f533",
-                                        "promotion_title": "Oferta especial de fin de semana",
-                                        "promotion_description": "¡Aprovecha nuestra oferta especial de fin de semana y obtén un 20% de descuento en todos los productos!",
-                                        "promotion_start_date": "2024-07-20",
-                                        "promotion_end_date": "2024-07-22",
-                                        "promotion_type": "Oferta Especial",
-                                        "promotion_status": "Active",
-                                        "business_id": 2
+                                        "uuid": "8a256d16-55c0-4e37-a8f4-8db7c1e764d8",
+                                        "title": "Pizzas 2x1 Tradicionales",
+                                        "sub_title": "¡2x1 en Pizzas Tradicionales!",
+                                        "description": "Llévate dos pizzas tradicionales por el precio de una. Elige entre pepperoni, hawaiana, margherita o vegetariana.",
+                                        "start_date": "2024-06-15",
+                                        "expire_date": "2024-08-31",
+                                        "business": [
+                                            {
+                                                "id": 2,
+                                                "business_uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+                                                "business_logo": "https://example.com/business_logo.png",
+                                                "business_name": "Restaurante Internacional",
+                                                "business_email": "info@restauranteinternacional.com",
+                                                "business_phone": "+1 (555) 123-4567",
+                                                "business_address": "Calle Principal, 123",
+                                                "business_zipcode": "12345",
+                                                "business_city": "Ciudad Principal",
+                                                "business_country": "País Principal",
+                                                "business_website": "https://www.restauranteinternacional.com",
+                                                "business_about_us": "Acerca de"
+                                            }
+                                        ],
+                                        "versions": [
+                                            "regular",
+                                            "medium",
+                                            "big"
+                                        ],
+                                        "prices": {
+                                            "regular": 5.99,
+                                            "medium": 12,
+                                            "big": 15
+                                        },
+                                        "favorites_count": 7,
+                                        "available": true,
+                                        "business_promo_reference_media": [
+                                            {
+                                                "id": 3,
+                                                "uuid": "7c256d16-45c0-4e37-a8f4-8db7c1e764d8",
+                                                "business_promo_item_id": 1,
+                                                "business_promo_media_url": "storage/promotion_media_images/image_123456.jpg",
+                                                "media_type": "Image",
+                                                "created_at": "2024-03-15T10:30:00",
+                                                "updated_at": "2024-03-15T10:30:00"
+                                            },
+                                            {
+                                                "id": 4,
+                                                "uuid": "8d367e27-56d1-4f38-b9f5-9ec8c1e765e9",
+                                                "business_promo_item_id": 1,
+                                                "business_promo_media_url": "storage/promotion_media_video/video_789012.mp4",
+                                                "media_type": "Video",
+                                                "created_at": "2024-03-15T10:35:00",
+                                                "updated_at": "2024-03-15T10:35:00"
+                                            }
+                                        ],
+                                        "promo_active_days": {
+                                            "day_0": true,
+                                            "day_1": false,
+                                            "day_2": true,
+                                            "day_3": true,
+                                            "day_4": false,
+                                            "day_5": true,
+                                            "day_6": false
+                                        },
+                                        "created_at": "2024-03-15T10:30:00",
+                                        "updated_at": "2024-03-15T10:30:00"
                                     }
                                 ]
                             }
@@ -6157,7 +6337,7 @@
                 ]
             }
         },
-        "/promotions-store": {
+        "/promotions/store": {
             "post": {
                 "tags": ["Business Promotions"],
                 "summary": "Store a new Business Promotion",
@@ -6218,14 +6398,71 @@
                                 "example": [
                                     {
                                         "id": 1,
-                                        "promotion_uuid": "8a256d16-55c0-4e37-a8f4-8db7c1e764d8",
-                                        "promotion_title": "Descuento de verano",
-                                        "promotion_description": "¡Aprovecha nuestro descuento especial de verano!",
-                                        "promotion_start_date": "2024-06-15",
-                                        "promotion_end_date": "2024-08-31",
-                                        "promotion_type": "Descuento",
-                                        "promotion_status": "Active",
-                                        "business_id": 1
+                                        "uuid": "8a256d16-55c0-4e37-a8f4-8db7c1e764d8",
+                                        "title": "Descuento de verano",
+                                        "sub_title": "Descuento de verano",
+                                        "description": "¡Aprovecha nuestro descuento especial de verano!",
+                                        "start_date": "2024-06-15",
+                                        "expire_date": "2024-08-31",
+                                        "business": [
+                                            {
+                                                "id": 1,
+                                                "business_uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+                                                "business_logo": "https://example.com/business_logo.png",
+                                                "business_name": "Restaurante Internacional",
+                                                "business_email": "info@restauranteinternacional.com",
+                                                "business_phone": "+1 (555) 123-4567",
+                                                "business_address": "Calle Principal, 123",
+                                                "business_zipcode": "12345",
+                                                "business_city": "Ciudad Principal",
+                                                "business_country": "País Principal",
+                                                "business_website": "https://www.restauranteinternacional.com",
+                                                "business_about_us": "Acerca de"
+                                            }
+                                        ],
+                                        "versions": [
+                                            "regular",
+                                            "medium",
+                                            "big"
+                                        ],
+                                        "prices": {
+                                            "regular": 5.99,
+                                            "medium": 12,
+                                            "big": 15
+                                        },
+                                        "favorites_count": 7,
+                                        "available": true,
+                                        "business_promo_reference_media": [
+                                            {
+                                                "id": 1,
+                                                "uuid": "7c256d16-45c0-4e37-a8f4-8db7c1e764d8",
+                                                "business_promo_media_url": "storage/promotion_media_images/image_123456.jpg",
+                                                "media_type": "Image",
+                                                "business_promo_item_id": 1,
+                                                "created_at": "2024-03-15T10:30:00",
+                                                "updated_at": "2024-03-15T10:30:00"
+                                            },
+                                            {
+                                                "id": 2,
+                                                "uuid": "8d367e27-56d1-4f38-b9f5-9ec8c1e765e9",
+                                                "business_promo_media_url": "storage/promotion_media_video/video_789012.mp4",
+                                                "media_type": "Video",
+                                                "business_promo_item_id": 1,
+                                                "created_at": "2024-03-15T10:35:00",
+                                                "updated_at": "2024-03-15T10:35:00"
+                                            }
+                                        ],
+                                        "promo_active_days": {
+                                            "day_0": true,
+                                            "day_1": false,
+                                            "day_2": true,
+                                            "day_3": true,
+                                            "day_4": false,
+                                            "day_5": true,
+                                            "day_6": false
+                                        },
+                                        "created_at": "2024-03-15T10:30:00",
+                                        "updated_at": "2024-03-15T10:30:00"
                                     }
                                 ]
                             }
@@ -6248,8 +6485,8 @@
                 ]
             }
         },
-        "/promotions-update/{uuid}": {
-            "put": {
+        "/promotions/update/{uuid}": {
+            "patch": {
                 "tags": ["Business Promotions"],
                 "summary": "Update a Promotion by UUID",
                 "parameters": [
@@ -6278,7 +6515,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Subcategory updated successfully"
+                        "description": "Promotion updated successfully"
                     },
                     "401": {
                         "$ref": "#/components/responses/Unauthorized"
@@ -6300,7 +6537,7 @@
                 ]
             }
         },
-        "/promotions-delete/{uuid}": {
+        "/promotions/delete/{uuid}": {
             "delete": {
                 "tags": ["Business Promotions"],
                 "summary": "Delete a Promotion by UUID",
@@ -6339,7 +6576,7 @@
                 ]
             }
         },
-        "/promotions-restore/{uuid}": {
+        "/promotions/restore/{uuid}": {
             "put": {
                 "tags": ["Business Promotions"],
                 "summary": "Restore a Promotion by UUID",
@@ -6365,14 +6602,72 @@
                                 "example": [
                                     {
                                         "id": 1,
-                                        "promotion_uuid": "8a256d16-55c0-4e37-a8f4-8db7c1e764d8",
-                                        "promotion_title": "Descuento de verano",
-                                        "promotion_description": "¡Aprovecha nuestro descuento especial de verano!",
-                                        "promotion_start_date": "2024-06-15",
-                                        "promotion_end_date": "2024-08-31",
-                                        "promotion_type": "Descuento",
-                                        "promotion_status": "Active",
-                                        "business_id": 1
+                                        "uuid": "8a256d16-55c0-4e37-a8f4-8db7c1e764d8",
+                                        "title": "Descuento de verano",
+                                        "sub_title": "Descuento de verano",
+                                        "description": "¡Aprovecha nuestro descuento especial de verano!",
+                                        "start_date": "2024-06-15",
+                                        "expire_date": "2024-08-31",
+                                        "versions": [
+                                            "regular",
+                                            "medium",
+                                            "big"
+                                        ],
+                                        "prices": {
+                                            "regular": 5.99,
+                                            "medium": 12,
+                                            "big": 15
+                                        },
+                                        "favorites_count": 7,
+                                        "available": true,
+                                        "business_promo_reference_media": [
+                                            {
+                                                "id": 1,
+                                                "uuid": "7c256d16-45c0-4e37-a8f4-8db7c1e764d8",
+                                                "business_promo_item_id": 1,
+                                                "business_promo_media_url": "storage/promotion_media_images/image_123456.jpg",
+                                                "media_type": "Image",
+                                                "created_at": "2024-03-15T10:30:00",
+                                                "updated_at": "2024-03-15T10:30:00"
+                                            },
+                                            {
+                                                "id": 2,
+                                                "uuid": "8d367e27-56d1-4f38-b9f5-9ec8c1e765e9",
+                                                "business_promo_item_id": 1,
+                                                "business_promo_media_url": "storage/promotion_media_video/video_789012.mp4",
+                                                "media_type": "Video",
+                                                "created_at": "2024-03-15T10:35:00",
+                                                "updated_at": "2024-03-15T10:35:00"
+                                            }
+                                        ],
+                                        "promo_active_days": {
+                                            "day_0": true,
+                                            "day_1": false,
+                                            "day_2": true,
+                                            "day_3": true,
+                                            "day_4": false,
+                                            "day_5": true,
+                                            "day_6": false
+                                        },
+                                        "business_id": 1,
+                                        "business": [
+                                            {
+                                                "id": 1,
+                                                "business_uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+                                                "business_logo": "https://example.com/business_logo.png",
+                                                "business_name": "Restaurante Internacional",
+                                                "business_email": "info@restauranteinternacional.com",
+                                                "business_phone": "+1 (555) 123-4567",
+                                                "business_address": "Calle Principal, 123",
+                                                "business_zipcode": "12345",
+                                                "business_city": "Ciudad Principal",
+                                                "business_country": "País Principal",
+                                                "business_website": "https://www.restauranteinternacional.com",
+                                                "business_about_us": "Acerca de"
+                                            }
+                                        ],
+                                        "created_at": "2024-03-15T10:30:00",
+                                        "updated_at": "2024-03-15T10:30:00"
                                     }
                                 ]
                             }
@@ -6395,27 +6690,33 @@
                 ]
             }
         },
-        "/promotions-images": {
+        "/promotions-media": {
             "get": {
-                "tags": ["Business Promotions Images"],
-                "summary": "Get all Images of Registered Business Promotions",
+                "tags": ["Business Promotions Media"],
+                "summary": "Get all Media of Registered Business Promotions",
                 "responses": {
                     "200": {
-                        "description": "List of registered business promotion images",
+                        "description": "List of registered business promotion media",
                         "content": {
                             "application/json": {
                                 "example": [
                                     {
                                         "id": 1,
-                                        "promotion_image_uuid": "3f2504e0-4f89-41d3-9a0c-0305e82c3301",
-                                        "promotion_image_path": "https://example.com/business_promotion.png",
-                                        "promotion_id": 1
+                                        "uuid": "7c256d16-45c0-4e37-a8f4-8db7c1e764d8",
+                                        "business_promo_media_url": "storage/promotion_media_images/image_123456.jpg",
+                                        "media_type": "Image",
+                                        "business_promo_item_id": 1,
+                                        "created_at": "2024-03-15T10:30:00",
+                                        "updated_at": "2024-03-15T10:30:00"
                                     },
                                     {
                                         "id": 2,
-                                        "promotion_image_uuid": "892504e0-4f89-41d3-9a0c-0305e82c3301",
-                                        "promotion_image_path": "https://example.com/business_promotion2.png",
-                                        "promotion_id": 2
+                                        "uuid": "8d367e27-56d1-4f38-b9f5-9ec8c1e765e9",
+                                        "business_promo_media_url": "storage/promotion_media_video/video_789012.mp4",
+                                        "media_type": "Video",
+                                        "business_promo_item_id": 1,
+                                        "created_at": "2024-03-15T10:35:00",
+                                        "updated_at": "2024-03-15T10:35:00"
                                     }
                                 ]
                             }
@@ -6432,15 +6733,15 @@
                 ]
             }
         },
-        "/promotions-images-store": {
+        "/promotions-media/store": {
             "post": {
-                "tags": ["Business Promotions Images"],
-                "summary": "Store new Business Promotion Images",
+                "tags": ["Business Promotions Media"],
+                "summary": "Store new Business Promotion Media",
                 "requestBody": {
                     "content": {
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/BusinessPromotionImagesRegistration"
+                                "$ref": "#/components/schemas/BusinessPromotionMediaRegistration"
                             }
                         }
                     },
@@ -6448,7 +6749,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Branch cover images stored successfully"
+                        "description": "Business Prmotion Media stored successfully"
                     },
                     "401": {
                         "$ref": "#/components/responses/Unauthorized"
@@ -6467,10 +6768,10 @@
                 ]
             }
         },
-        "/promotions-images/{uuid}": {
+        "/promotions-media/{uuid}": {
             "get": {
-                "tags": ["Business Promotions Images"],
-                "summary": "Get a Branch Image by UUID",
+                "tags": ["Business Promotions Media"],
+                "summary": "Get a Prmotion Media by UUID",
                 "parameters": [
                     {
                         "name": "uuid",
@@ -6487,15 +6788,20 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Branch Image details retrieved successfully",
+                        "description": "Promotion Media details retrieved successfully",
                         "content": {
                             "application/json": {
-                                "example": {
-                                    "id": 1,
-                                    "branch_image_uuid": "3f2504e0-4f89-41d3-9a0c-0305e82c3301",
-                                    "branch_image_path": "https://example.com/business_promotion_cover.png",
-                                    "branch_id": 1
-                                }
+                                "example": [
+                                    {
+                                        "id": 1,
+                                        "uuid": "7c256d16-45c0-4e37-a8f4-8db7c1e764d8",
+                                        "business_promo_media_url": "storage/promotion_media_images/image_123456.jpg",
+                                        "media_type": "Image",
+                                        "business_promo_item_id": 1,
+                                        "created_at": "2024-03-15T10:30:00",
+                                        "updated_at": "2024-03-15T10:30:00"
+                                    }
+                                ]
                             }
                         }
                     },
@@ -6516,10 +6822,10 @@
                 ]
             }
         },
-        "/promotions-images-update/{uuid}": {
+        "/promotions-media/update/{uuid}": {
             "post": {
-                "tags": ["Business Promotions Images"],
-                "summary": "Update Business Promotion Images",
+                "tags": ["Business Promotions Media"],
+                "summary": "Update Business Promotion Media",
                 "parameters": [
                     {
                         "name": "uuid",
@@ -6538,7 +6844,7 @@
                     "content": {
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/UpdatePromotionImages"
+                                "$ref": "#/components/schemas/UpdatePromotionMedia"
                             }
                         }
                     },
@@ -6546,7 +6852,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Promotion Image updated successfully"
+                        "description": "Promotion Media updated successfully"
                     },
                     "401": {
                         "$ref": "#/components/responses/Unauthorized"
@@ -6562,10 +6868,10 @@
                 ]
             }
         },
-        "/promotions-images-delete/{uuid}": {
+        "/promotions-media/delete/{uuid}": {
             "delete": {
-                "tags": ["Business Promotions Images"],
-                "summary": "Delete a Promotion Image by UUID",
+                "tags": ["Business Promotions Media"],
+                "summary": "Delete a Promotion Media by UUID",
                 "parameters": [
                     {
                         "name": "uuid",
@@ -7804,89 +8110,132 @@
             "PromotionsRegistration": {
                 "type": "object",
                 "properties": {
-                    "promotion_title": {
+                    "business_uuid": {
                         "type": "string",
-                        "description": "Title of the promotion"
+                        "description": "UUID of the associated business",
+                        "format": "uuid",
+                        "example": "01ba7b46-b656-4e25-bee4-fbfeab431191"
                     },
-                    "promotion_description": {
+                    "title": {
                         "type": "string",
-                        "description": "Description of the promotion"
+                        "description": "Title of the promotion",
+                        "example": "Descuento de verano"
                     },
-                    "promotion_start_date": {
+                    "sub_title": {
                         "type": "string",
-                        "description": "Start date of the promotion"
+                        "description": "Subtitle of the promotion",
+                        "example": "¡Oferta especial de verano!"
                     },
-                    "promotion_end_date": {
+                    "description": {
                         "type": "string",
-                        "description": "End date of the promotion"
+                        "description": "Detailed description of the promotion",
+                        "example": "¡Aprovecha nuestro descuento especial de verano!"
                     },
-                    "promotion_type": {
+                    "start_date": {
                         "type": "string",
-                        "description": "Type of the promotion"
+                        "description": "Start date of the promotion",
+                        "format": "date",
+                        "example": "2024-06-15"
                     },
-                    "promotion_status": {
+                    "expire_date": {
                         "type": "string",
-                        "description": "Status of the promotion"
+                        "description": "End date of the promotion",
+                        "format": "date",
+                        "example": "2024-08-31"
                     },
-                    "business_id": {
-                        "type": "integer",
-                        "description": "ID of the associated business"
+                    "versions": {
+                        "type": "array",
+                        "description": "Available versions/sizes of the promotion",
+                        "example": ["regular", "medium", "big"],
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "prices": {
+                        "$ref": "#/components/schemas/PromotionsRegistration_prices"
+                    },
+                    "promo_active_days": {
+                        "$ref": "#/components/schemas/PromotionsRegistration_promo_active_days"
+                    },
+                    "available": {
+                        "type": "boolean",
+                        "description": "Availability status of the promotion",
+                        "example": true
                     }
                 }
             },
             "UpdatePromotions": {
+                "required": ["business_uuid", "title"],
                 "type": "object",
                 "properties": {
-                    "promotion_title": {
+                    "title": {
                         "type": "string",
-                        "description": "Title of the promotion"
+                        "description": "Title of the promotion",
+                        "example": "Descuento de verano"
                     },
-                    "promotion_description": {
+                    "sub_title": {
                         "type": "string",
-                        "description": "Description of the promotion"
+                        "description": "Subtitle of the promotion",
+                        "example": "¡Oferta especial de verano!"
                     },
-                    "promotion_start_date": {
+                    "description": {
                         "type": "string",
-                        "description": "Start date of the promotion"
+                        "description": "Detailed description of the promotion",
+                        "example": "¡Aprovecha nuestro descuento especial de verano!"
                     },
-                    "promotion_end_date": {
+                    "start_date": {
                         "type": "string",
-                        "description": "End date of the promotion"
+                        "description": "Start date of the promotion",
+                        "format": "date",
+                        "example": "2024-06-15"
                     },
-                    "promotion_type": {
+                    "expire_date": {
                         "type": "string",
-                        "description": "Type of the promotion"
+                        "description": "End date of the promotion",
+                        "format": "date",
+                        "example": "2024-08-31"
                     },
-                    "promotion_status": {
-                        "type": "string",
-                        "description": "Status of the promotion"
+                    "versions": {
+                        "type": "array",
+                        "description": "Available versions/sizes of the promotion",
+                        "example": ["regular", "medium", "big"],
+                        "items": {
+                            "type": "string"
+                        }
                     },
-                    "business_id": {
-                        "type": "integer",
-                        "description": "ID of the associated business"
+                    "prices": {
+                        "$ref": "#/components/schemas/PromotionsRegistration_prices"
+                    },
+                    "promo_active_days": {
+                        "$ref": "#/components/schemas/PromotionsRegistration_promo_active_days"
+                    },
+                    "available": {
+                        "type": "boolean",
+                        "description": "Availability status of the promotion",
+                        "example": true
                     }
                 }
             },
-            "BusinessPromotionImagesRegistration": {
+            "BusinessPromotionMediaRegistration": {
                 "type": "object",
                 "properties": {
-                    "promotion_image_path": {
+                    "business_promo_media_url": {
                         "type": "array",
                         "items": {
                             "type": "string",
                             "format": "binary"
                         }
                     },
-                    "promotion_id": {
-                        "type": "integer",
-                        "description": "Id of the promotion"
+                    "promotion_uuid": {
+                        "type": "string",
+                        "description": "Uuid of the promotion"
                     }
                 }
             },
-            "UpdatePromotionImages": {
+            "UpdatePromotionMedia": {
                 "type": "object",
                 "properties": {
-                    "promotion_image_path": {
+                    "business_promo_media_url": {
                         "type": "string",
                         "format": "binary"
                     }
@@ -8445,6 +8794,53 @@
                         "$ref": "#/components/schemas/BusinessRegistration_business_opening_hours_day_0"
                     }
                 }
+            },
+            "PromotionsRegistration_prices": {
+                "type": "object",
+                "properties": {
+                    "regular": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "medium": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "big": {
+                        "type": "number",
+                        "format": "float"
+                    }
+                },
+                "description": "Prices for each version",
+                "example": "{\"regular\":5.99,\"medium\":12.0,\"big\":15.0}"
+            },
+            "PromotionsRegistration_promo_active_days": {
+                "type": "object",
+                "properties": {
+                    "day_0": {
+                        "type": "boolean"
+                    },
+                    "day_1": {
+                        "type": "boolean"
+                    },
+                    "day_2": {
+                        "type": "boolean"
+                    },
+                    "day_3": {
+                        "type": "boolean"
+                    },
+                    "day_4": {
+                        "type": "boolean"
+                    },
+                    "day_5": {
+                        "type": "boolean"
+                    },
+                    "day_6": {
+                        "type": "boolean"
+                    }
+                },
+                "description": "Days when the promotion is active",
+                "example": "{\"day_0\":true,\"day_1\":false,\"day_2\":true,\"day_3\":true,\"day_4\":false,\"day_5\":true,\"day_6\":false}"
             },
             "BusinessFoodItemStore_prices": {
                 "type": "object",

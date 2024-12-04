@@ -25,17 +25,33 @@ class PromotionRequest extends FormRequest
     public function rules(): array
     {
          // Determine if the current route is 'api/promotions-store'
-        $isStoreRoute = $this->is('api/promotions-store');
+        $isStoreRoute = $this->is('api/promotions/store');
 
-        return [
-            'promotion_title' => ($isStoreRoute ? 'required|' : '') . 'string|min:3|max:255',
-            'promotion_description' => 'nullable|min:3|string|max:255',
-            'promotion_start_date' => 'nullable|min:3|string|max:50',
-            'promotion_end_date' => 'nullable|min:3|string|max:50',
-            'promotion_type' => 'nullable|string|min:3|string|max:50',
-            'promotion_status' => 'nullable|string|min:3|string|max:50',
-            'business_id' => ($isStoreRoute ? 'required|' : '') . 'exists:businesses,id',
+       return [
+            'business_uuid' => ($isStoreRoute ? 'required|' : 'nullable|') . 'exists:businesses,business_uuid',
+            'title' => ($isStoreRoute ? 'required|' : '') . 'string|min:3|max:255',
+            'sub_title' => 'nullable|min:3|string|max:255',
+            'description' => 'nullable|min:3|string|max:255',
+            'start_date' => 'nullable|string|min:3|max:50',
+            'expire_date' => 'nullable|string|min:3|max:50',
+
+            'versions' => 'nullable|array',
+            'prices' => 'nullable|array',
+            'prices.regular' => 'nullable|numeric|min:0',
+            'prices.medium' => 'nullable|numeric|min:0',
+            'prices.big' => 'nullable|numeric|min:0',
+            'favorites_count' => 'nullable|integer|min:0',
+            'available' => 'nullable|boolean',
+
+            'promo_active_days.*.day_0' => 'nullable',
+            'promo_active_days.*.day_1' => 'nullable',
+            'promo_active_days.*.day_2' => 'nullable',
+            'promo_active_days.*.day_3' => 'nullable',
+            'promo_active_days.*.day_4' => 'nullable',
+            'promo_active_days.*.day_5' => 'nullable',
+            'promo_active_days.*.day_6' => 'nullable',
         ];
+
     }
 
     public function failedValidation(Validator $validator)

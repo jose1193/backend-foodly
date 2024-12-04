@@ -92,7 +92,7 @@ private function getGroupedPromotionImages($userId)
         
         foreach ($validatedData['promotion_image_path'] as $image) {
            
-            $storedImagePath = ImageHelper::storeAndResize($image, 'public/promotion_photos');
+            $storedImagePath = ImageHelper::storeAndResize($image, 'public/promotion_media');
 
            
             $promotionImage = PromotionImage::create([
@@ -192,7 +192,7 @@ private function getGroupedPromotionImages($userId)
 
         if ($request->hasFile('promotion_image_path')) {
             // Store and resize the new image
-            $storedImagePath = ImageHelper::storeAndResize($request->file('promotion_image_path'), 'public/promotion_photos');
+            $storedImagePath = ImageHelper::storeAndResize($request->file('promotion_image_path'), 'public/promotion_media');
 
            
             ImageHelper::deleteFileFromStorage($promotionImage->promotion_image_path);
