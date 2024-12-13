@@ -39,7 +39,7 @@ class BusinessController extends BaseController
     
     public function __construct()
 {
-   $this->middleware('check.permission:Customer')->only(['index', 'store', 'update', 'destroy','updateLogo']);
+   $this->middleware('check.permission:Manager')->only(['index', 'store', 'update', 'destroy','updateLogo']);
   
   $this->middleware(function ($request, $next) {
             $this->userId = Auth::id();
@@ -58,7 +58,7 @@ public function index()
             return $this->updateBusinessCache($userId);
         });
 
-
+       
         return response()->json([
             'business' => BusinessResource::collection($businesses)
         ], 200);
