@@ -50,7 +50,6 @@ class BusinessController extends BaseController
 
 }
 
-
 public function index()
 {
     try {
