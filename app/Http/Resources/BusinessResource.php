@@ -66,6 +66,15 @@ class BusinessResource extends JsonResource
             'big' => $promotion->prices['big'] ?? null,
         ] : null,
         'available' => (boolean) $promotion->available,
+        'promo_active_days' => $promotion->activeDay ? [
+            'day_0' => (bool) $promotion->activeDay->day_0,
+            'day_1' => (bool) $promotion->activeDay->day_1,
+            'day_2' => (bool) $promotion->activeDay->day_2,
+            'day_3' => (bool) $promotion->activeDay->day_3,
+            'day_4' => (bool) $promotion->activeDay->day_4,
+            'day_5' => (bool) $promotion->activeDay->day_5,
+            'day_6' => (bool) $promotion->activeDay->day_6,
+        ] : null,
         'business_promo_reference_media' => $promotion->promotionMedia->map(function ($media) {
             return [
                 'id' => (int) $media->id,

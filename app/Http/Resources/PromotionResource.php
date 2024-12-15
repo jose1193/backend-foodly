@@ -31,9 +31,10 @@ class PromotionResource extends JsonResource
             ],
             'favorites_count' => (int) $this->favorites_count ?? 0,
             'available' => (boolean) $this->available,
+            'promo_active_days' => $this->getPromoActiveDays(),
             'business_promo_reference_media' => PromotionMediaResource::collection($this->promotionMedia), 
             
-            'promo_active_days' => $this->getPromoActiveDays(),
+           
             //'business_id' => $this->business->id,
             'business' => new BusinessResource($this->business),
             
