@@ -18,6 +18,7 @@ class PromotionResource extends JsonResource
             'id' => (int) $this->id,
             'uuid' => $this->uuid,
             'title' => $this->title,
+            'sub_title' => $this->sub_title,
             'description' => $this->description,
             'start_date' => $this->start_date,
             'expire_date' => $this->expire_date,
