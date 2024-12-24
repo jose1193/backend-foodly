@@ -33,11 +33,20 @@ class PromotionResource extends JsonResource
             'available' => (boolean) $this->available,
             'promo_active_days' => $this->getPromoActiveDays(),
             'business_promo_reference_media' => PromotionMediaResource::collection($this->promotionMedia), 
-            
-           
-            //'business_id' => $this->business->id,
-            'business' => new BusinessResource($this->business),
-            
+            'business' => [
+                'id' => (int) $this->business->id,
+                'business_uuid' => $this->business->business_uuid,
+                'business_name' => $this->business->business_name,
+                'business_logo' => asset($this->business->business_logo),
+                'business_email' => $this->business_email,
+                'business_phone' => $this->business_phone,
+                'business_address' => $this->business->business_address,
+                'business_city' => $this->business_city,
+                'business_country' => $this->business_country,
+                'business_zipcode' => $this->business_zipcode,
+                'business_latitude' => (double) $this->business->business_latitude,
+                'business_longitude' => (double) $this->business->business_longitude,
+            ],
             'created_at' => $this->created_at ? $this->created_at->toDateTimeString() : null,
             'updated_at' => $this->updated_at ? $this->updated_at->toDateTimeString() : null,
             //'deleted_at' => $this->deleted_at ? $this->deleted_at->toDateTimeString() : null,

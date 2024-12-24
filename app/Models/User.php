@@ -35,7 +35,9 @@ class User extends Authenticatable
         'country',
         'gender',
         'profile_photo_path',
-        'terms_and_conditions',     
+        'terms_and_conditions',
+        'latitude',
+        'longitude',     
     ];
 
     /**

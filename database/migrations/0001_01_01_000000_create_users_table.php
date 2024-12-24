@@ -28,6 +28,8 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->string('gender')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
+            $table->double('latitude', 10, 6)->nullable(); 
+            $table->double('longitude', 10, 6)->nullable(); 
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

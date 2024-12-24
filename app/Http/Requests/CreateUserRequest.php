@@ -50,6 +50,8 @@ class CreateUserRequest extends FormRequest
         'provider' => ['nullable', 'min:4', 'max:20'],
         'provider_id' => ['nullable', 'min:4', 'max:30'],
         'provider_avatar' => ['nullable', 'min:4', 'max:255'],
+        'latitude' => ['nullable', 'numeric', 'between:-90,90'],
+        'longitude' => ['nullable', 'numeric', 'between:-180,180'],
     ];
 }
 

@@ -214,15 +214,23 @@
                                         "last_name": "Doe",
                                         "username": "john_doe",
                                         "email": "john@example.com",
+                                        "email_verified_at": "2024-01-01T00:00:00Z",
                                         "phone": "123-456-7890",
                                         "date_of_birth": "10-01-1990",
                                         "address": "123 Main St",
                                         "zip_code": "12345",
                                         "city": "Exampleville",
                                         "country": "Exampleland",
-                                        "gender": "Male",
                                         "terms_and_conditions": true,
-                                        "user_role": "Role"
+                                        "gender": "Male",
+                                        "latitude": 40.7128,
+                                        "longitude": -74.006,
+                                        "created_at": "2024-01-01T00:00:00Z",
+                                        "updated_at": "2024-01-01T00:00:00Z",
+                                        "user_role": "Role",
+                                        "role_id": 1,
+                                        "social_provider": [],
+                                        "business": []
                                     }
                                 ]
                             }
@@ -1003,36 +1011,54 @@
                                     {
                                         "id": 1,
                                         "uuid": "ID-a1b2c3d4-5e6f-7g8h-9i10",
+                                        "photo": "https://example.com/profile-photo.png",
                                         "name": "John",
                                         "last_name": "Doe",
                                         "username": "john_doe",
                                         "email": "john@example.com",
+                                        "email_verified_at": "2024-01-01T00:00:00Z",
                                         "phone": "123-456-7890",
                                         "date_of_birth": "10-01-1990",
                                         "address": "123 Main St",
                                         "zip_code": "12345",
                                         "city": "Exampleville",
                                         "country": "Exampleland",
-                                        "gender": "Male",
                                         "terms_and_conditions": true,
-                                        "role_id": 1
+                                        "gender": "Male",
+                                        "latitude": 40.7128,
+                                        "longitude": -74.006,
+                                        "created_at": "2024-01-01T00:00:00Z",
+                                        "updated_at": "2024-01-01T00:00:00Z",
+                                        "user_role": "Role",
+                                        "role_id": 1,
+                                        "social_provider": [],
+                                        "business": []
                                     },
                                     {
                                         "id": 2,
-                                        "uuid": "ID-m15n16o17p1-8q19r20s21t2",
-                                        "name": "Jane",
-                                        "last_name": "Smith",
-                                        "username": "jane_smith",
-                                        "email": "jane@example.com",
-                                        "phone": "987-654-3210",
-                                        "date_of_birth": "15-02-1995",
-                                        "address": "456 Oak St",
-                                        "zip_code": "54321",
-                                        "city": "Sampletown",
-                                        "country": "Sampleland",
-                                        "gender": "Female",
+                                        "uuid": "ID-a1b2c3d4-5e6f-7g8h-9i10",
+                                        "photo": "https://example.com/profile-photo.png",
+                                        "name": "John",
+                                        "last_name": "Doe",
+                                        "username": "john_doe",
+                                        "email": "john@example.com",
+                                        "email_verified_at": "2024-01-01T00:00:00Z",
+                                        "phone": "123-456-7890",
+                                        "date_of_birth": "10-01-1990",
+                                        "address": "123 Main St",
+                                        "zip_code": "12345",
+                                        "city": "Exampleville",
+                                        "country": "Exampleland",
                                         "terms_and_conditions": true,
-                                        "role_id": 2
+                                        "gender": "Male",
+                                        "latitude": 40.7128,
+                                        "longitude": -74.006,
+                                        "created_at": "2024-01-01T00:00:00Z",
+                                        "updated_at": "2024-01-01T00:00:00Z",
+                                        "user_role": "Role",
+                                        "role_id": 1,
+                                        "social_provider": [],
+                                        "business": []
                                     }
                                 ]
                             }
@@ -1158,20 +1184,29 @@
                             "application/json": {
                                 "example": {
                                     "id": 1,
-                                    "uuid": "Id-c123-2556-5656",
-                                    "name": "Jon",
+                                    "uuid": "ID-a1b2c3d4-5e6f-7g8h-9i10",
+                                    "photo": "https://example.com/profile-photo.png",
+                                    "name": "John",
                                     "last_name": "Doe",
                                     "username": "john_doe",
-                                    "email": "user@example.com",
+                                    "email": "john@example.com",
+                                    "email_verified_at": "2024-01-01T00:00:00Z",
                                     "phone": "123-456-7890",
                                     "date_of_birth": "10-01-1990",
                                     "address": "123 Main St",
                                     "zip_code": "12345",
                                     "city": "Exampleville",
                                     "country": "Exampleland",
-                                    "gender": "Male",
                                     "terms_and_conditions": true,
-                                    "role_id": 1
+                                    "gender": "Male",
+                                    "latitude": 40.7128,
+                                    "longitude": -74.006,
+                                    "created_at": "2024-01-01T00:00:00Z",
+                                    "updated_at": "2024-01-01T00:00:00Z",
+                                    "user_role": "Role",
+                                    "role_id": 1,
+                                    "social_provider": [],
+                                    "business": []
                                 }
                             }
                         }
@@ -1219,20 +1254,29 @@
                                 "example": {
                                     "user": {
                                         "id": 1,
-                                        "uuid": "Id-c123-2556-5656",
-                                        "name": "Jon",
+                                        "uuid": "ID-a1b2c3d4-5e6f-7g8h-9i10",
+                                        "photo": "https://example.com/profile-photo.png",
+                                        "name": "John",
                                         "last_name": "Doe",
                                         "username": "john_doe",
-                                        "email": "user@example.com",
+                                        "email": "john@example.com",
+                                        "email_verified_at": "2024-01-01T00:00:00Z",
                                         "phone": "123-456-7890",
                                         "date_of_birth": "10-01-1990",
                                         "address": "123 Main St",
                                         "zip_code": "12345",
                                         "city": "Exampleville",
                                         "country": "Exampleland",
-                                        "gender": "Male",
                                         "terms_and_conditions": true,
-                                        "role_id": 1
+                                        "gender": "Male",
+                                        "latitude": 40.7128,
+                                        "longitude": -74.006,
+                                        "created_at": "2024-01-01T00:00:00Z",
+                                        "updated_at": "2024-01-01T00:00:00Z",
+                                        "user_role": "Role",
+                                        "role_id": 1,
+                                        "social_provider": [],
+                                        "business": []
                                     },
                                     "roles": {
                                         "Role 1": "Role 1",
@@ -6194,22 +6238,6 @@
                                         "description": "¡Aprovecha nuestro descuento especial de verano!",
                                         "start_date": "2024-06-15",
                                         "expire_date": "2024-08-31",
-                                        "business": [
-                                            {
-                                                "id": 1,
-                                                "business_uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
-                                                "business_logo": "https://example.com/business_logo.png",
-                                                "business_name": "Restaurante Internacional",
-                                                "business_email": "info@restauranteinternacional.com",
-                                                "business_phone": "+1 (555) 123-4567",
-                                                "business_address": "Calle Principal, 123",
-                                                "business_zipcode": "12345",
-                                                "business_city": "Ciudad Principal",
-                                                "business_country": "País Principal",
-                                                "business_website": "https://www.restauranteinternacional.com",
-                                                "business_about_us": "Acerca de"
-                                            }
-                                        ],
                                         "versions": [
                                             "regular",
                                             "medium",
@@ -6222,6 +6250,31 @@
                                         },
                                         "favorites_count": 7,
                                         "available": true,
+                                        "promo_active_days": {
+                                            "day_0": true,
+                                            "day_1": false,
+                                            "day_2": true,
+                                            "day_3": true,
+                                            "day_4": false,
+                                            "day_5": true,
+                                            "day_6": false
+                                        },
+                                        "business": [
+                                            {
+                                                "id": 1,
+                                                "business_uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+                                                "business_name": "Restaurante Internacional",
+                                                "business_logo": "https://example.com/business_logo.png",
+                                                "business_email": "info@restauranteinternacional.com",
+                                                "business_phone": "+1 (555) 123-4567",
+                                                "business_address": "Calle Principal, 123",
+                                                "business_city": "Ciudad Principal",
+                                                "business_zipcode": "12345",
+                                                "business_country": "País Principal",
+                                                "business_latitude": 10.56444,
+                                                "business_longitude": 10.56656
+                                            }
+                                        ],
                                         "business_promo_reference_media": [
                                             {
                                                 "id": 1,
@@ -6242,42 +6295,17 @@
                                                 "updated_at": "2024-03-15T10:35:00"
                                             }
                                         ],
-                                        "promo_active_days": {
-                                            "day_0": true,
-                                            "day_1": false,
-                                            "day_2": true,
-                                            "day_3": true,
-                                            "day_4": false,
-                                            "day_5": true,
-                                            "day_6": false
-                                        },
                                         "created_at": "2024-03-15T10:30:00",
                                         "updated_at": "2024-03-15T10:30:00"
                                     },
                                     {
                                         "id": 2,
                                         "uuid": "8a256d16-55c0-4e37-a8f4-8db7c1e764d8",
-                                        "title": "Pizzas 2x1 Tradicionales",
-                                        "sub_title": "¡2x1 en Pizzas Tradicionales!",
-                                        "description": "Llévate dos pizzas tradicionales por el precio de una. Elige entre pepperoni, hawaiana, margherita o vegetariana.",
+                                        "title": "Descuento de verano",
+                                        "sub_title": "Descuento de verano",
+                                        "description": "¡Aprovecha nuestro descuento especial de verano!",
                                         "start_date": "2024-06-15",
                                         "expire_date": "2024-08-31",
-                                        "business": [
-                                            {
-                                                "id": 2,
-                                                "business_uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
-                                                "business_logo": "https://example.com/business_logo.png",
-                                                "business_name": "Restaurante Internacional",
-                                                "business_email": "info@restauranteinternacional.com",
-                                                "business_phone": "+1 (555) 123-4567",
-                                                "business_address": "Calle Principal, 123",
-                                                "business_zipcode": "12345",
-                                                "business_city": "Ciudad Principal",
-                                                "business_country": "País Principal",
-                                                "business_website": "https://www.restauranteinternacional.com",
-                                                "business_about_us": "Acerca de"
-                                            }
-                                        ],
                                         "versions": [
                                             "regular",
                                             "medium",
@@ -6290,26 +6318,6 @@
                                         },
                                         "favorites_count": 7,
                                         "available": true,
-                                        "business_promo_reference_media": [
-                                            {
-                                                "id": 3,
-                                                "uuid": "7c256d16-45c0-4e37-a8f4-8db7c1e764d8",
-                                                "business_promo_item_id": 1,
-                                                "business_promo_media_url": "storage/promotion_media_images/image_123456.jpg",
-                                                "media_type": "Image",
-                                                "created_at": "2024-03-15T10:30:00",
-                                                "updated_at": "2024-03-15T10:30:00"
-                                            },
-                                            {
-                                                "id": 4,
-                                                "uuid": "8d367e27-56d1-4f38-b9f5-9ec8c1e765e9",
-                                                "business_promo_item_id": 1,
-                                                "business_promo_media_url": "storage/promotion_media_video/video_789012.mp4",
-                                                "media_type": "Video",
-                                                "created_at": "2024-03-15T10:35:00",
-                                                "updated_at": "2024-03-15T10:35:00"
-                                            }
-                                        ],
                                         "promo_active_days": {
                                             "day_0": true,
                                             "day_1": false,
@@ -6319,6 +6327,42 @@
                                             "day_5": true,
                                             "day_6": false
                                         },
+                                        "business": [
+                                            {
+                                                "id": 1,
+                                                "business_uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+                                                "business_name": "Restaurante Internacional",
+                                                "business_logo": "https://example.com/business_logo.png",
+                                                "business_email": "info@restauranteinternacional.com",
+                                                "business_phone": "+1 (555) 123-4567",
+                                                "business_address": "Calle Principal, 123",
+                                                "business_city": "Ciudad Principal",
+                                                "business_zipcode": "12345",
+                                                "business_country": "País Principal",
+                                                "business_latitude": 10.56444,
+                                                "business_longitude": 10.56656
+                                            }
+                                        ],
+                                        "business_promo_reference_media": [
+                                            {
+                                                "id": 1,
+                                                "uuid": "7c256d16-45c0-4e37-a8f4-8db7c1e764d8",
+                                                "business_promo_item_id": 1,
+                                                "business_promo_media_url": "storage/promotion_media_images/image_123456.jpg",
+                                                "media_type": "Image",
+                                                "created_at": "2024-03-15T10:30:00",
+                                                "updated_at": "2024-03-15T10:30:00"
+                                            },
+                                            {
+                                                "id": 2,
+                                                "uuid": "8d367e27-56d1-4f38-b9f5-9ec8c1e765e9",
+                                                "business_promo_item_id": 1,
+                                                "business_promo_media_url": "storage/promotion_media_video/video_789012.mp4",
+                                                "media_type": "Video",
+                                                "created_at": "2024-03-15T10:35:00",
+                                                "updated_at": "2024-03-15T10:35:00"
+                                            }
+                                        ],
                                         "created_at": "2024-03-15T10:30:00",
                                         "updated_at": "2024-03-15T10:30:00"
                                     }
@@ -6404,22 +6448,6 @@
                                         "description": "¡Aprovecha nuestro descuento especial de verano!",
                                         "start_date": "2024-06-15",
                                         "expire_date": "2024-08-31",
-                                        "business": [
-                                            {
-                                                "id": 1,
-                                                "business_uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
-                                                "business_logo": "https://example.com/business_logo.png",
-                                                "business_name": "Restaurante Internacional",
-                                                "business_email": "info@restauranteinternacional.com",
-                                                "business_phone": "+1 (555) 123-4567",
-                                                "business_address": "Calle Principal, 123",
-                                                "business_zipcode": "12345",
-                                                "business_city": "Ciudad Principal",
-                                                "business_country": "País Principal",
-                                                "business_website": "https://www.restauranteinternacional.com",
-                                                "business_about_us": "Acerca de"
-                                            }
-                                        ],
                                         "versions": [
                                             "regular",
                                             "medium",
@@ -6432,26 +6460,6 @@
                                         },
                                         "favorites_count": 7,
                                         "available": true,
-                                        "business_promo_reference_media": [
-                                            {
-                                                "id": 1,
-                                                "uuid": "7c256d16-45c0-4e37-a8f4-8db7c1e764d8",
-                                                "business_promo_media_url": "storage/promotion_media_images/image_123456.jpg",
-                                                "media_type": "Image",
-                                                "business_promo_item_id": 1,
-                                                "created_at": "2024-03-15T10:30:00",
-                                                "updated_at": "2024-03-15T10:30:00"
-                                            },
-                                            {
-                                                "id": 2,
-                                                "uuid": "8d367e27-56d1-4f38-b9f5-9ec8c1e765e9",
-                                                "business_promo_media_url": "storage/promotion_media_video/video_789012.mp4",
-                                                "media_type": "Video",
-                                                "business_promo_item_id": 1,
-                                                "created_at": "2024-03-15T10:35:00",
-                                                "updated_at": "2024-03-15T10:35:00"
-                                            }
-                                        ],
                                         "promo_active_days": {
                                             "day_0": true,
                                             "day_1": false,
@@ -6461,6 +6469,42 @@
                                             "day_5": true,
                                             "day_6": false
                                         },
+                                        "business": [
+                                            {
+                                                "id": 1,
+                                                "business_uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+                                                "business_name": "Restaurante Internacional",
+                                                "business_logo": "https://example.com/business_logo.png",
+                                                "business_email": "info@restauranteinternacional.com",
+                                                "business_phone": "+1 (555) 123-4567",
+                                                "business_address": "Calle Principal, 123",
+                                                "business_city": "Ciudad Principal",
+                                                "business_zipcode": "12345",
+                                                "business_country": "País Principal",
+                                                "business_latitude": 10.56444,
+                                                "business_longitude": 10.56656
+                                            }
+                                        ],
+                                        "business_promo_reference_media": [
+                                            {
+                                                "id": 1,
+                                                "uuid": "7c256d16-45c0-4e37-a8f4-8db7c1e764d8",
+                                                "business_promo_item_id": 1,
+                                                "business_promo_media_url": "storage/promotion_media_images/image_123456.jpg",
+                                                "media_type": "Image",
+                                                "created_at": "2024-03-15T10:30:00",
+                                                "updated_at": "2024-03-15T10:30:00"
+                                            },
+                                            {
+                                                "id": 2,
+                                                "uuid": "8d367e27-56d1-4f38-b9f5-9ec8c1e765e9",
+                                                "business_promo_item_id": 1,
+                                                "business_promo_media_url": "storage/promotion_media_video/video_789012.mp4",
+                                                "media_type": "Video",
+                                                "created_at": "2024-03-15T10:35:00",
+                                                "updated_at": "2024-03-15T10:35:00"
+                                            }
+                                        ],
                                         "created_at": "2024-03-15T10:30:00",
                                         "updated_at": "2024-03-15T10:30:00"
                                     }

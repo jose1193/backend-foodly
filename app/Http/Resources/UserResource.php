@@ -32,6 +32,8 @@ class UserResource extends JsonResource {
             'zip_code' => $this->zip_code,
             'city' => $this->city,
             'country' => $this->country,
+            'latitude' => (double) $this->latitude,
+            'longitude' => (double) $this->longitude,
             'terms_and_conditions' => (boolean) $this->terms_and_conditions,
             'gender' => $this->gender,
             'created_at' => $this->created_at,
@@ -45,6 +47,3 @@ class UserResource extends JsonResource {
         ];
     }
 }
-
-
-
