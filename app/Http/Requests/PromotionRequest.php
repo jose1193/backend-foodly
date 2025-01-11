@@ -34,7 +34,7 @@ class PromotionRequest extends FormRequest
             'description' => 'nullable|min:3|string|max:255',
             'start_date' => 'nullable|string|min:3|max:50',
             'expire_date' => 'nullable|string|min:3|max:50',
-
+            'media_link' => 'nullable|string|max:255',
             'versions' => 'nullable|array',
             'prices' => 'nullable|array',
             'prices.regular' => 'nullable|numeric|min:0',

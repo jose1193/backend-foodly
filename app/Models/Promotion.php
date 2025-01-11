@@ -5,11 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
 class Promotion extends Model
 {
     use HasFactory;
-
 
     protected $fillable = [
         'uuid',
@@ -18,14 +16,13 @@ class Promotion extends Model
         'description',
         'start_date',
         'expire_date',
+        'media_link',
         'versions',
         'prices',
         'favorites_count',
         'available',
         'business_id',
-
     ];
-
 
     protected $casts = [
         'versions' => 'array',

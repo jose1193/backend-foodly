@@ -22,8 +22,9 @@ class PromotionResource extends JsonResource
             'description' => $this->description,
             'start_date' => $this->start_date,
             'expire_date' => $this->expire_date,
+           
             'versions' => $this->versions ?? null,
-            //'prices' => $this->prices, 
+            //'prices' => $this->prices,
             'prices' => [
             'regular' => $this->prices['regular'] !== null ? (double)$this->prices['regular'] : null,
             'medium' => $this->prices['medium'] !== null ? (double)$this->prices['medium'] : null,
@@ -32,6 +33,7 @@ class PromotionResource extends JsonResource
             'favorites_count' => (int) $this->favorites_count ?? 0,
             'available' => (boolean) $this->available,
             'promo_active_days' => $this->getPromoActiveDays(),
+            'media_link' => $this->media_link,
             'business_promo_reference_media' => PromotionMediaResource::collection($this->promotionMedia), 
             'business' => [
                 'id' => (int) $this->business->id,

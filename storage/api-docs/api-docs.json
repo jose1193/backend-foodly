@@ -6259,6 +6259,7 @@
                                             "day_5": true,
                                             "day_6": false
                                         },
+                                        "media_link": "https://example.com/promotions/summer-discount-2-video.mp4",
                                         "business": [
                                             {
                                                 "id": 1,
@@ -6327,6 +6328,7 @@
                                             "day_5": true,
                                             "day_6": false
                                         },
+                                        "media_link": "https://example.com/promotions/summer-discount-2-video.mp4",
                                         "business": [
                                             {
                                                 "id": 1,
@@ -6485,6 +6487,7 @@
                                                 "business_longitude": 10.56656
                                             }
                                         ],
+                                        "media_link": "https://example.com/promotions/summer-discount-2-video.mp4",
                                         "business_promo_reference_media": [
                                             {
                                                 "id": 1,
@@ -8205,6 +8208,11 @@
                         "type": "boolean",
                         "description": "Availability status of the promotion",
                         "example": true
+                    },
+                    "media_link": {
+                        "type": "string",
+                        "description": "URL of the promotion media content",
+                        "example": "https://example.com/promotions/summer-discount-video.mp4"
                     }
                 }
             },
@@ -8257,6 +8265,11 @@
                         "type": "boolean",
                         "description": "Availability status of the promotion",
                         "example": true
+                    },
+                    "media_link": {
+                        "type": "string",
+                        "description": "URL of the promotion media content",
+                        "example": "https://example.com/promotions/summer-discount-video.mp4"
                     }
                 }
             },
