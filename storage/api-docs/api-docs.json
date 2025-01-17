@@ -8996,7 +8996,7 @@
                     "voice_text": {
                         "type": "string",
                         "description": "Voice Search Text",
-                        "example": "Quero negócios de pizzarias perto de mim"
+                        "example": "Find sushi restaurants near me"
                     }
                 }
             },
