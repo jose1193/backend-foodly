@@ -66,6 +66,10 @@
             "description": "Business Users Foodly"
         },
         {
+            "name": "Business Search",
+            "description": "Business Search Foodly"
+        },
+        {
             "name": "Business Menus",
             "description": "Business Menus"
         },
@@ -2982,6 +2986,221 @@
                         "BearerAuth": []
                     }
                 ]
+            }
+        },
+        "/business/search": {
+            "post": {
+                "tags": ["Business Search"],
+                "summary": "Get all Filtered Location Business",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LocationSearchSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "List Filtered Location Business",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "business": [
+                                        {
+                                            "id": 1,
+                                            "user_id": 3,
+                                            "business_uuid": "ae300e26-9b6f-4786-bc1a-7a2e1a33224f",
+                                            "business_logo": "http://localhost:8080/",
+                                            "business_name": "La Dolce Vita Trattoria",
+                                            "business_email": "dolcevita@example.com",
+                                            "business_phone": "+351 967845123",
+                                            "business_about_us": "Auténtica cocina italiana en el corazón de Covilhã",
+                                            "business_services": [
+                                                {
+                                                    "id": 1,
+                                                    "service_uuid": "8b9e3e40-0261-4122-b7dd-049abef54f50",
+                                                    "service_name": "Wifi"
+                                                },
+                                                {
+                                                    "id": 3,
+                                                    "service_uuid": "6f285d24-2712-4cf2-880e-3f94a35090e6",
+                                                    "service_name": "Terraza"
+                                                },
+                                                {
+                                                    "id": 4,
+                                                    "service_uuid": "7a285d24-2712-4cf2-880e-3f94a35090e7",
+                                                    "service_name": "Parking"
+                                                }
+                                            ],
+                                            "business_additional_info": "Especialidad en pizzas al horno de leña",
+                                            "business_address": "Rua do Comercio 45",
+                                            "business_zipcode": "6200-161",
+                                            "business_city": "Covilhã",
+                                            "business_country": "Portugal",
+                                            "business_website": "dolcevita-trattoria.pt",
+                                            "business_latitude": 40.281562,
+                                            "business_longitude": -7.543215,
+                                            "business_menus": [
+                                                {
+                                                    "id": 5,
+                                                    "uuid": "5bc3d88e-4386-49a4-9e98-c5630a68a480",
+                                                    "business_uuid": "ae300e26-9b6f-4786-bc1a-7a2e1a33224f"
+                                                }
+                                            ],
+                                            "category_id": 3,
+                                            "category": {
+                                                "id": 3,
+                                                "category_uuid": "d88d9120-6850-4627-84a2-c27ef0e23e67",
+                                                "category_name": "Pizzerías",
+                                                "category_image_path": "https://foodly.s3.amazonaws.com/public/categories_images/zy66xbwjltRgitojWuzbUoOxX4OpLfQUmlotimVi.jpg",
+                                                "subcategories": []
+                                            },
+                                            "business_opening_hours": {
+                                                "day_0": {
+                                                    "open_a": "12:00",
+                                                    "close_a": "15:00",
+                                                    "open_b": "19:00",
+                                                    "close_b": "23:00"
+                                                },
+                                                "day_1": {
+                                                    "open_a": "12:00",
+                                                    "close_a": "15:00",
+                                                    "open_b": "19:00",
+                                                    "close_b": "23:00"
+                                                },
+                                                "day_2": {
+                                                    "open_a": "12:00",
+                                                    "close_a": "15:00",
+                                                    "open_b": "19:00",
+                                                    "close_b": "23:00"
+                                                },
+                                                "day_3": {
+                                                    "open_a": "12:00",
+                                                    "close_a": "15:00",
+                                                    "open_b": "19:00",
+                                                    "close_b": "23:00"
+                                                },
+                                                "day_4": {
+                                                    "open_a": "12:00",
+                                                    "close_a": "15:00",
+                                                    "open_b": "19:00",
+                                                    "close_b": "23:00"
+                                                },
+                                                "day_5": {
+                                                    "open_a": "12:00",
+                                                    "close_a": "15:00",
+                                                    "open_b": "19:00",
+                                                    "close_b": "00:00"
+                                                },
+                                                "day_6": {
+                                                    "open_a": "12:00",
+                                                    "close_a": "15:00",
+                                                    "open_b": "19:00",
+                                                    "close_b": "00:00"
+                                                }
+                                            },
+                                            "created_at": "2025-01-15 14:30:22",
+                                            "updated_at": "2025-01-15 14:30:22",
+                                            "cover_images": [],
+                                            "business_promotions": [],
+                                            "business_branches": []
+                                        },
+                                        {
+                                            "id": 6,
+                                            "user_id": 4,
+                                            "business_uuid": "bf400e26-9b6f-4786-bc1a-7a2e1a33225g",
+                                            "business_logo": "http://localhost:8080/",
+                                            "business_name": "Napoli Express",
+                                            "business_email": "napoliexpress@example.com",
+                                            "business_phone": "+351 967832456",
+                                            "business_about_us": "Pizza napolitana auténtica con ingredientes importados de Italia",
+                                            "business_services": [
+                                                {
+                                                    "id": 1,
+                                                    "service_uuid": "8b9e3e40-0261-4122-b7dd-049abef54f50",
+                                                    "service_name": "Wifi"
+                                                },
+                                                {
+                                                    "id": 5,
+                                                    "service_uuid": "8f285d24-2712-4cf2-880e-3f94a35090e8",
+                                                    "service_name": "Delivery"
+                                                },
+                                                {
+                                                    "id": 6,
+                                                    "service_uuid": "9a285d24-2712-4cf2-880e-3f94a35090e9",
+                                                    "service_name": "Take Away"
+                                                }
+                                            ],
+                                            "business_additional_info": "Pizzas certificadas por la Asociación Verace Pizza Napoletana",
+                                            "business_address": "Avenida da Universidade 123",
+                                            "business_zipcode": "6200-172",
+                                            "business_city": "Covilhã",
+                                            "business_country": "Portugal",
+                                            "business_website": "napoli-express.pt",
+                                            "business_latitude": 40.279876,
+                                            "business_longitude": -7.541234,
+                                            "business_menus": [
+                                                {
+                                                    "id": 6,
+                                                    "uuid": "6bc3d88e-4386-49a4-9e98-c5630a68a481",
+                                                    "business_uuid": "bf400e26-9b6f-4786-bc1a-7a2e1a33225g"
+                                                }
+                                            ],
+                                            "category_id": 3,
+                                            "category": {
+                                                "id": 3,
+                                                "category_uuid": "d88d9120-6850-4627-84a2-c27ef0e23e67",
+                                                "category_name": "Pizzerías",
+                                                "category_image_path": "https://foodly.s3.amazonaws.com/public/categories_images/zy66xbwjltRgitojWuzbUoOxX4OpLfQUmlotimVi.jpg",
+                                                "subcategories": []
+                                            },
+                                            "business_opening_hours": {
+                                                "day_0": {
+                                                    "open_a": "11:00",
+                                                    "close_a": "23:00"
+                                                },
+                                                "day_1": {
+                                                    "open_a": "11:00",
+                                                    "close_a": "23:00"
+                                                },
+                                                "day_2": {
+                                                    "open_a": "11:00",
+                                                    "close_a": "23:00"
+                                                },
+                                                "day_3": {
+                                                    "open_a": "11:00",
+                                                    "close_a": "23:00"
+                                                },
+                                                "day_4": {
+                                                    "open_a": "11:00",
+                                                    "close_a": "23:00"
+                                                },
+                                                "day_5": {
+                                                    "open_a": "11:00",
+                                                    "close_a": "00:00"
+                                                },
+                                                "day_6": {
+                                                    "open_a": "11:00",
+                                                    "close_a": "00:00"
+                                                }
+                                            },
+                                            "created_at": "2025-01-15 16:45:33",
+                                            "updated_at": "2025-01-15 16:45:33",
+                                            "cover_images": [],
+                                            "business_promotions": [],
+                                            "business_branches": []
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                }
             }
         },
         "/business-cover-images": {
@@ -8749,6 +8968,35 @@
                     "business_combos_photo_url": {
                         "type": "string",
                         "format": "binary"
+                    }
+                }
+            },
+            "LocationSearchSchema": {
+                "required": ["latitude", "longitude", "voice_text"],
+                "type": "object",
+                "properties": {
+                    "latitude": {
+                        "type": "number",
+                        "description": "Location latitude",
+                        "format": "float",
+                        "example": 40.2784256
+                    },
+                    "longitude": {
+                        "type": "number",
+                        "description": "Location Length",
+                        "format": "float",
+                        "example": -7.4973184
+                    },
+                    "radius": {
+                        "type": "number",
+                        "description": "Search radius in kilometers",
+                        "format": "float",
+                        "example": 5
+                    },
+                    "voice_text": {
+                        "type": "string",
+                        "description": "Voice Search Text",
+                        "example": "Quero negócios de pizzarias perto de mim"
                     }
                 }
             },

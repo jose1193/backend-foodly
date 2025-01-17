@@ -8,6 +8,7 @@
         "php": "^8.2",
         "abraham/twitteroauth": "^7.0",
         "darkaonline/l5-swagger": "^8.6",
+        "doctrine/inflector": "^2.0",
         "intervention/image": "^2",
         "laravel/framework": "^11.0",
         "laravel/sanctum": "^4.0",

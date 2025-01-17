@@ -38,6 +38,8 @@ use App\Http\Controllers\BusinessFoodItemController;
 use App\Http\Controllers\BusinessDrinkItemController;
 use App\Http\Controllers\BusinessFoodItemPhotoController;
 use App\Http\Controllers\BusinessDrinkItemPhotoController;
+use App\Http\Controllers\HaversineSearchController;
+
 
 //Route::get('/user', function (Request $request) {
     //return $request->user();
@@ -80,6 +82,7 @@ Route::post('twitter/callback', [TwitterController::class, 'handleTwitterCallbac
 Route::post('/twitter/user-details', [TwitterController::class, 'getUserDetails']);
 
 
+Route::post('/business/search', [HaversineSearchController::class, 'search']);
 
 Route::middleware(['auth:sanctum','handle.notfound'])->group(function() {
     //Route::get('/user', function (Request $request) {
