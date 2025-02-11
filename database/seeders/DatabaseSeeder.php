@@ -138,8 +138,8 @@ class DatabaseSeeder extends Seeder
         }
         // END CATEGORIAS
 
-        // CATEGORIAS
-   $services = [
+        // SERVICES
+    $services = [
             ['service_uuid' => Uuid::uuid4()->toString(), 'service_name' => 'Wifi', 'service_description' => 'Descripción de Wifi', 'service_image_path' => 'storage/app/public/services_images/wifi.png', 'user_id' => 1],
             ['service_uuid' => Uuid::uuid4()->toString(), 'service_name' => 'Multilenguage', 'service_description' => 'Descripción de Multilenguage', 'service_image_path' => 'storage/app/public/services_images/multilenguage.png', 'user_id' => 1],
             ['service_uuid' => Uuid::uuid4()->toString(), 'service_name' => 'Kid Chairs', 'service_description' => 'Descripción de Kid Chairs', 'service_image_path' => 'storage/app/public/services_images/kid_chairs.png', 'user_id' => 1],
@@ -156,6 +156,8 @@ class DatabaseSeeder extends Seeder
             ['service_uuid' => Uuid::uuid4()->toString(), 'service_name' => 'Pet Friendly', 'service_description' => 'Descripción de Pet Friendly', 'service_image_path' => 'storage/app/public/services_images/pet_friendly.png', 'user_id' => 1],
             ['service_uuid' => Uuid::uuid4()->toString(), 'service_name' => 'Catering', 'service_description' => 'Descripción de Catering', 'service_image_path' => 'storage/app/public/services_images/catering.png', 'user_id' => 1],
             ['service_uuid' => Uuid::uuid4()->toString(), 'service_name' => 'Live Music', 'service_description' => 'Descripción de Live Music', 'service_image_path' => 'storage/app/public/services_images/livemusic.png', 'user_id' => 1],
+            ['service_uuid' => Uuid::uuid4()->toString(), 'service_name' => 'On Site', 'service_description' => 'Descripción de On Site', 'service_image_path' => 'storage/app/public/services_images/on_site.png', 'user_id' => 1],
+            ['service_uuid' => Uuid::uuid4()->toString(), 'service_name' => 'Kids Menu', 'service_description' => 'Descripción de Kids Menu', 'service_image_path' => 'storage/app/public/services_images/kids_menu.png', 'user_id' => 1],
         ];
 
 
