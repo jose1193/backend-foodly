@@ -45,7 +45,7 @@ return [
    'twitter' => [
     'client_id' => env('TWITTER_CLIENT_ID'),
     'client_secret' => env('TWITTER_CLIENT_SECRET'),
-    'redirect' => env('TWITTER_CALLBACK_URL'),
+    'redirect' => env('TWITTER_REDIRECT_URI'),
     ],
 
     'facebook' => [
@@ -54,5 +54,11 @@ return [
     'redirect' => 'FACEBOOK_REDIRECT_URI',
     ],
 
-    
+    'apple' => [
+        'client_id' => env('APPLE_CLIENT_ID'),
+        'team_id' => env('APPLE_TEAM_ID'),
+        'key_id' => env('APPLE_KEY_ID'),
+        'private_key' => env('APPLE_PRIVATE_KEY'),
+        'redirect' => 'APPLE_REDIRECT_URI',
+    ],
 ];

@@ -43,6 +43,12 @@ class UserResource extends JsonResource {
             'role_id' => $this->roles->pluck('id')->first() ?? null,
             'social_provider' => $this->providers->isNotEmpty() ? $this->providers : [],
             'business' => BusinessResource::collection($this->businesses),
+            'favorite_businesses' => $this->favoriteBusiness->map(function ($business) {
+            return [
+                    'business_uuid' => $business->business_uuid,
+                ];
+        }),
+
             //'business' => $this->businesses && $this->businesses->isNotEmpty() ? BusinessResource::collection($this->businesses) : [],
         ];
     }

@@ -78,5 +78,10 @@ public function services()
     
     }
 
+    public function favoritedBy()
+    {
+        return $this->belongsToMany(User::class, 'business_favorites')
+                ->withTimestamps();
+    }
 
 }

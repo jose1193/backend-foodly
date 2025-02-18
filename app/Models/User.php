@@ -77,4 +77,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Provider::class,'user_id');
     }
+
+    public function favoriteBusiness()
+    {
+        return $this->belongsToMany(Business::class, 'business_favorites')
+                ->withTimestamps();
+    }
 }

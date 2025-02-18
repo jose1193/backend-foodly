@@ -118,6 +118,22 @@
             "description": "Business Promotions Images"
         },
         {
+            "name": "Business Favorites",
+            "description": "Business Favorites"
+        },
+        {
+            "name": "Business Menu Favorites",
+            "description": "Business Menu Favorites"
+        },
+        {
+            "name": "Business Item Favorites",
+            "description": "Business Item Favorites"
+        },
+        {
+            "name": "Saved Promotios",
+            "description": "Saved Promotios"
+        },
+        {
             "name": "Business Branch",
             "description": "Business Branch Users Foodly"
         },
@@ -138,7 +154,7 @@
         "/login": {
             "post": {
                 "tags": ["Users"],
-                "summary": "User login",
+                "summary": "Login user",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -151,15 +167,53 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "User login successfully",
+                        "description": "User logged in successfully",
                         "content": {
-                            "text/plain": {
-                                "example": "User logged successfully"
+                            "application/json": {
+                                "example": {
+                                    "message": "User logged successfully",
+                                    "token": "jsutFqXt7zNJizr8vRlUhuLMdYeUxaGSFz4G4uAFe326f380",
+                                    "token_type": "Bearer",
+                                    "token_created_at": "2025-02-17 18:03:33",
+                                    "user": {
+                                        "id": 2,
+                                        "uuid": "7faca1bc-1f05-4c75-b8a5-20a98bcf8f8c",
+                                        "photo": "https://ui-avatars.com/api/?name=M&color=7F9CF5&background=EBF4FF",
+                                        "name": "Manager",
+                                        "username": "manager369",
+                                        "email": "manager@manager.com",
+                                        "email_verified_at": "2025-02-13T15:57:49.000000Z",
+                                        "phone": "00000",
+                                        "latitude": 0,
+                                        "longitude": 0,
+                                        "terms_and_conditions": false,
+                                        "created_at": "2025-02-13T15:57:49.000000Z",
+                                        "updated_at": "2025-02-13T15:57:49.000000Z",
+                                        "user_role": "Manager",
+                                        "role_id": 2,
+                                        "social_provider": [],
+                                        "business": [],
+                                        "favorite_businesses": [
+                                            {
+                                                "business_uuid": "9533e911-8edd-41a6-84fc-1187dcab2a8d"
+                                            },
+                                            {
+                                                "business_uuid": "148fb6a0-8a4a-4efa-93c1-39b15f479ea1"
+                                            },
+                                            {
+                                                "business_uuid": "3f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                            }
+                                        ]
+                                    }
+                                }
                             }
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/UnprocessableEntity"
                     },
                     "500": {
                         "$ref": "#/components/responses/ServerError"
@@ -234,7 +288,18 @@
                                         "user_role": "Role",
                                         "role_id": 1,
                                         "social_provider": [],
-                                        "business": []
+                                        "business": [],
+                                        "favorite_businesses": [
+                                            {
+                                                "business_uuid": "9533e911-8edd-41a6-84fc-1187dcab2a8d"
+                                            },
+                                            {
+                                                "business_uuid": "148fb6a0-8a4a-4efa-93c1-39b15f479ea1"
+                                            },
+                                            {
+                                                "business_uuid": "3f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                            }
+                                        ]
                                     }
                                 ]
                             }
@@ -1036,7 +1101,18 @@
                                         "user_role": "Role",
                                         "role_id": 1,
                                         "social_provider": [],
-                                        "business": []
+                                        "business": [],
+                                        "favorite_businesses": [
+                                            {
+                                                "business_uuid": "9533e911-8edd-41a6-84fc-1187dcab2a8d"
+                                            },
+                                            {
+                                                "business_uuid": "148fb6a0-8a4a-4efa-93c1-39b15f479ea1"
+                                            },
+                                            {
+                                                "business_uuid": "3f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                            }
+                                        ]
                                     },
                                     {
                                         "id": 2,
@@ -1062,7 +1138,18 @@
                                         "user_role": "Role",
                                         "role_id": 1,
                                         "social_provider": [],
-                                        "business": []
+                                        "business": [],
+                                        "favorite_businesses": [
+                                            {
+                                                "business_uuid": "9533e911-8edd-41a6-84fc-1187dcab2a8d"
+                                            },
+                                            {
+                                                "business_uuid": "148fb6a0-8a4a-4efa-93c1-39b15f479ea1"
+                                            },
+                                            {
+                                                "business_uuid": "3f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                            }
+                                        ]
                                     }
                                 ]
                             }
@@ -1210,7 +1297,18 @@
                                     "user_role": "Role",
                                     "role_id": 1,
                                     "social_provider": [],
-                                    "business": []
+                                    "business": [],
+                                    "favorite_businesses": [
+                                        {
+                                            "business_uuid": "9533e911-8edd-41a6-84fc-1187dcab2a8d"
+                                        },
+                                        {
+                                            "business_uuid": "148fb6a0-8a4a-4efa-93c1-39b15f479ea1"
+                                        },
+                                        {
+                                            "business_uuid": "3f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                        }
+                                    ]
                                 }
                             }
                         }
@@ -5810,6 +5908,156 @@
                 ]
             }
         },
+        "/business-favorites": {
+            "get": {
+                "tags": ["Business Favorites"],
+                "summary": "Get user's favorite businesses",
+                "responses": {
+                    "200": {
+                        "description": "List of user's favorite businesses",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "favorite_businesses": [
+                                        {
+                                            "id": 1,
+                                            "business_uuid": "9533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "business_name": "Mamma Mia",
+                                            "business_logo": "http://localhost:8080/storage/business_logos/logo1.jpg",
+                                            "business_email": "mammamia@example.com",
+                                            "business_phone": "+351 98956556",
+                                            "business_address": "R. Marquês de Ávila e Bolama 6",
+                                            "business_city": "Covilhã",
+                                            "business_country": "Portugal",
+                                            "business_zipcode": "6200-156",
+                                            "business_latitude": 40.280149,
+                                            "business_longitude": -7.5419885
+                                        },
+                                        {
+                                            "id": 2,
+                                            "business_uuid": "148fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                            "business_name": "Pizzeria Roma",
+                                            "business_logo": "http://localhost:8080/storage/business_logos/logo2.jpg",
+                                            "business_email": "roma@example.com",
+                                            "business_phone": "+351 98956557",
+                                            "business_address": "Rua Central, 123",
+                                            "business_city": "Lisboa",
+                                            "business_country": "Portugal",
+                                            "business_zipcode": "1000-001",
+                                            "business_latitude": 38.722252,
+                                            "business_longitude": -9.139337
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-favorites/{businessUuid}": {
+            "post": {
+                "tags": ["Business Favorites"],
+                "summary": "Toggle favorite status for a business",
+                "parameters": [
+                    {
+                        "name": "businessUuid",
+                        "in": "path",
+                        "description": "UUID of the business to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Favorite status toggled successfully",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "is_favorite": true
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-favorites/check/{businessUuid}": {
+            "get": {
+                "tags": ["Business Favorites"],
+                "summary": "Check if a business is favorited by the user",
+                "parameters": [
+                    {
+                        "name": "businessUuid",
+                        "in": "path",
+                        "description": "UUID of the business to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Favorite status check result",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "is_favorite": true
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
         "/branch": {
             "get": {
                 "tags": ["Business Branch"],
@@ -9273,6 +9521,18 @@
             },
             "BusinessId": {
                 "name": "uuid",
+                "in": "path",
+                "description": "UUID of the business to retrieve",
+                "required": true,
+                "style": "simple",
+                "explode": false,
+                "schema": {
+                    "type": "string",
+                    "format": "uuid"
+                }
+            },
+            "BusinessUuid": {
+                "name": "businessUuid",
                 "in": "path",
                 "description": "UUID of the business to retrieve",
                 "required": true,

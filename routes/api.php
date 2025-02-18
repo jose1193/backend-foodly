@@ -25,6 +25,7 @@ use App\Http\Controllers\PromotionMediaController;
 use App\Http\Controllers\PromotionBranchController;
 use App\Http\Controllers\PromotionBranchImageController;
 use App\Http\Controllers\SocialLoginController;
+use App\Http\Controllers\TwitterLoginController;
 use App\Http\Controllers\CreateUserController;
 use App\Http\Controllers\PasswordResetUserController;
 use App\Http\Controllers\ServiceController;
@@ -39,7 +40,7 @@ use App\Http\Controllers\BusinessDrinkItemController;
 use App\Http\Controllers\BusinessFoodItemPhotoController;
 use App\Http\Controllers\BusinessDrinkItemPhotoController;
 use App\Http\Controllers\HaversineSearchController;
-
+use App\Http\Controllers\BusinessFavoriteController;
 
 //Route::get('/user', function (Request $request) {
     //return $request->user();
@@ -58,6 +59,8 @@ Route::get('/categories', [CategoryController::class, 'index']);
 // Route related to User Social Login
 Route::post('/social-login', [SocialLoginController::class, 'handleProviderCallback']);
 
+Route::post('/auth/twitter', [TwitterLoginController::class, 'handleProvider']);  
+Route::get('/auth/twitter/callback', [TwitterLoginController::class, 'handleTwitterCallback']);
 
 // Public route to list menus of all businesses
 Route::get('/public', [BusinessMenuController::class, 'publicIndex']);
@@ -312,5 +315,10 @@ Route::group(['prefix' => 'business-drink-item-photos'], function () {
     Route::delete('/delete/{uuid}', [BusinessDrinkItemPhotoController::class, 'destroy']);
 });
 
+Route::group(['prefix' => 'business-favorites'], function () {
+    Route::get('/', [BusinessFavoriteController::class, 'index']);
+    Route::post('/{businessUuid}', [BusinessFavoriteController::class, 'toggle']);
+    Route::get('/check/{businessUuid}', [BusinessFavoriteController::class, 'check']);
+});
     // Otras rutas protegidas...
 });

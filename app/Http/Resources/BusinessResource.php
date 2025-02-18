@@ -88,10 +88,12 @@ class BusinessResource extends JsonResource
         })->toArray()
     ];
 })->toArray(),
+        'favorites_count' => (int)$this->favoritedBy()->count(),
         'business_branches' => BranchResource::collection($this->branches),
        
-         
-
+        //'is_favorite' => $request->user() 
+            //? $this->favoritedBy()->where('user_id', $request->user()->id)->exists()
+            //: false,
     ];
 
     
