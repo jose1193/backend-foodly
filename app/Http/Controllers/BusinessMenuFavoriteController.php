@@ -15,7 +15,7 @@ class BusinessMenuFavoriteController extends Controller
     {
         $favorites = auth()->user()->favoriteMenus;
         return response()->json([
-            'favorite_menus' => $favorites->pluck('uuid')
+            'favorite_menus' => BusinessMenuResource::collection($favorites)
         ], 200);
     }
 

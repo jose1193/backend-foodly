@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BusinessFoodItem;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Http\Resources\BusinessFoodItemResource;
 
 class BusinessFoodItemFavoriteController extends Controller
 {
@@ -15,7 +16,7 @@ class BusinessFoodItemFavoriteController extends Controller
     {
         $favorites = auth()->user()->favoriteFoodItems;
         return response()->json([
-            'favorite_foods_items' => $favorites->pluck('uuid')
+            'favorite_food_items' => BusinessFoodItemResource::collection($favorites)
         ], 200);
     }
 

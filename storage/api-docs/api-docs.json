@@ -6074,19 +6074,34 @@
                             "application/json": {
                                 "example": {
                                     "favorite_menus": [
-                                        "7533e911-8edd-41a6-84fc-1187dcab2a8d",
-                                        "248fb6a0-8a4a-4efa-93c1-39b15f479ea1",
-                                        "5f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                        {
+                                            "id": 1,
+                                            "uuid": "7533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "business_id": 1,
+                                            "business_uuid": "9533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "business_food_categories": [
+                                                {
+                                                    "id": 1,
+                                                    "name": "Pizzas",
+                                                    "food_items": ["..."]
+                                                }
+                                            ],
+                                            "business_drink_categories": [
+                                                {
+                                                    "id": 1,
+                                                    "name": "Soft Drinks",
+                                                    "drink_items": ["..."]
+                                                }
+                                            ],
+                                            "business_combos": ["..."],
+                                            "created_at": "2024-02-18T16:39:34.000000Z",
+                                            "updated_at": "2024-02-18T16:39:34.000000Z",
+                                            "favorites_count": 15
+                                        }
                                     ]
                                 }
                             }
                         }
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/ServerError"
                     }
                 },
                 "security": [
@@ -6153,9 +6168,33 @@
                             "application/json": {
                                 "example": {
                                     "favorite_foods_items": [
-                                        "7533e911-8edd-41a6-84fc-1187dcab2a8d",
-                                        "248fb6a0-8a4a-4efa-93c1-39b15f479ea1",
-                                        "5f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                        {
+                                            "id": 1,
+                                            "uuid": "2f71b41a-7c26-4852-abd0-dd13817114c1",
+                                            "business_food_category_id": 1,
+                                            "name": "Ensalada César",
+                                            "description": "Ensalada fresca con aderezo César",
+                                            "versions": [
+                                                "regular",
+                                                "medium",
+                                                "big"
+                                            ],
+                                            "prices": {
+                                                "regular": 3,
+                                                "medium": 4.5,
+                                                "big": 6
+                                            },
+                                            "favorites_count": 7,
+                                            "available": true,
+                                            "business_food_reference_photos": [
+                                                {
+                                                    "id": 1,
+                                                    "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                                    "business_food_photo_url": "https://url/business_food_item_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                                    "business_food_item_id": 1
+                                                }
+                                            ]
+                                        }
                                     ]
                                 }
                             }
@@ -6232,9 +6271,31 @@
                             "application/json": {
                                 "example": {
                                     "favorite_drinks_items": [
-                                        "6533e911-8edd-41a6-84fc-1187dcab2a8d",
-                                        "348fb6a0-8a4a-4efa-93c1-39b15f479ea1",
-                                        "4f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                        {
+                                            "id": 1,
+                                            "uuid": "2f71b41a-7c26-4852-abd0-dd13817114c1",
+                                            "business_drink_category_id": 1,
+                                            "name": "Jugo de Naranja",
+                                            "description": "Jugo de naranja recién exprimido",
+                                            "versions": [
+                                                "regular",
+                                                "medium",
+                                                "big"
+                                            ],
+                                            "regular": 3,
+                                            "medium": 4.5,
+                                            "big": 6,
+                                            "favorites_count": 7,
+                                            "available": true,
+                                            "business_drink_reference_photos": [
+                                                {
+                                                    "id": 1,
+                                                    "uuid": "8633ed66-6402-4b09-9655-4272863c9774",
+                                                    "business_drink_photo_url": "https://url/business_drink_item_photos/NCmmpQEKL2xRs2VgGdozsFu1EyaVnH3h5wowZ35k.jpg",
+                                                    "business_drink_item_id": 1
+                                                }
+                                            ]
+                                        }
                                     ]
                                 }
                             }
@@ -6311,9 +6372,40 @@
                             "application/json": {
                                 "example": {
                                     "saved_promotions": [
-                                        "6533e911-8edd-41a6-84fc-1187dcab2a8d",
-                                        "348fb6a0-8a4a-4efa-93c1-39b15f479ea1",
-                                        "4f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                        {
+                                            "id": 1,
+                                            "uuid": "9533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "business_uuid": "148fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                            "title": "Summer Special",
+                                            "sub_title": "Limited Time Offer",
+                                            "description": "Get 20% off on all items",
+                                            "start_date": "2024-06-01",
+                                            "expire_date": "2024-08-31",
+                                            "versions": [
+                                                "regular",
+                                                "medium",
+                                                "big"
+                                            ],
+                                            "prices": {
+                                                "regular": 15.99,
+                                                "medium": 20.99,
+                                                "big": 25.99
+                                            },
+                                            "promo_active_days": {
+                                                "day_0": true,
+                                                "day_1": true,
+                                                "day_2": true,
+                                                "day_3": true,
+                                                "day_4": true,
+                                                "day_5": true,
+                                                "day_6": true
+                                            },
+                                            "available": true,
+                                            "media_link": "http://example.com/promotions/summer-special.jpg",
+                                            "favorites_count": 45,
+                                            "created_at": "2024-02-18T16:39:34",
+                                            "updated_at": "2024-02-18T16:39:34"
+                                        }
                                     ]
                                 }
                             }

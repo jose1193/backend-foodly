@@ -29,11 +29,11 @@ class BusinessDrinkItemResource extends JsonResource
             'medium' => $this->prices['medium'] !== null ? (double)$this->prices['medium'] : null,
             'big' => $this->prices['big'] !== null ? (double)$this->prices['big'] : null,
             ],
-            'favorites_count' => $this->favorites_count,
+            'favorites_count' => (int) $this->favoritedBy()->count(),
             'available' => (boolean) $this->available,
             //'business_menu' => new BusinessMenuResource($this->whenLoaded('businessMenu')),
             'business_drink_reference_photos' => BusinessDrinkItemPhotoResource::collection($this->drinkItemReferencePhotos), 
-            'favorites_count' => (int) $this->favoritedBy()->count(),
+            
         ];
     }
 }

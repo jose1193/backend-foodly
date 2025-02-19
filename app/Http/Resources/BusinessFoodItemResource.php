@@ -27,10 +27,10 @@ class BusinessFoodItemResource extends JsonResource
         'medium' => $this->prices['medium'] !== null ? (double)$this->prices['medium'] : null,
         'big' => $this->prices['big'] !== null ? (double)$this->prices['big'] : null,
         ],
-        'favorites_count' => (int) $this->favorites_count ?? 0,
+        'favorites_count' => (int) $this->favoritedBy()->count(),
         'available' => (boolean) $this->available,
         'business_food_reference_photos' => BusinessFoodItemPhotoResource::collection($this->foodItemReferencePhotos),
-        'favorites_count' => (int) $this->favoritedBy()->count(),
+        
     ];
 }
 
