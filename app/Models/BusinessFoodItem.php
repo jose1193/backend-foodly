@@ -42,4 +42,10 @@ class BusinessFoodItem extends Model
     {
         return $this->hasMany(BusinessFoodItemPhoto::class);
     }
+
+    public function favoritedBy()
+    {
+        return $this->belongsToMany(User::class, 'business_food_item_favorites')
+                ->withTimestamps();
+    }
 }

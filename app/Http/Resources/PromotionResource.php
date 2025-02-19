@@ -30,7 +30,7 @@ class PromotionResource extends JsonResource
             'medium' => $this->prices['medium'] !== null ? (double)$this->prices['medium'] : null,
             'big' => $this->prices['big'] !== null ? (double)$this->prices['big'] : null,
             ],
-            'favorites_count' => (int) $this->favorites_count ?? 0,
+            'favorites_count' => (int)$this->favoritedBy()->count(),
             'available' => (boolean) $this->available,
             'promo_active_days' => $this->getPromoActiveDays(),
             'media_link' => $this->media_link,

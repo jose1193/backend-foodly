@@ -41,6 +41,10 @@ use App\Http\Controllers\BusinessFoodItemPhotoController;
 use App\Http\Controllers\BusinessDrinkItemPhotoController;
 use App\Http\Controllers\HaversineSearchController;
 use App\Http\Controllers\BusinessFavoriteController;
+use App\Http\Controllers\BusinessMenuFavoriteController;
+use App\Http\Controllers\BusinessFoodItemFavoriteController;
+use App\Http\Controllers\BusinessDrinkItemFavoriteController;
+use App\Http\Controllers\SavePromotionController;
 
 //Route::get('/user', function (Request $request) {
     //return $request->user();
@@ -320,5 +324,30 @@ Route::group(['prefix' => 'business-favorites'], function () {
     Route::post('/{businessUuid}', [BusinessFavoriteController::class, 'toggle']);
     Route::get('/check/{businessUuid}', [BusinessFavoriteController::class, 'check']);
 });
+
+Route::group(['prefix' => 'business-menu-favorites'], function () {
+    Route::get('/', [BusinessMenuFavoriteController::class, 'index']);
+    Route::post('/{uuid}', [BusinessMenuFavoriteController::class, 'toggle']);
+    Route::get('/check/{uuid}', [BusinessMenuFavoriteController::class, 'check']);
+});
+
+Route::group(['prefix' => 'business-food-item-favorites'], function () {
+    Route::get('/', [BusinessFoodItemFavoriteController::class, 'index']);
+    Route::post('/{uuid}', [BusinessFoodItemFavoriteController::class, 'toggle']);
+    Route::get('/check/{uuid}', [BusinessFoodItemFavoriteController::class, 'check']);
+});
+
+Route::group(['prefix' => 'business-drink-item-favorites'], function () {
+    Route::get('/', [BusinessDrinkItemFavoriteController::class, 'index']);
+    Route::post('/{uuid}', [BusinessDrinkItemFavoriteController::class, 'toggle']);
+    Route::get('/check/{uuid}', [BusinessDrinkItemFavoriteController::class, 'check']);
+});
+
+Route::group(['prefix' => 'save-promotions'], function () {
+    Route::get('/', [SavePromotionController::class, 'index']);
+    Route::post('/{uuid}', [SavePromotionController::class, 'toggle']);
+    Route::get('/check/{uuid}', [SavePromotionController::class, 'check']);
+});
+
     // Otras rutas protegidas...
 });

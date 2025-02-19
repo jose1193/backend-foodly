@@ -126,12 +126,16 @@
             "description": "Business Menu Favorites"
         },
         {
-            "name": "Business Item Favorites",
-            "description": "Business Item Favorites"
+            "name": "Business Food Item Favorites",
+            "description": "Business Food Item Favorites"
         },
         {
-            "name": "Saved Promotios",
-            "description": "Saved Promotios"
+            "name": "Business Drink Item Favorites",
+            "description": "Business Drink Item Favorites"
+        },
+        {
+            "name": "Business Promotions Favorites",
+            "description": "Business Promotions Favorites"
         },
         {
             "name": "Business Branch",
@@ -194,15 +198,24 @@
                                         "social_provider": [],
                                         "business": [],
                                         "favorite_businesses": [
-                                            {
-                                                "business_uuid": "9533e911-8edd-41a6-84fc-1187dcab2a8d"
-                                            },
-                                            {
-                                                "business_uuid": "148fb6a0-8a4a-4efa-93c1-39b15f479ea1"
-                                            },
-                                            {
-                                                "business_uuid": "3f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
-                                            }
+                                            "9533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "148fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                            "3f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                        ],
+                                        "favorite_menus": [
+                                            "7533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "248fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                            "5f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                        ],
+                                        "favorite_items": [
+                                            "6533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "348fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                            "4f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                        ],
+                                        "saved_promotions": [
+                                            "8533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "448fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                            "2f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
                                         ]
                                     }
                                 }
@@ -290,15 +303,24 @@
                                         "social_provider": [],
                                         "business": [],
                                         "favorite_businesses": [
-                                            {
-                                                "business_uuid": "9533e911-8edd-41a6-84fc-1187dcab2a8d"
-                                            },
-                                            {
-                                                "business_uuid": "148fb6a0-8a4a-4efa-93c1-39b15f479ea1"
-                                            },
-                                            {
-                                                "business_uuid": "3f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
-                                            }
+                                            "9533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "148fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                            "3f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                        ],
+                                        "favorite_menus": [
+                                            "7533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "248fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                            "5f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                        ],
+                                        "favorite_items": [
+                                            "6533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "348fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                            "4f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                        ],
+                                        "saved_promotions": [
+                                            "8533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "448fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                            "2f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
                                         ]
                                     }
                                 ]
@@ -1103,15 +1125,24 @@
                                         "social_provider": [],
                                         "business": [],
                                         "favorite_businesses": [
-                                            {
-                                                "business_uuid": "9533e911-8edd-41a6-84fc-1187dcab2a8d"
-                                            },
-                                            {
-                                                "business_uuid": "148fb6a0-8a4a-4efa-93c1-39b15f479ea1"
-                                            },
-                                            {
-                                                "business_uuid": "3f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
-                                            }
+                                            "9533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "148fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                            "3f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                        ],
+                                        "favorite_menus": [
+                                            "7533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "248fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                            "5f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                        ],
+                                        "favorite_items": [
+                                            "6533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "348fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                            "4f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                        ],
+                                        "saved_promotions": [
+                                            "8533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "448fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                            "2f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
                                         ]
                                     },
                                     {
@@ -1140,15 +1171,24 @@
                                         "social_provider": [],
                                         "business": [],
                                         "favorite_businesses": [
-                                            {
-                                                "business_uuid": "9533e911-8edd-41a6-84fc-1187dcab2a8d"
-                                            },
-                                            {
-                                                "business_uuid": "148fb6a0-8a4a-4efa-93c1-39b15f479ea1"
-                                            },
-                                            {
-                                                "business_uuid": "3f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
-                                            }
+                                            "9533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "148fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                            "3f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                        ],
+                                        "favorite_menus": [
+                                            "7533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "248fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                            "5f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                        ],
+                                        "favorite_items": [
+                                            "6533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "348fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                            "4f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                        ],
+                                        "saved_promotions": [
+                                            "8533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "448fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                            "2f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
                                         ]
                                     }
                                 ]
@@ -1299,15 +1339,24 @@
                                     "social_provider": [],
                                     "business": [],
                                     "favorite_businesses": [
-                                        {
-                                            "business_uuid": "9533e911-8edd-41a6-84fc-1187dcab2a8d"
-                                        },
-                                        {
-                                            "business_uuid": "148fb6a0-8a4a-4efa-93c1-39b15f479ea1"
-                                        },
-                                        {
-                                            "business_uuid": "3f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
-                                        }
+                                        "9533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                        "148fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                        "3f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                    ],
+                                    "favorite_menus": [
+                                        "7533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                        "248fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                        "5f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                    ],
+                                    "favorite_items": [
+                                        "6533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                        "348fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                        "4f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                    ],
+                                    "saved_promotions": [
+                                        "8533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                        "448fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                        "2f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
                                     ]
                                 }
                             }
@@ -3637,7 +3686,8 @@
                                                     }
                                                 ]
                                             }
-                                        ]
+                                        ],
+                                        "favorites_count": 7
                                     }
                                 ]
                             }
@@ -3822,7 +3872,8 @@
                                                     }
                                                 ]
                                             }
-                                        ]
+                                        ],
+                                        "favorites_count": 7
                                     }
                                 ]
                             }
@@ -6012,15 +6063,48 @@
                 ]
             }
         },
-        "/business-favorites/check/{businessUuid}": {
+        "/business-menu-favorites": {
             "get": {
-                "tags": ["Business Favorites"],
-                "summary": "Check if a business is favorited by the user",
+                "tags": ["Business Menu Favorites"],
+                "summary": "Get user's favorite menus",
+                "responses": {
+                    "200": {
+                        "description": "List of user's favorite menus",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "favorite_menus": [
+                                        "7533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                        "248fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                        "5f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-menu-favorites/{uuid}": {
+            "post": {
+                "tags": ["Business Menu Favorites"],
+                "summary": "Toggle favorite status for a business menu",
                 "parameters": [
                     {
-                        "name": "businessUuid",
+                        "name": "uuid",
                         "in": "path",
-                        "description": "UUID of the business to retrieve",
+                        "description": "UUID of the data to retrieve",
                         "required": true,
                         "style": "simple",
                         "explode": false,
@@ -6032,7 +6116,244 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Favorite status check result",
+                        "description": "Favorite status toggled successfully",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "is_favorite": true
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-food-item-favorites": {
+            "get": {
+                "tags": ["Business Food Item Favorites"],
+                "summary": "Get user's favorite food items menus",
+                "responses": {
+                    "200": {
+                        "description": "List of user's favorite food items menus",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "favorite_foods_items": [
+                                        "7533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                        "248fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                        "5f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-food-item-favorites/{uuid}": {
+            "post": {
+                "tags": ["Business Food Item Favorites"],
+                "summary": "Toggle favorite status for a food item",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Favorite status toggled successfully",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "is_favorite": true
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-drink-item-favorites": {
+            "get": {
+                "tags": ["Business Drink Item Favorites"],
+                "summary": "Get user's favorite items menus",
+                "responses": {
+                    "200": {
+                        "description": "List of user's favorite drinks items menu",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "favorite_drinks_items": [
+                                        "6533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                        "348fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                        "4f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/business-drink-item-favorites/{uuid}": {
+            "post": {
+                "tags": ["Business Drink Item Favorites"],
+                "summary": "Toggle favorite status for a drink item",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Favorite status toggled successfully",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "is_favorite": true
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/save-promotions": {
+            "get": {
+                "tags": ["Business Promotions Favorites"],
+                "summary": "Get user's favorite promotions",
+                "responses": {
+                    "200": {
+                        "description": "List of user's favorite promotions",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "saved_promotions": [
+                                        "6533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                        "348fb6a0-8a4a-4efa-93c1-39b15f479ea1",
+                                        "4f7d9b24-c5e2-4f8b-a1d3-892e5d8c6b9a"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/save-promotions/{uuid}": {
+            "post": {
+                "tags": ["Business Promotions Favorites"],
+                "summary": "Toggle favorite status for a promotion",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the data to retrieve",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Favorite status toggled successfully",
                         "content": {
                             "application/json": {
                                 "example": {

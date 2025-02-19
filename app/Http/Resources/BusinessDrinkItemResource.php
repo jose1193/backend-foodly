@@ -33,6 +33,7 @@ class BusinessDrinkItemResource extends JsonResource
             'available' => (boolean) $this->available,
             //'business_menu' => new BusinessMenuResource($this->whenLoaded('businessMenu')),
             'business_drink_reference_photos' => BusinessDrinkItemPhotoResource::collection($this->drinkItemReferencePhotos), 
+            'favorites_count' => (int) $this->favoritedBy()->count(),
         ];
     }
 }

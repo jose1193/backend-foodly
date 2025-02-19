@@ -35,5 +35,11 @@ public function businessCombo()
         return $this->hasMany(BusinessCombo::class);
     }
 
+public function favoritedBy()
+{
+    return $this->belongsToMany(User::class, 'business_menu_favorites')
+                ->withTimestamps();
+}
+
 }
 

@@ -83,4 +83,28 @@ class User extends Authenticatable
         return $this->belongsToMany(Business::class, 'business_favorites')
                 ->withTimestamps();
     }
+
+    public function favoriteMenus()
+    {
+        return $this->belongsToMany(BusinessMenu::class, 'business_menu_favorites')
+                    ->withTimestamps();
+    }
+
+        public function favoriteFoodItems()
+    {
+        return $this->belongsToMany(BusinessFoodItem::class, 'business_food_item_favorites')
+                ->withTimestamps();
+    }
+
+    public function favoriteDrinkItems()
+    {
+        return $this->belongsToMany(BusinessDrinkItem::class, 'business_drink_item_favorites')
+                ->withTimestamps();
+    }
+
+    public function favoritePromotions()
+    {
+        return $this->belongsToMany(Promotion::class, 'save_promotions')
+                    ->withTimestamps();
+    }
 }

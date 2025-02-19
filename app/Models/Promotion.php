@@ -45,4 +45,9 @@ class Promotion extends Model
     return $this->hasOne(PromoActiveDay::class);
     }
     
+    public function favoritedBy()
+    {
+        return $this->belongsToMany(User::class, 'save_promotions')
+                    ->withTimestamps();
+    }
 }

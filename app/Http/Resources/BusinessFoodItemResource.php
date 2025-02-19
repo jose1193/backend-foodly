@@ -30,6 +30,7 @@ class BusinessFoodItemResource extends JsonResource
         'favorites_count' => (int) $this->favorites_count ?? 0,
         'available' => (boolean) $this->available,
         'business_food_reference_photos' => BusinessFoodItemPhotoResource::collection($this->foodItemReferencePhotos),
+        'favorites_count' => (int) $this->favoritedBy()->count(),
     ];
 }
 

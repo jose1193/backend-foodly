@@ -5,15 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BusinessFavorite extends Model
+class BusinessFoodItemFavorite extends Model
 {
     use HasFactory;
-
-    protected $table = 'business_favorites';
+    protected $table = 'business_food_item_favorites';
 
     protected $fillable = [
         'user_id',
-        'business_id'
+        'business_food_item_id'
     ];
 
     public function user()
@@ -21,8 +20,8 @@ class BusinessFavorite extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function business()
+    public function businessFoodItem()
     {
-        return $this->belongsTo(Business::class);
+        return $this->belongsTo(BusinessFoodItem::class);
     }
 }
