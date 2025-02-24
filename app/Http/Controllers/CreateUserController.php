@@ -166,6 +166,14 @@ public function update(CreateUserRequest $request)
         $user = Auth::user();
         $data = $request->validated();
 
+        // Log latitude y longitude
+        \Log::info('Update Coordinates:', [
+            'latitude' => $request->input('latitude'),
+            'longitude' => $request->input('longitude'),
+            'validated_latitude' => $data['latitude'] ?? null,
+            'validated_longitude' => $data['longitude'] ?? null
+        ]);
+
         if ($user->id !== $request->user()->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
