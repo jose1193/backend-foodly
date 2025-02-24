@@ -51,6 +51,10 @@ class UserResource extends JsonResource {
             ],
             'saved_promotions' => $this->favoritePromotions->pluck('uuid'),
             //'business' => $this->businesses && $this->businesses->isNotEmpty() ? BusinessResource::collection($this->businesses) : [],
+            'followers' => $this->followers->pluck('uuid'),
+            'followers_length' => (int) $this->followers()->count(),
+            'following' => $this->following->pluck('uuid'),
+            'following_length' => (int) $this->following()->count(),
         ];
     }
 }

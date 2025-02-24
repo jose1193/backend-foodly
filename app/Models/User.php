@@ -107,4 +107,14 @@ class User extends Authenticatable
         return $this->belongsToMany(Promotion::class, 'save_promotions')
                     ->withTimestamps();
     }
+
+public function followers()
+{
+    return $this->belongsToMany(User::class, 'user_followers', 'following_id', 'follower_id');
+}
+
+public function following()
+{
+    return $this->belongsToMany(User::class, 'user_followers', 'follower_id', 'following_id');
+}
 }

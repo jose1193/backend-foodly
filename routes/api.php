@@ -45,6 +45,7 @@ use App\Http\Controllers\BusinessMenuFavoriteController;
 use App\Http\Controllers\BusinessFoodItemFavoriteController;
 use App\Http\Controllers\BusinessDrinkItemFavoriteController;
 use App\Http\Controllers\SavePromotionController;
+use App\Http\Controllers\UserFollowerController;
 
 //Route::get('/user', function (Request $request) {
     //return $request->user();
@@ -349,5 +350,10 @@ Route::group(['prefix' => 'save-promotions'], function () {
     Route::get('/check/{uuid}', [SavePromotionController::class, 'check']);
 });
 
+Route::group(['prefix' => 'user-followers'], function () {
+    Route::get('/', [UserFollowerController::class, 'index']);
+    Route::post('/{userUuid}', [UserFollowerController::class, 'toggle']);
+    Route::get('/check/{userUuid}', [UserFollowerController::class, 'check']);
+});
     // Otras rutas protegidas...
 });
