@@ -48,7 +48,7 @@ class UserResource extends JsonResource {
             'favorite_items' => [
                 ...$this->favoriteFoodItems->pluck('uuid'),
                 ...$this->favoriteDrinkItems->pluck('uuid'),
-                ...$this->favoriteCombos->pluck('uuid')
+                
             ],
             'favorite_combos' => $this->favoriteCombos->pluck('uuid'),
             'saved_promotions' => $this->favoritePromotions->pluck('uuid'),
