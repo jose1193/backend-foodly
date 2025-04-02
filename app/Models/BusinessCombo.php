@@ -37,4 +37,10 @@ class BusinessCombo extends Model
     {
         return $this->hasMany(BusinessComboPhoto::class, 'business_combos_id');
     }
+
+    public function favoritedBy()
+    {
+        return $this->belongsToMany(User::class, 'business_combo_favorites')
+                    ->withTimestamps();
+    }
 }

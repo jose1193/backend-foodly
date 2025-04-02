@@ -47,8 +47,10 @@ class UserResource extends JsonResource {
             'favorite_menus' => $this->favoriteMenus->pluck('uuid'), 
             'favorite_items' => [
                 ...$this->favoriteFoodItems->pluck('uuid'),
-                ...$this->favoriteDrinkItems->pluck('uuid')
+                ...$this->favoriteDrinkItems->pluck('uuid'),
+                ...$this->favoriteCombos->pluck('uuid')
             ],
+            'favorite_combos' => $this->favoriteCombos->pluck('uuid'),
             'saved_promotions' => $this->favoritePromotions->pluck('uuid'),
             //'business' => $this->businesses && $this->businesses->isNotEmpty() ? BusinessResource::collection($this->businesses) : [],
             'followers' => $this->followers->pluck('uuid'),

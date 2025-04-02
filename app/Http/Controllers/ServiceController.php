@@ -228,20 +228,16 @@ private function errorResponse()
         $cacheKey = "service_{$uuid}";
         $cacheTime = $this->cacheTime;
 
-        // Obtén el servicio correspondiente al UUID
-         $service = $this->getCachedData($cacheKey, $cacheTime, function () use ($uuid) {
-                return Service::where('service_uuid', $uuid)->firstOrFail();
-            });
-      
+        $service = $this->getCachedData($cacheKey, $cacheTime, function () use ($uuid) {
+            return Service::where('service_uuid', $uuid)->firstOrFail();
+        });
 
         return DB::transaction(function () use ($request, $service, $cacheKey, $cacheTime, $uuid) {
-            // Actualiza el servicio con los datos validados
             $service->update($request->validated());
 
-            // Actualiza la caché
             $this->refreshCache($cacheKey, $cacheTime, function () use ($service) {
-                    return $service;
-                });
+                return $service;
+            });
 
             $this->updateServicesCache();
 

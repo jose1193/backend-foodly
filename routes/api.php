@@ -46,6 +46,7 @@ use App\Http\Controllers\BusinessFoodItemFavoriteController;
 use App\Http\Controllers\BusinessDrinkItemFavoriteController;
 use App\Http\Controllers\SavePromotionController;
 use App\Http\Controllers\UserFollowerController;
+use App\Http\Controllers\BusinessComboFavoriteController;
 
 //Route::get('/user', function (Request $request) {
     //return $request->user();
@@ -354,6 +355,12 @@ Route::group(['prefix' => 'user-followers'], function () {
     Route::get('/', [UserFollowerController::class, 'index']);
     Route::post('/{userUuid}', [UserFollowerController::class, 'toggle']);
     Route::get('/check/{userUuid}', [UserFollowerController::class, 'check']);
+});
+
+Route::group(['prefix' => 'business-combo-favorites'], function () {
+    Route::get('/', [BusinessComboFavoriteController::class, 'index']);
+    Route::post('/{uuid}', [BusinessComboFavoriteController::class, 'toggle']);
+    Route::get('/check/{uuid}', [BusinessComboFavoriteController::class, 'check']);
 });
     // Otras rutas protegidas...
 });
