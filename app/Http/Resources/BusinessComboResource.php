@@ -17,6 +17,8 @@ class BusinessComboResource extends JsonResource
         return [
             'id' => $this->id,
             'uuid' => $this->uuid,
+            'menu_uuid' => $this->businessMenu->uuid ?? null,
+            'business_uuid' => $this->businessMenu->business->business_uuid ?? null,
             'business_menu_id' => (int) $this->business_menu_id,
             'name' => $this->name,
             'description' => $this->description,

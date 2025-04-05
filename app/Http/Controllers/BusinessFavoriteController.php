@@ -11,7 +11,8 @@ class BusinessFavoriteController extends Controller
 {
     public function index()
     {
-        $favorites = auth()->user()->favoriteBusiness;
+        // Eager load the 'category' relationship along with favorite businesses
+        $favorites = auth()->user()->favoriteBusiness()->with('category')->get();
         return response()->json([
             'favorite_businesses' => BusinessFavoriteResource::collection($favorites)
         ], 200);

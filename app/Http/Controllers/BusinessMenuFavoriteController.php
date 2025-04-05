@@ -13,7 +13,14 @@ class BusinessMenuFavoriteController extends Controller
      */
     public function index()
     {
-        $favorites = auth()->user()->favoriteMenus;
+        // Eager load relationships needed by BusinessMenuResource
+        $favorites = auth()->user()->favoriteMenus()->with([
+            'business', 
+            'businessFoodCategories', 
+            'businessDrinkCategories', 
+            'businessCombo'
+        ])->get();
+        
         return response()->json([
             'favorite_menus' => BusinessMenuResource::collection($favorites)
         ], 200);

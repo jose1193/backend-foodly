@@ -2550,6 +2550,12 @@
                                             }
                                         ],
                                         "category_id": 1,
+                                        "category": {
+                                            "id": 1,
+                                            "category_uuid": "bdf2abda-0016-4e63-8de5-8ff4542d33bf",
+                                            "category_name": "International Cuisine",
+                                            "category_image_path": "https://foodly.s3.amazonaws.com/public/categories_images/oMAAZvmiXpRoIXhPMUgan7o4m6GS0VngGzuExxF4.jpg"
+                                        },
                                         "business_opening_hours": [
                                             {
                                                 "day_0": {
@@ -2637,6 +2643,12 @@
                                             }
                                         ],
                                         "category_id": 2,
+                                        "category": {
+                                            "id": 1,
+                                            "category_uuid": "bdf2abda-0016-4e63-8de5-8ff4542d33bf",
+                                            "category_name": "International Cuisine",
+                                            "category_image_path": "https://foodly.s3.amazonaws.com/public/categories_images/oMAAZvmiXpRoIXhPMUgan7o4m6GS0VngGzuExxF4.jpg"
+                                        },
                                         "business_opening_hours": [
                                             {
                                                 "day_0": {
@@ -2880,6 +2892,12 @@
                                         }
                                     ],
                                     "category_id": 1,
+                                    "category": {
+                                        "id": 1,
+                                        "category_uuid": "bdf2abda-0016-4e63-8de5-8ff4542d33bf",
+                                        "category_name": "International Cuisine",
+                                        "category_image_path": "https://foodly.s3.amazonaws.com/public/categories_images/oMAAZvmiXpRoIXhPMUgan7o4m6GS0VngGzuExxF4.jpg"
+                                    },
                                     "business_opening_hours": [
                                         {
                                             "day_0": {
@@ -6057,7 +6075,43 @@
                                             "business_country": "Portugal",
                                             "business_zipcode": "6200-156",
                                             "business_latitude": 40.280149,
-                                            "business_longitude": -7.5419885
+                                            "business_longitude": -7.5419885,
+                                            "category": {
+                                                "id": 1,
+                                                "category_uuid": "bdf2abda-0016-4e63-8de5-8ff4542d33bf",
+                                                "category_name": "International Cuisine",
+                                                "category_image_path": "https://foodly.s3.amazonaws.com/public/categories_images/oMAAZvmiXpRoIXhPMUgan7o4m6GS0VngGzuExxF4.jpg"
+                                            },
+                                            "business_opening_hours": {
+                                                "day_0": {
+                                                    "open_a": "11:00",
+                                                    "close_a": "23:00"
+                                                },
+                                                "day_1": {
+                                                    "open_a": "11:00",
+                                                    "close_a": "23:00"
+                                                },
+                                                "day_2": {
+                                                    "open_a": "11:00",
+                                                    "close_a": "23:00"
+                                                },
+                                                "day_3": {
+                                                    "open_a": "11:00",
+                                                    "close_a": "23:00"
+                                                },
+                                                "day_4": {
+                                                    "open_a": "11:00",
+                                                    "close_a": "23:00"
+                                                },
+                                                "day_5": {
+                                                    "open_a": "11:00",
+                                                    "close_a": "00:00"
+                                                },
+                                                "day_6": {
+                                                    "open_a": "11:00",
+                                                    "close_a": "00:00"
+                                                }
+                                            }
                                         },
                                         {
                                             "id": 2,
@@ -6071,7 +6125,43 @@
                                             "business_country": "Portugal",
                                             "business_zipcode": "1000-001",
                                             "business_latitude": 38.722252,
-                                            "business_longitude": -9.139337
+                                            "business_longitude": -9.139337,
+                                            "category": {
+                                                "id": 1,
+                                                "category_uuid": "bdf2abda-0016-4e63-8de5-8ff4542d33bf",
+                                                "category_name": "International Cuisine",
+                                                "category_image_path": "https://foodly.s3.amazonaws.com/public/categories_images/oMAAZvmiXpRoIXhPMUgan7o4m6GS0VngGzuExxF4.jpg"
+                                            },
+                                            "business_opening_hours": {
+                                                "day_0": {
+                                                    "open_a": "11:00",
+                                                    "close_a": "23:00"
+                                                },
+                                                "day_1": {
+                                                    "open_a": "11:00",
+                                                    "close_a": "23:00"
+                                                },
+                                                "day_2": {
+                                                    "open_a": "11:00",
+                                                    "close_a": "23:00"
+                                                },
+                                                "day_3": {
+                                                    "open_a": "11:00",
+                                                    "close_a": "23:00"
+                                                },
+                                                "day_4": {
+                                                    "open_a": "11:00",
+                                                    "close_a": "23:00"
+                                                },
+                                                "day_5": {
+                                                    "open_a": "11:00",
+                                                    "close_a": "00:00"
+                                                },
+                                                "day_6": {
+                                                    "open_a": "11:00",
+                                                    "close_a": "00:00"
+                                                }
+                                            }
                                         }
                                     ]
                                 }
@@ -6246,6 +6336,8 @@
                                         {
                                             "id": 1,
                                             "uuid": "2f71b41a-7c26-4852-abd0-dd13817114c1",
+                                            "menu_uuid": "7533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "business_uuid": "9533e911-8edd-41a6-84fc-1187dcab2a8d",
                                             "business_food_category_id": 1,
                                             "name": "Ensalada César",
                                             "description": "Ensalada fresca con aderezo César",
@@ -6349,6 +6441,8 @@
                                         {
                                             "id": 1,
                                             "uuid": "2f71b41a-7c26-4852-abd0-dd13817114c1",
+                                            "menu_uuid": "7533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "business_uuid": "9533e911-8edd-41a6-84fc-1187dcab2a8d",
                                             "business_drink_category_id": 1,
                                             "name": "Jugo de Naranja",
                                             "description": "Jugo de naranja recién exprimido",
@@ -6450,6 +6544,8 @@
                                         {
                                             "id": 1,
                                             "uuid": "b842c7a3-6d9f-48e1-9c31-e24d58e57fb9",
+                                            "menu_uuid": "7533e911-8edd-41a6-84fc-1187dcab2a8d",
+                                            "business_uuid": "9533e911-8edd-41a6-84fc-1187dcab2a8d",
                                             "business_menu_id": 1,
                                             "name": "Super Combo Familiar",
                                             "description": "Incluye 4 hamburguesas, papas grandes y 4 bebidas",

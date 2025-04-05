@@ -27,6 +27,47 @@ class BusinessFavoriteResource extends JsonResource
             'business_zipcode' => $this->business_zipcode,
             'business_latitude' => (double) $this->business_latitude,
             'business_longitude' => (double) $this->business_longitude,
+            'category' => $this->category ? new CategoryResource($this->category) : null,
+            'business_opening_hours' => $this->getBusinessOpeningHours(),
         ];
+    }
+
+    public function getBusinessOpeningHours()
+    {
+        if (!$this->relationLoaded('businessHours')) {
+            if (!isset($this->businessHours) || $this->businessHours === null) {
+                return null;
+            }
+        }
+
+        $daysOfWeek = ['day_0', 'day_1', 'day_2', 'day_3', 'day_4', 'day_5', 'day_6'];
+        $businessOpeningHours = [];
+
+        foreach ($daysOfWeek as $day) {
+            $businessOpeningHours[$day] = [
+                'open_a' => $this->getOpenTime($day, 'open_a'),
+                'close_a' => $this->getCloseTime($day, 'close_a'),
+                'open_b' => $this->getOpenTime($day, 'open_b'),
+                'close_b' => $this->getCloseTime($day, 'close_b'),
+            ];
+        }
+
+        return $businessOpeningHours;
+    }
+
+    protected function getOpenTime($day, $time)
+    {
+        if ($this->businessHours === null) {
+            return null;
+        }
+        return $this->businessHours->where('day', $day)->pluck($time)->first();
+    }
+
+    protected function getCloseTime($day, $time)
+    {
+        if ($this->businessHours === null) {
+            return null;
+        }
+        return $this->businessHours->where('day', $day)->pluck($time)->first();
     }
 } 

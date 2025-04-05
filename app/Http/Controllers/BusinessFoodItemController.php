@@ -36,9 +36,10 @@ class BusinessFoodItemController extends BaseController
             $cacheKey = "user_{$this->userId}_business_food_item";
             
             $foodItems = $this->getCachedData($cacheKey, $this->cacheTime, function () {
-                return BusinessFoodItem::whereHas('businessFoodCategory.businessMenu.business', function ($query) {
-                    $query->whereIn('id', $this->businessIds);
-                })->get();
+                return BusinessFoodItem::with('businessFoodCategory.businessMenu.business')
+                    ->whereHas('businessFoodCategory.businessMenu.business', function ($query) {
+                        $query->whereIn('id', $this->businessIds);
+                    })->get();
             });
 
             return response()->json([
@@ -60,6 +61,9 @@ class BusinessFoodItemController extends BaseController
 
             $foodItem = BusinessFoodItem::create($validatedData);
 
+            // Load relationships needed for the resource
+            $foodItem->loadMissing('businessFoodCategory.businessMenu.business');
+
             $this->updateFoodItemCache($foodItem);
             $this->updateAllFoodItemCache();
 
@@ -73,28 +77,30 @@ class BusinessFoodItemController extends BaseController
     }
 
     public function show(string $uuid)
-{
-    try {
-        $cacheKey = "business_food_item_{$uuid}";
-        
-        $foodItem = $this->getCachedData($cacheKey, $this->cacheTime, function () use ($uuid) {
-            return BusinessFoodItem::whereHas('businessFoodCategory.businessMenu.business', function ($query) {
-                $query->whereIn('id', $this->businessIds);
-            })->where('uuid', $uuid)->firstOrFail();
-        });
+    {
+        try {
+            $cacheKey = "business_food_item_{$uuid}";
+            
+            $foodItem = $this->getCachedData($cacheKey, $this->cacheTime, function () use ($uuid) {
+                return BusinessFoodItem::with('businessFoodCategory.businessMenu.business')
+                    ->whereHas('businessFoodCategory.businessMenu.business', function ($query) {
+                        $query->whereIn('id', $this->businessIds);
+                    })->where('uuid', $uuid)->firstOrFail();
+            });
 
-        return response()->json(new BusinessFoodItemResource($foodItem), 200);
-    } catch (\Exception $e) {
-        Log::error('Error fetching business food item: ' . $e->getMessage());
-        return response()->json(['message' => 'Error fetching business food item: '. $e->getMessage()], 500);
+            return response()->json(new BusinessFoodItemResource($foodItem), 200);
+        } catch (\Exception $e) {
+            Log::error('Error fetching business food item: ' . $e->getMessage());
+            return response()->json(['message' => 'Error fetching business food item: '. $e->getMessage()], 500);
+        }
     }
-}
 
     public function update(BusinessFoodItemRequest $request, string $uuid)
     {
         DB::beginTransaction();
         try {
-            $foodItem = BusinessFoodItem::where('uuid', $uuid)->firstOrFail();
+            $foodItem = BusinessFoodItem::with('businessFoodCategory.businessMenu.business')
+                ->where('uuid', $uuid)->firstOrFail();
             
             $validatedData = $request->validated();
             $this->authorizeBusinessFoodCategory($foodItem->business_food_category_id);
@@ -148,6 +154,8 @@ class BusinessFoodItemController extends BaseController
     {
         $cacheKey = "business_food_item_{$foodItem->uuid}";
         $this->updateCache($cacheKey, $this->cacheTime, function () use ($foodItem) {
+            // Ensure relationships are loaded before creating the resource for caching
+            $foodItem->loadMissing('businessFoodCategory.businessMenu.business');
             return new BusinessFoodItemResource($foodItem);
         });
     }
@@ -163,9 +171,10 @@ class BusinessFoodItemController extends BaseController
         $cacheKey = "user_{$this->userId}_business_food_item";
         $this->updateCache($cacheKey, $this->cacheTime, function () {
             return BusinessFoodItemResource::collection(
-                BusinessFoodItem::whereHas('businessFoodCategory.businessMenu.business', function ($query) {
-                    $query->whereIn('id', $this->businessIds);
-                })->get()
+                BusinessFoodItem::with('businessFoodCategory.businessMenu.business')
+                    ->whereHas('businessFoodCategory.businessMenu.business', function ($query) {
+                        $query->whereIn('id', $this->businessIds);
+                    })->get()
             );
         });
     }

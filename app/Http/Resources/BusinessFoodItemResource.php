@@ -17,6 +17,8 @@ class BusinessFoodItemResource extends JsonResource
     return [
         'id' => $this->id,
         'uuid' => $this->uuid,
+        'menu_uuid' => $this->businessFoodCategory->businessMenu->uuid ?? null,
+        'business_uuid' => $this->businessFoodCategory->businessMenu->business->business_uuid ?? null,
         'business_food_category_id' => (int) $this->business_food_category_id,
         'name' => $this->name,
         'description' => $this->description,
