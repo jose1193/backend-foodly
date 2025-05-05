@@ -158,8 +158,8 @@ public function updatePassword(UpdatePasswordResetRequest $request)
            
 
             // Envía el correo electrónico de confirmación de cambio de contraseña
-            //Mail::to($user->email)->send(new PasswordResetSuccess($user));
-            SendMailPasswordResetSuccess::dispatch($user);
+            Mail::to($user->email)->send(new PasswordResetSuccess($user));
+            //SendMailPasswordResetSuccess::dispatch($user);
         });
 
         return response()->json(['message' => 'Password updated successfully'], 200);
