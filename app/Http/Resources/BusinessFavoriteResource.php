@@ -27,8 +27,27 @@ class BusinessFavoriteResource extends JsonResource
             'business_zipcode' => $this->business_zipcode,
             'business_latitude' => (double) $this->business_latitude,
             'business_longitude' => (double) $this->business_longitude,
-            'category' => $this->category ? new CategoryResource($this->category) : null,
+            'category' => $this->formatCategory(),
             'business_opening_hours' => $this->getBusinessOpeningHours(),
+        ];
+    }
+
+    /**
+     * Format the category data without subcategories.
+     *
+     * @return array|null
+     */
+    protected function formatCategory()
+    {
+        if (!$this->category) {
+            return null;
+        }
+
+        return [
+            'id' => (int) $this->category->id,
+            'category_uuid' => $this->category->category_uuid,
+            'category_name' => $this->category->category_name,
+            'category_image_path' => asset($this->category->category_image_path),
         ];
     }
 

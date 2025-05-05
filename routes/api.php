@@ -47,6 +47,7 @@ use App\Http\Controllers\BusinessDrinkItemFavoriteController;
 use App\Http\Controllers\SavePromotionController;
 use App\Http\Controllers\UserFollowerController;
 use App\Http\Controllers\BusinessComboFavoriteController;
+use App\Http\Controllers\ExternalSearchController;
 
 //Route::get('/user', function (Request $request) {
     //return $request->user();
@@ -91,7 +92,8 @@ Route::post('twitter/callback', [TwitterController::class, 'handleTwitterCallbac
 Route::post('/twitter/user-details', [TwitterController::class, 'getUserDetails']);
 
 
-Route::post('/business/search', [HaversineSearchController::class, 'search']);
+Route::post('/business/search-backup', [HaversineSearchController::class, 'search']);
+Route::post('/business/search', [ExternalSearchController::class, 'search']);
 
 Route::middleware(['auth:sanctum','handle.notfound'])->group(function() {
     //Route::get('/user', function (Request $request) {
@@ -362,5 +364,6 @@ Route::group(['prefix' => 'business-combo-favorites'], function () {
     Route::post('/{uuid}', [BusinessComboFavoriteController::class, 'toggle']);
     Route::get('/check/{uuid}', [BusinessComboFavoriteController::class, 'check']);
 });
+
     // Otras rutas protegidas...
 });

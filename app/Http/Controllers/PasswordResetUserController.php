@@ -66,8 +66,8 @@ public function store(ForgotPasswordUserRequest $request)
         ]);
 
         // Enviar correo electrónico al usuario
-        //Mail::to($user->email)->send(new ResetPasswordMail($pin));
-        SendMailResetPassword::dispatch($user->email,$pin);
+        Mail::to($user->email)->send(new ResetPasswordMail($pin));
+        //SendMailResetPassword::dispatch($user->email,$pin);
 
         DB::commit();
 

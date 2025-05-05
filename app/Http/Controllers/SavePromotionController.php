@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Promotion;
 use Illuminate\Http\Request;
-use App\Http\Resources\PromotionResource;
+use App\Http\Resources\SavedPromotionFavoriteResource;
 
 class SavePromotionController extends Controller
 {
@@ -15,7 +15,7 @@ class SavePromotionController extends Controller
     {
         $favorites = auth()->user()->favoritePromotions;
         return response()->json([
-            'saved_promotions' => PromotionResource::collection($favorites)
+            'saved_promotions' => SavedPromotionFavoriteResource::collection($favorites)
         ], 200);
     }
 

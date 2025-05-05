@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PromotionResource extends JsonResource
+class SavedPromotionFavoriteResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -52,26 +52,6 @@ class PromotionResource extends JsonResource
             ],
             'created_at' => $this->created_at ? $this->created_at->toDateTimeString() : null,
             'updated_at' => $this->updated_at ? $this->updated_at->toDateTimeString() : null,
-        //'deleted_at' => $this->deleted_at ? $this->deleted_at->toDateTimeString() : null,
-          
-           
-            //'promotions_images' => $this->promotionImages->map(function ($image) {
-            //return [
-                //'id' => $image->id,
-                //'promotion_image_uuid' => $image->promotion_image_uuid,
-                //'promotion_image_path' => asset($image->promotion_image_path),
-                //'promotion_id' => (int) $image->promotion_id,
-                //'created_at' => $image->created_at ? $image->created_at->toDateTimeString() : null,
-                //'updated_at' => $image->updated_at ? $image->updated_at->toDateTimeString() : null,
-            //];
-            //})->toArray(),
-            //'business' => [
-            //'id' => $this->business->id,
-            //'user_id' => $this->business->user_id,
-            //'business_uuid' => $this->business->business_uuid,
-            //'business_logo' => $this->business->business_logo ? asset($this->business->business_logo) : null,
-            //'business_name' => $this->business->business_name,
-            //],
         ];
     }
 
@@ -163,4 +143,4 @@ class PromotionResource extends JsonResource
 
         return $activeDays;
     }
-}
+} 
