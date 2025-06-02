@@ -1,17 +1,19 @@
 {
     "openapi": "3.0.0",
+    "info": {
+        "title": "Foodly APIs",
+        "description": "The APIs for the APPS 369 Company project",
+        "version": "1.0.0",
+        "contact": {
+            "name": "Foodly",
+            "url": "https://www.foodly.world/",
+            "email": "supportcontact@foodly.world"
+        }
+    },
     "servers": [
         {
-            "description": "SwaggerHub API Auto Mocking",
-            "url": "https://virtserver.swaggerhub.com/JOSEGONZALEZCR2794_1/APPS369_API/1.0.0"
-        },
-        {
-            "description": "SwaggerHub API Auto Mocking",
-            "url": "https://www.foodly.world/api/"
-        },
-        {
-            "description": "SwaggerHub API Auto Mocking",
-            "url": "https://www.foodly.world/api"
+            "url": "https://www.foodly.world/api",
+            "description": "Foodly API"
         }
     ],
     "tags": [
@@ -42,14 +44,6 @@
         {
             "name": "Users Data",
             "description": "Users Crud Foodly"
-        },
-        {
-            "name": "User Addresses",
-            "description": "User address management for multiple addresses with labels"
-        },
-        {
-            "name": "Address Labels",
-            "description": "Address label management for categorizing user addresses (Super Admin only)"
         },
         {
             "name": "Check Username Availability",
@@ -168,11 +162,7 @@
             "description": "Business Branch Promotions Images"
         }
     ],
-    "info": {
-        "version": "1.0.0",
-        "title": "FOODLY APIs",
-        "description": "The APIs for the APPS 369 Company project"
-    },
+
     "paths": {
         "/login": {
             "post": {
@@ -209,29 +199,12 @@
                                         "email_verified_at": "2025-02-13T15:57:49.000000Z",
                                         "date_of_birth": null,
                                         "phone": "00000",
-                                        "addresses": [
-                                            {
-                                                "id": 1,
-                                                "uuid": "550e8400-e29b-41d4-a716-446655440001",
-                                                "address": "123 Main Street",
-                                                "city": "New York",
-                                                "country": "USA",
-                                                "zip_code": "10001",
-                                                "latitude": 40.7128,
-                                                "longitude": -74.006,
-                                                "address_label": {
-                                                    "id": 1,
-                                                    "uuid": "660f9500-f39c-51e5-b827-556766550002",
-                                                    "name": "Home",
-                                                    "description": "Home address",
-                                                    "icon": "home",
-                                                    "is_active": true
-                                                },
-                                                "principal": true,
-                                                "created_at": "2025-02-25T10:30:00.000000Z",
-                                                "updated_at": "2025-02-25T10:30:00.000000Z"
-                                            }
-                                        ],
+                                        "address": null,
+                                        "zip_code": null,
+                                        "city": null,
+                                        "country": null,
+                                        "latitude": 0,
+                                        "longitude": 0,
                                         "terms_and_conditions": false,
                                         "gender": null,
                                         "created_at": "2025-02-13T15:57:49.000000Z",
@@ -354,31 +327,14 @@
                                         "email_verified_at": "2024-01-01T00:00:00Z",
                                         "phone": "123-456-7890",
                                         "date_of_birth": "10-01-1990",
-                                        "addresses": [
-                                            {
-                                                "id": 1,
-                                                "uuid": "550e8400-e29b-41d4-a716-446655440001",
-                                                "address": "123 Main Street",
-                                                "city": "New York",
-                                                "country": "USA",
-                                                "zip_code": "10001",
-                                                "latitude": 40.7128,
-                                                "longitude": -74.006,
-                                                "address_label": {
-                                                    "id": 1,
-                                                    "uuid": "660f9500-f39c-51e5-b827-556766550002",
-                                                    "name": "Home",
-                                                    "description": "Home address",
-                                                    "icon": "home",
-                                                    "is_active": true
-                                                },
-                                                "principal": true,
-                                                "created_at": "2025-02-25T10:30:00.000000Z",
-                                                "updated_at": "2025-02-25T10:30:00.000000Z"
-                                            }
-                                        ],
+                                        "address": "123 Main St",
+                                        "zip_code": "12345",
+                                        "city": "Exampleville",
+                                        "country": "Exampleland",
                                         "terms_and_conditions": true,
                                         "gender": "Male",
+                                        "latitude": 40.7128,
+                                        "longitude": -74.006,
                                         "created_at": "2024-01-01T00:00:00Z",
                                         "updated_at": "2024-01-01T00:00:00Z",
                                         "deleted_at": null,
@@ -1238,31 +1194,14 @@
                                         "email_verified_at": "2024-01-01T00:00:00Z",
                                         "phone": "123-456-7890",
                                         "date_of_birth": "10-01-1990",
-                                        "addresses": [
-                                            {
-                                                "id": 1,
-                                                "uuid": "550e8400-e29b-41d4-a716-446655440001",
-                                                "address": "123 Main Street",
-                                                "city": "New York",
-                                                "country": "USA",
-                                                "zip_code": "10001",
-                                                "latitude": 40.7128,
-                                                "longitude": -74.006,
-                                                "address_label": {
-                                                    "id": 1,
-                                                    "uuid": "660f9500-f39c-51e5-b827-556766550002",
-                                                    "name": "Home",
-                                                    "description": "Home address",
-                                                    "icon": "home",
-                                                    "is_active": true
-                                                },
-                                                "principal": true,
-                                                "created_at": "2025-02-25T10:30:00.000000Z",
-                                                "updated_at": "2025-02-25T10:30:00.000000Z"
-                                            }
-                                        ],
+                                        "address": "123 Main St",
+                                        "zip_code": "12345",
+                                        "city": "Exampleville",
+                                        "country": "Exampleland",
                                         "terms_and_conditions": true,
                                         "gender": "Male",
+                                        "latitude": 40.7128,
+                                        "longitude": -74.006,
                                         "created_at": "2024-01-01T00:00:00Z",
                                         "updated_at": "2024-01-01T00:00:00Z",
                                         "deleted_at": null,
@@ -1426,31 +1365,14 @@
                                     "email_verified_at": "2024-01-01T00:00:00Z",
                                     "phone": "123-456-7890",
                                     "date_of_birth": "10-01-1990",
-                                    "addresses": [
-                                        {
-                                            "id": 1,
-                                            "uuid": "550e8400-e29b-41d4-a716-446655440001",
-                                            "address": "123 Main Street",
-                                            "city": "New York",
-                                            "country": "USA",
-                                            "zip_code": "10001",
-                                            "latitude": 40.7128,
-                                            "longitude": -74.006,
-                                            "address_label": {
-                                                "id": 1,
-                                                "uuid": "660f9500-f39c-51e5-b827-556766550002",
-                                                "name": "Home",
-                                                "description": "Home address",
-                                                "icon": "home",
-                                                "is_active": true
-                                            },
-                                            "principal": true,
-                                            "created_at": "2025-02-25T10:30:00.000000Z",
-                                            "updated_at": "2025-02-25T10:30:00.000000Z"
-                                        }
-                                    ],
+                                    "address": "123 Main St",
+                                    "zip_code": "12345",
+                                    "city": "Exampleville",
+                                    "country": "Exampleland",
                                     "terms_and_conditions": true,
                                     "gender": "Male",
+                                    "latitude": 40.7128,
+                                    "longitude": -74.006,
                                     "created_at": "2024-01-01T00:00:00Z",
                                     "updated_at": "2024-01-01T00:00:00Z",
                                     "deleted_at": null,
@@ -1536,31 +1458,14 @@
                                         "email_verified_at": "2024-01-01T00:00:00Z",
                                         "phone": "123-456-7890",
                                         "date_of_birth": "10-01-1990",
-                                        "addresses": [
-                                            {
-                                                "id": 1,
-                                                "uuid": "550e8400-e29b-41d4-a716-446655440001",
-                                                "address": "123 Main Street",
-                                                "city": "New York",
-                                                "country": "USA",
-                                                "zip_code": "10001",
-                                                "latitude": 40.7128,
-                                                "longitude": -74.006,
-                                                "address_label": {
-                                                    "id": 1,
-                                                    "uuid": "660f9500-f39c-51e5-b827-556766550002",
-                                                    "name": "Home",
-                                                    "description": "Home address",
-                                                    "icon": "home",
-                                                    "is_active": true
-                                                },
-                                                "principal": true,
-                                                "created_at": "2025-02-25T10:30:00.000000Z",
-                                                "updated_at": "2025-02-25T10:30:00.000000Z"
-                                            }
-                                        ],
+                                        "address": "123 Main St",
+                                        "zip_code": "12345",
+                                        "city": "Exampleville",
+                                        "country": "Exampleland",
                                         "terms_and_conditions": true,
                                         "gender": "Male",
+                                        "latitude": 40.7128,
+                                        "longitude": -74.006,
                                         "created_at": "2024-01-01T00:00:00Z",
                                         "updated_at": "2024-01-01T00:00:00Z",
                                         "deleted_at": null,
@@ -1648,7 +1553,7 @@
                     }
                 ],
                 "responses": {
-                    "200": {
+                    "204": {
                         "description": "User deleted successfully"
                     },
                     "401": {
@@ -8523,604 +8428,6 @@
                     }
                 }
             }
-        },
-        "/user-addresses": {
-            "get": {
-                "tags": ["User Addresses"],
-                "summary": "Get all user addresses",
-                "description": "Retrieve all addresses for the authenticated user, ordered by principal first",
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "List of user addresses retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "addresses": [
-                                        {
-                                            "id": 1,
-                                            "uuid": "550e8400-e29b-41d4-a716-446655440001",
-                                            "address": "123 Main St",
-                                            "city": "New York",
-                                            "country": "USA",
-                                            "zip_code": "10001",
-                                            "latitude": 40.7128,
-                                            "longitude": -74.006,
-                                            "address_label_id": 1,
-                                            "address_label": {
-                                                "id": 1,
-                                                "uuid": "550e8400-e29b-41d4-a716-446655440002",
-                                                "name": "Home",
-                                                "description": "Primary residence",
-                                                "icon": "home"
-                                            },
-                                            "principal": true,
-                                            "created_at": "2025-02-25T10:30:00.000000Z",
-                                            "updated_at": "2025-02-25T10:30:00.000000Z"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    }
-                }
-            }
-        },
-        "/user-addresses/store": {
-            "post": {
-                "tags": ["User Addresses"],
-                "summary": "Create a new user address",
-                "description": "Create a new address for the authenticated user",
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UserAddressStore"
-                            },
-                            "example": {
-                                "address": "456 Oak Avenue",
-                                "city": "Los Angeles",
-                                "country": "USA",
-                                "zip_code": "90210",
-                                "latitude": 34.0522,
-                                "longitude": -118.2437,
-                                "address_label_id": 2,
-                                "principal": false
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Address created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserAddressResponse"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "409": {
-                        "description": "User already has an address with this label"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/UnprocessableEntity"
-                    }
-                }
-            }
-        },
-        "/user-addresses/{uuid}": {
-            "get": {
-                "tags": ["User Addresses"],
-                "summary": "Get specific user address",
-                "description": "Retrieve a specific address by UUID for the authenticated user",
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "uuid",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        },
-                        "description": "UUID of the address to retrieve"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Address retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserAddressResponse"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "404": {
-                        "description": "Address not found"
-                    }
-                }
-            }
-        },
-        "/user-addresses/update/{uuid}": {
-            "patch": {
-                "tags": ["User Addresses"],
-                "summary": "Update user address",
-                "description": "Update an existing address for the authenticated user",
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "uuid",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        },
-                        "description": "UUID of the address to update"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UserAddressUpdate"
-                            },
-                            "example": {
-                                "address": "456 Updated Street",
-                                "city": "Updated City",
-                                "country": "USA",
-                                "zip_code": "12345",
-                                "latitude": 41.8781,
-                                "longitude": -87.6298,
-                                "address_label_id": 3,
-                                "principal": false
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Address updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserAddressResponse"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "404": {
-                        "description": "Address not found"
-                    },
-                    "409": {
-                        "description": "User already has an address with this label"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/UnprocessableEntity"
-                    }
-                }
-            }
-        },
-        "/user-addresses/delete/{uuid}": {
-            "delete": {
-                "tags": ["User Addresses"],
-                "summary": "Delete user address",
-                "description": "Delete an address for the authenticated user",
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "uuid",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        },
-                        "description": "UUID of the address to delete"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Address deleted successfully",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "message": "Address deleted successfully"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "404": {
-                        "description": "Address not found"
-                    }
-                }
-            }
-        },
-        "/user-addresses/set-principal/{uuid}": {
-            "patch": {
-                "tags": ["User Addresses"],
-                "summary": "Set address as principal",
-                "description": "Mark an address as the principal address for the authenticated user",
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "uuid",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        },
-                        "description": "UUID of the address to set as principal"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Principal address updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserAddressResponse"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "404": {
-                        "description": "Address not found"
-                    }
-                }
-            }
-        },
-        "/address-labels": {
-            "get": {
-                "tags": ["Address Labels"],
-                "summary": "Get all active address labels",
-                "description": "Retrieve all active address labels available for categorizing addresses",
-                "responses": {
-                    "200": {
-                        "description": "Address labels retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "labels": [
-                                        {
-                                            "id": 1,
-                                            "uuid": "550e8400-e29b-41d4-a716-446655440001",
-                                            "name": "Home",
-                                            "description": "Primary residence address",
-                                            "icon": "home",
-                                            "is_active": true,
-                                            "created_at": "2025-02-25T10:30:00.000000Z",
-                                            "updated_at": "2025-02-25T10:30:00.000000Z"
-                                        },
-                                        {
-                                            "id": 2,
-                                            "uuid": "550e8400-e29b-41d4-a716-446655440002",
-                                            "name": "Work",
-                                            "description": "Office or workplace address",
-                                            "icon": "briefcase",
-                                            "is_active": true,
-                                            "created_at": "2025-02-25T10:35:00.000000Z",
-                                            "updated_at": "2025-02-25T10:35:00.000000Z"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    }
-                }
-            }
-        },
-        "/address-labels/store": {
-            "post": {
-                "tags": ["Address Labels"],
-                "summary": "Create a new address label (Super Admin only)",
-                "description": "Create a new address label for categorizing user addresses",
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/AddressLabelStore"
-                            },
-                            "example": {
-                                "name": "Emergency",
-                                "description": "Emergency contact address",
-                                "icon": "alert-circle",
-                                "is_active": true
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Address label created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AddressLabelResponse"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden - Super Admin required"
-                    },
-                    "422": {
-                        "description": "Validation failed (e.g., duplicate name)"
-                    }
-                }
-            }
-        },
-        "/address-labels/{uuid}": {
-            "get": {
-                "tags": ["Address Labels"],
-                "summary": "Get specific address label (Super Admin only)",
-                "description": "Retrieve a specific address label by UUID",
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "uuid",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        },
-                        "description": "UUID of the address label to retrieve"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Address label retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AddressLabelResponse"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden - Super Admin required"
-                    },
-                    "404": {
-                        "description": "Address label not found"
-                    }
-                }
-            }
-        },
-        "/address-labels/update/{uuid}": {
-            "patch": {
-                "tags": ["Address Labels"],
-                "summary": "Update address label (Super Admin only)",
-                "description": "Update an existing address label",
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "uuid",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        },
-                        "description": "UUID of the address label to update"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/AddressLabelUpdate"
-                            },
-                            "example": {
-                                "name": "Office",
-                                "description": "Updated workplace address description",
-                                "icon": "building",
-                                "is_active": true
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Address label updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AddressLabelResponse"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden - Super Admin required"
-                    },
-                    "404": {
-                        "description": "Address label not found"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/UnprocessableEntity"
-                    }
-                }
-            }
-        },
-        "/address-labels/delete/{uuid}": {
-            "delete": {
-                "tags": ["Address Labels"],
-                "summary": "Delete address label (Super Admin only)",
-                "description": "Delete an address label if not in use by any addresses",
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "uuid",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        },
-                        "description": "UUID of the address label to delete"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Address label deleted successfully",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "message": "Address label deleted successfully"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden - Super Admin required"
-                    },
-                    "404": {
-                        "description": "Address label not found"
-                    },
-                    "409": {
-                        "description": "Cannot delete label - in use by addresses",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "message": "Cannot delete label. It is being used by 3 address(es).",
-                                    "addresses_count": 3
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/address-labels/toggle-active/{uuid}": {
-            "patch": {
-                "tags": ["Address Labels"],
-                "summary": "Toggle address label active status (Super Admin only)",
-                "description": "Toggle the active status of an address label",
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "uuid",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        },
-                        "description": "UUID of the address label to toggle"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Address label status updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AddressLabelResponse"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden - Super Admin required"
-                    },
-                    "404": {
-                        "description": "Address label not found"
-                    }
-                }
-            }
         }
     },
     "components": {
@@ -11054,273 +10361,6 @@
                         "type": "string",
                         "description": "Voice Search Text",
                         "example": "Find sushi restaurants near me"
-                    }
-                }
-            },
-            "UserAddressStore": {
-                "type": "object",
-                "properties": {
-                    "address": {
-                        "type": "string",
-                        "description": "Address of the user"
-                    },
-                    "city": {
-                        "type": "string",
-                        "description": "City of the user"
-                    },
-                    "country": {
-                        "type": "string",
-                        "description": "Country of the user"
-                    },
-                    "zip_code": {
-                        "type": "string",
-                        "description": "Zip Code of the user"
-                    },
-                    "latitude": {
-                        "type": "number",
-                        "format": "double",
-                        "description": "Latitude of the user's address"
-                    },
-                    "longitude": {
-                        "type": "number",
-                        "format": "double",
-                        "description": "Longitude of the user's address"
-                    },
-                    "address_label_id": {
-                        "type": "integer",
-                        "description": "ID of the address label"
-                    },
-                    "principal": {
-                        "type": "boolean",
-                        "description": "Whether this address is the principal address"
-                    }
-                }
-            },
-            "UserAddressResponse": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "description": "ID of the address"
-                    },
-                    "uuid": {
-                        "type": "string",
-                        "format": "uuid",
-                        "description": "UUID of the address"
-                    },
-                    "address": {
-                        "type": "string",
-                        "description": "Address of the user"
-                    },
-                    "city": {
-                        "type": "string",
-                        "description": "City of the user"
-                    },
-                    "country": {
-                        "type": "string",
-                        "description": "Country of the user"
-                    },
-                    "zip_code": {
-                        "type": "string",
-                        "description": "Zip Code of the user"
-                    },
-                    "latitude": {
-                        "type": "number",
-                        "format": "double",
-                        "description": "Latitude of the user's address"
-                    },
-                    "longitude": {
-                        "type": "number",
-                        "format": "double",
-                        "description": "Longitude of the user's address"
-                    },
-                    "address_label_id": {
-                        "type": "integer",
-                        "description": "ID of the address label"
-                    },
-                    "address_label": {
-                        "type": "object",
-                        "description": "Label of the address",
-                        "properties": {
-                            "id": {
-                                "type": "integer",
-                                "description": "ID of the address label"
-                            },
-                            "uuid": {
-                                "type": "string",
-                                "format": "uuid",
-                                "description": "UUID of the address label"
-                            },
-                            "name": {
-                                "type": "string",
-                                "description": "Name of the address label"
-                            },
-                            "description": {
-                                "type": "string",
-                                "description": "Description of the address label"
-                            },
-                            "icon": {
-                                "type": "string",
-                                "description": "Icon of the address label"
-                            }
-                        }
-                    },
-                    "principal": {
-                        "type": "boolean",
-                        "description": "Whether this address is the principal address"
-                    },
-                    "created_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Date and time when the address was created"
-                    },
-                    "updated_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Date and time when the address was last updated"
-                    }
-                }
-            },
-            "UserAddressUpdate": {
-                "type": "object",
-                "properties": {
-                    "address": {
-                        "type": "string",
-                        "description": "Address of the user"
-                    },
-                    "city": {
-                        "type": "string",
-                        "description": "City of the user"
-                    },
-                    "country": {
-                        "type": "string",
-                        "description": "Country of the user"
-                    },
-                    "zip_code": {
-                        "type": "string",
-                        "description": "Zip Code of the user"
-                    },
-                    "latitude": {
-                        "type": "number",
-                        "format": "double",
-                        "description": "Latitude of the user's address"
-                    },
-                    "longitude": {
-                        "type": "number",
-                        "format": "double",
-                        "description": "Longitude of the user's address"
-                    },
-                    "address_label_id": {
-                        "type": "integer",
-                        "description": "ID of the address label"
-                    },
-                    "principal": {
-                        "type": "boolean",
-                        "description": "Whether this address is the principal address"
-                    }
-                }
-            },
-            "AddressLabelStore": {
-                "type": "object",
-                "required": ["name", "description", "icon"],
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "description": "Unique name for the address label",
-                        "example": "Emergency",
-                        "maxLength": 50
-                    },
-                    "description": {
-                        "type": "string",
-                        "description": "Description of the address label",
-                        "example": "Emergency contact address",
-                        "maxLength": 255
-                    },
-                    "icon": {
-                        "type": "string",
-                        "description": "Icon identifier for the label",
-                        "example": "alert-circle",
-                        "maxLength": 50
-                    },
-                    "is_active": {
-                        "type": "boolean",
-                        "description": "Whether the label is active",
-                        "default": true,
-                        "example": true
-                    }
-                }
-            },
-            "AddressLabelUpdate": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "description": "Unique name for the address label",
-                        "example": "Office",
-                        "maxLength": 50
-                    },
-                    "description": {
-                        "type": "string",
-                        "description": "Description of the address label",
-                        "example": "Updated workplace address description",
-                        "maxLength": 255
-                    },
-                    "icon": {
-                        "type": "string",
-                        "description": "Icon identifier for the label",
-                        "example": "building",
-                        "maxLength": 50
-                    },
-                    "is_active": {
-                        "type": "boolean",
-                        "description": "Whether the label is active",
-                        "example": true
-                    }
-                }
-            },
-            "AddressLabelResponse": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "description": "Internal ID",
-                        "example": 1
-                    },
-                    "uuid": {
-                        "type": "string",
-                        "format": "uuid",
-                        "description": "UUID of the address label",
-                        "example": "550e8400-e29b-41d4-a716-446655440001"
-                    },
-                    "name": {
-                        "type": "string",
-                        "description": "Name of the address label",
-                        "example": "Home"
-                    },
-                    "description": {
-                        "type": "string",
-                        "description": "Description of the address label",
-                        "example": "Primary residence address"
-                    },
-                    "icon": {
-                        "type": "string",
-                        "description": "Icon identifier for the label",
-                        "example": "home"
-                    },
-                    "is_active": {
-                        "type": "boolean",
-                        "description": "Whether the label is active",
-                        "example": true
-                    },
-                    "created_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "example": "2025-02-25T10:30:00.000000Z"
-                    },
-                    "updated_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "example": "2025-02-25T10:30:00.000000Z"
                     }
                 }
             }

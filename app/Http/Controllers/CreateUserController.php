@@ -14,11 +14,13 @@ use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\PersonalAccessToken;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Models\UserAddress;
 use App\Models\Provider;
 use App\Helpers\ImageHelper;
 use App\Http\Requests\CreateUserRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Validation\ValidationException;
 
 class CreateUserController extends Controller 
 {
@@ -44,6 +46,9 @@ class CreateUserController extends Controller
         // Asignar roles y otros datos sin dependencia de la subida de archivos.
         $this->assignUserRole($data, $user);
         $this->handleUserProviderData($request, $data, $user);
+        
+        // Handle addresses (new system)
+        $this->handleUserAddresses($data, $user);
         
         // Crear token de usuario.
         $tokenData = $this->createUserToken($user);
@@ -131,6 +136,109 @@ private function createCookieForToken($token) {
      return cookie('token', $token, 60 * 24 * 365); 
 }
 
+private function handleUserAddresses(array $data, User $user)
+{
+    // Handle new addresses array
+    if (isset($data['addresses']) && is_array($data['addresses'])) {
+        $usedLabels = [];
+        
+        foreach ($data['addresses'] as $index => $addressData) {
+            // Check for duplicate labels in the same request
+            if (in_array($addressData['address_label_id'], $usedLabels)) {
+                throw ValidationException::withMessages(['addresses' => ['Each address must have a unique label.']]);
+            }
+            $usedLabels[] = $addressData['address_label_id'];
+            
+            // Set first address as principal if not specified
+            if ($index === 0 && !isset($addressData['principal'])) {
+                $addressData['principal'] = true;
+            }
+            
+            $addressData['user_id'] = $user->id;
+            $user->addresses()->create($addressData);
+        }
+    } 
+    // Handle legacy address fields for backward compatibility
+    elseif (isset($data['address']) || isset($data['city']) || isset($data['country']) || isset($data['zip_code'])) {
+        // Get default "Home" label for legacy addresses
+        $homeLabel = \App\Models\AddressLabel::where('name', 'Home')->first();
+        if (!$homeLabel) {
+            throw new \Exception('Default "Home" address label not found. Please run the address labels seeder.');
+        }
+        
+        $legacyAddress = [
+            'user_id' => $user->id,
+            'address' => $data['address'] ?? '',
+            'city' => $data['city'] ?? '',
+            'country' => $data['country'] ?? '',
+            'zip_code' => $data['zip_code'] ?? '',
+            'latitude' => $data['latitude'] ?? null,
+            'longitude' => $data['longitude'] ?? null,
+            'address_label_id' => $homeLabel->id,
+            'principal' => true,
+        ];
+        
+        $user->addresses()->create($legacyAddress);
+    }
+}
+
+private function updateUserAddresses(array $data, User $user)
+{
+    // Handle new addresses array
+    if (isset($data['addresses']) && is_array($data['addresses'])) {
+        $usedLabels = [];
+        
+        // Validate for duplicate labels in the request
+        foreach ($data['addresses'] as $addressData) {
+            if (in_array($addressData['address_label_id'], $usedLabels)) {
+                throw ValidationException::withMessages(['addresses' => ['Each address must have a unique label.']]);
+            }
+            $usedLabels[] = $addressData['address_label_id'];
+        }
+        
+        // Delete existing addresses and create new ones
+        $user->addresses()->delete();
+        foreach ($data['addresses'] as $index => $addressData) {
+            // Set first address as principal if not specified
+            if ($index === 0 && !isset($addressData['principal'])) {
+                $addressData['principal'] = true;
+            }
+            
+            $addressData['user_id'] = $user->id;
+            $user->addresses()->create($addressData);
+        }
+    } 
+    // Handle legacy address fields for backward compatibility
+    elseif (isset($data['address']) || isset($data['city']) || isset($data['country']) || isset($data['zip_code'])) {
+        // Get default "Home" label for legacy addresses
+        $homeLabel = \App\Models\AddressLabel::where('name', 'Home')->first();
+        if (!$homeLabel) {
+            throw new \Exception('Default "Home" address label not found. Please run the address labels seeder.');
+        }
+        
+        // Update or create principal address with legacy data
+        $principalAddress = $user->addresses()->where('principal', true)->first();
+        
+        $legacyAddressData = [
+            'address' => $data['address'] ?? '',
+            'city' => $data['city'] ?? '',
+            'country' => $data['country'] ?? '',
+            'zip_code' => $data['zip_code'] ?? '',
+            'latitude' => $data['latitude'] ?? null,
+            'longitude' => $data['longitude'] ?? null,
+            'address_label_id' => $homeLabel->id,
+            'principal' => true,
+        ];
+        
+        if ($principalAddress) {
+            $principalAddress->update($legacyAddressData);
+        } else {
+            $legacyAddressData['user_id'] = $user->id;
+            $user->addresses()->create($legacyAddressData);
+        }
+    }
+}
+
 //protected function createUser(array $input): User
 //{
     //return User::create([
@@ -188,7 +296,13 @@ public function update(CreateUserRequest $request)
             $user->syncRoles($role);
         }
 
-        unset($data['password'], $data['role_id']);
+        // Handle addresses update
+        $this->updateUserAddresses($data, $user);
+
+        // Remove address-related fields and role_id from data before updating user
+        unset($data['password'], $data['role_id'], $data['addresses'], 
+              $data['address'], $data['city'], $data['country'], 
+              $data['zip_code'], $data['latitude'], $data['longitude']);
 
         $user->update($data);
 
@@ -235,7 +349,6 @@ private function validateRoleId($data)
         }
     }
 }
-
 
 private function updateUserCache($user)
 {

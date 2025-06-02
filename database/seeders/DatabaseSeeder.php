@@ -159,6 +159,7 @@ class DatabaseSeeder extends Seeder
 
         // Finalmente los usuarios mock
         $this->call([
+            AddressLabelSeeder::class,
             MockUsersSeeder::class,
         ]);
     }

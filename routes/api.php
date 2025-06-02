@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\UserAddressController;
+use App\Http\Controllers\AddressLabelController;
 use App\Http\Controllers\PermissionController;
 //use App\Http\Controllers\Api\ErrorController;
 use Illuminate\Support\Facades\Response;
@@ -62,6 +64,8 @@ Route::get('/username-available/{username}', [CheckUsernameController::class, 'c
 Route::get('/email-available/{email}', [CheckEmailController::class, 'checkEmailAvailability']);
 
 Route::get('/categories', [CategoryController::class, 'index']);
+
+Route::get('/address-labels', [AddressLabelController::class, 'index']);
 
 // Route related to User Social Login
 Route::post('/social-login', [SocialLoginController::class, 'handleProviderCallback']);
@@ -131,6 +135,26 @@ Route::middleware(['auth:sanctum','handle.notfound'])->group(function() {
     Route::get('users-create', [UsersController::class, 'create']); 
     Route::get('users-list/{uuid}/edit', [UsersController::class, 'edit']); 
     Route::put('users-restore/{uuid}', [UsersController::class, 'restore']); 
+
+    // Routes related to User Addresses
+    Route::group(['prefix' => 'user-addresses'], function () {
+        Route::get('/', [UserAddressController::class, 'index']);
+        Route::post('/store', [UserAddressController::class, 'store']);
+        Route::get('/{uuid}', [UserAddressController::class, 'show']);
+        Route::patch('/update/{uuid}', [UserAddressController::class, 'update']);
+        Route::delete('/delete/{uuid}', [UserAddressController::class, 'destroy']);
+        Route::patch('/set-principal/{uuid}', [UserAddressController::class, 'setPrincipal']);
+    });
+
+    // Routes related to Address Labels
+    Route::group(['prefix' => 'address-labels'], function () {
+       
+        Route::post('/store', [AddressLabelController::class, 'store']);
+        Route::get('/{uuid}', [AddressLabelController::class, 'show']);
+        Route::patch('/update/{uuid}', [AddressLabelController::class, 'update']);
+        Route::delete('/delete/{uuid}', [AddressLabelController::class, 'destroy']);
+        Route::patch('/toggle-active/{uuid}', [AddressLabelController::class, 'toggleActive']);
+    });
 
     // Rutas relacionadas con permisos
     Route::get('permissions-list', [PermissionController::class, 'index']);

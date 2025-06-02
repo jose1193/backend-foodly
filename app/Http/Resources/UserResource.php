@@ -28,12 +28,12 @@ class UserResource extends JsonResource {
             'email_verified_at' => $this->email_verified_at,
             'date_of_birth' => $this->date_of_birth,
             'phone' => $this->phone,
-            'address' => $this->address,
-            'zip_code' => $this->zip_code,
-            'city' => $this->city,
-            'country' => $this->country,
-            'latitude' => (double) $this->latitude,
-            'longitude' => (double) $this->longitude,
+            
+            // New addresses field
+            'addresses' => UserAddressResource::collection($this->addresses),
+            
+           
+            
             'terms_and_conditions' => (boolean) $this->terms_and_conditions,
             'gender' => $this->gender,
             'created_at' => $this->created_at,

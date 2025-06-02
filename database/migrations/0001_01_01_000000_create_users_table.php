@@ -22,14 +22,10 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->string('phone')->nullable();
             $table->string('date_of_birth')->nullable();
-            $table->string('address')->nullable();
-            $table->string('zip_code')->nullable();
-            $table->string('city')->nullable();
-            $table->string('country')->nullable();
+            
             $table->string('gender')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
-            $table->double('latitude', 10, 6)->nullable(); 
-            $table->double('longitude', 10, 6)->nullable(); 
+            
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

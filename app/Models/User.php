@@ -29,15 +29,11 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
-        'address',   
-        'zip_code',
-        'city',
-        'country',
+        
         'gender',
         'profile_photo_path',
         'terms_and_conditions',
-        'latitude',
-        'longitude',     
+          
     ];
 
     /**
@@ -122,5 +118,29 @@ class User extends Authenticatable
     public function following()
     {
         return $this->belongsToMany(User::class, 'user_followers', 'follower_id', 'following_id');
+    }
+
+    /**
+     * Get all addresses for the user.
+     */
+    public function addresses()
+    {
+        return $this->hasMany(UserAddress::class);
+    }
+
+    /**
+     * Get the principal address for the user.
+     */
+    public function principalAddress()
+    {
+        return $this->hasOne(UserAddress::class)->where('principal', true);
+    }
+
+    /**
+     * Get addresses by label.
+     */
+    public function addressesByLabel($label)
+    {
+        return $this->addresses()->where('label', $label);
     }
 }
