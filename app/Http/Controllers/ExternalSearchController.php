@@ -13,7 +13,7 @@ class ExternalSearchController extends Controller
     /**
      * External search API URL
      */
-    protected $externalApiUrl = 'https://mateoalvarez.pythonanywhere.com/search';
+    protected $externalApiUrl = 'https://foodly-api-env.eba-t6i5hcyf.us-east-1.elasticbeanstalk.com/search';
 
     /**
      * Search businesses using external API service
