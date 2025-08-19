@@ -157,10 +157,11 @@ class DatabaseSeeder extends Seeder
         }
         // END CATEGORIAS
 
-        // Finalmente los usuarios mock
+        // Finalmente los usuarios argentinos
         $this->call([
             AddressLabelSeeder::class,
-            MockUsersSeeder::class,
+            ArgentinaUsersSeeder::class,
+            BusinessSeeder::class, 
         ]);
     }
 }

@@ -18,9 +18,11 @@ class MockUsersSeeder extends Seeder
             __DIR__ . '/mock-users-arg-caba-200-299.json'
         ];
 
-        // Desactivar temporalmente el auto-incremento
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::statement('ALTER TABLE users AUTO_INCREMENT = 100;');
+            // Solo ejecutar comandos MySQL si el driver es mysql
+            if (DB::getDriverName() === 'mysql') {
+                DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+                DB::statement('ALTER TABLE users AUTO_INCREMENT = 100;');
+            }
 
         foreach ($jsonFiles as $jsonPath) {
             try {
@@ -46,12 +48,6 @@ class MockUsersSeeder extends Seeder
                             'email_verified_at' => $userData['email_verified_at'],
                             'date_of_birth' => $userData['date_of_birth'],
                             'phone' => $userData['phone'],
-                            'address' => $userData['address'],
-                            'zip_code' => $userData['zip_code'],
-                            'city' => $userData['city'],
-                            'country' => $userData['country'],
-                            'latitude' => $userData['latitude'],
-                            'longitude' => $userData['longitude'],
                             'terms_and_conditions' => $userData['terms_and_conditions'],
                             'gender' => $userData['gender'],
                             'password' => Hash::make('Test@123'),
@@ -82,6 +78,9 @@ class MockUsersSeeder extends Seeder
             }
         }
 
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+            // Solo ejecutar en MySQL
+            if (DB::getDriverName() === 'mysql') {
+                DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+            }
     }
 }
